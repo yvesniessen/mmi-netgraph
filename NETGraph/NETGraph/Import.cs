@@ -63,7 +63,7 @@ namespace NETGraph
                     Debug.Print("Kantenliste");
                     foreach (String data in _data)
                     {
-                        String[] _Elements = data.Split('\t');
+ String[] _Elements = data.Split('\t');
                         
                         convertListLine(_Elements,ref _graph);
                     }
