@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace NETGraph
 {
@@ -23,59 +24,60 @@ namespace NETGraph
     {
 
 
-
+        #region constructor
         public MainWindow()
         {
             InitializeComponent();
-            tbx_filePath.Text = Environment.SpecialFolder.Desktop.ToString();
-            tbx_out.Text = "Welcome to .NETGraph 0.1 \n";
-
+            richTextBoxLog.AppendText("NetGraph Version 1.0 Alpha 1");
+            registerEvents();
         }
+        ~MainWindow()
+        {
+            unRegisterEvents();
+        }
+        #endregion
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        #region un/-register events
+        void registerEvents()
+        {
+            //This event updates an String the gui textfield
+            EventLogger.OnLoggingEvent += new LoggingEvent(EventLogger_OnLoggingEvent);
+        }
+    
+        void unRegisterEvents()
+        {
+            EventLogger.OnLoggingEvent += new LoggingEvent(EventLogger_OnLoggingEvent);
+        }
+        #endregion
+
+        #region react 2 gui events
+        private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
             Graph _graph = Import.openFileDialog();
             GraphList _graphList;
-            _graphList = Export.showGraph(ref _graph );
+            _graphList = Export.showGraph(ref _graph);
+        }
+
+        private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
 
-       
-
-        private void button2_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-/*
-            String s1 = "0,9 0,13 1,4 1,8 1,14 2,7 2,11 2,12 3,5 3,6 3,9 4,7 5,10 6,9 7,12 8,14 8,14";
-            String[] temp = s1.Split(' ');
 
-            Graph g = new Graph();
+        }
+        #endregion
 
-            g.DirectedEdges = false;
-            g.ParallelEdges = false;
+        #region react 2 subscribed events
+        //This event updates an String the gui textfield
+        void EventLogger_OnLoggingEvent(object sender, LogEventArgs a)
+        {
+            richTextBoxLog.AppendText("\n");
+            richTextBoxLog.AppendText(a.Text);
+        }
+        #endregion
 
-            int i=0;
-            while(i<15)
-            {
-                g.addVertex(new Vertex<String>(i.ToString()));
-                i++;
-            }
 
-            foreach (String s in temp)
-            {
-                Vertex<String> p1 = new Vertex<String>(s.Split(',')[0]);
-                Vertex<String> p2 = new Vertex<String>(s.Split(',')[1]);
-
-                g.addEdge(p1, p2);
-            }
-
-            foreach (Edge edge in g.getEdges())
-            {
-                tbx_out.Text += edge.ToString() + "\n";
-            }
-            tbx_out.Text += g.getVertexes().Count.ToString() + "\n";
-            tbx_out.Text += "Knoten-Kollisionen: " + g.CollisionOfVertexes.ToString() + "\n";
-            tbx_out.Text += "Kanten-Kollisionen: " + g.CollisionOfEdges.ToString() + "\n";
- * */
-        } 
     }
 }
