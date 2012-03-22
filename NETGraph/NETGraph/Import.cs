@@ -8,84 +8,119 @@ using System.Diagnostics;
 
 namespace NETGraph
 {
-   static  class Import
+    static class Import
    {
+
+   /*    #region Events
+       // Gui-Log-Text Event handling
+       public  delegate void GuiLogText( String logText);
+       // Define an Event based on the above Delegate
+       public static event GuiLogText GuiLogTextEvent;// = delegate {};
+       // This function adds a string to the Gui-RichText-Log
+       public static void OnGuiLogTextEvent( String logText)
+       {
+           if (GuiLogTextEvent != null)
+           {
+               GuiLogTextEvent( logText);
+           }
+       }
+       #endregion
+*/
        #region functions
        public static Graph openFileDialog()
         {
+            EventLogger.Log("test");
             //OpenFileDialog
             string _path = string.Empty;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                _path = openFileDialog1.FileName; 
-
-            return transformFileToGraph(_path);
+                _path = openFileDialog1.FileName;
+           // Prevent "Cancel-Button" Error 
+           if (transformFileToGraph(_path) != null)
+                return transformFileToGraph(_path);
+            else
+               return null;
         }
 
         private static Graph transformFileToGraph(String file)
         {
+            if (file == null)
+            {
+                throw new NotImplementedException("ERRORvvv:transformFileToGraph");
+            }
+
+
             Graph _graph = new Graph();
             String _line;
-            int _CountColoumnElements = 0;
-            StreamReader _sr = new StreamReader(file);
+            int _CountColoumnElements = 0;          
             List<String> _data = new List<string>();
 
-            //Write Number of Vertexes in Object Graph
-            if ((_line = _sr.ReadLine()) != null)
-                _graph.NumberOfVertexes = Int32.Parse(_line);
-            
-            // Read every line of file
-            while ((_line = _sr.ReadLine()) != null)
+
+            try
             {
-                String[] _coloumnElements = _line.Split('\t');
-                if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
+                StreamReader _sr = new StreamReader(file);
+                //Write Number of Vertexes in Object Graph
+                if ((_line = _sr.ReadLine()) != null)
+                    _graph.NumberOfVertexes = Int32.Parse(_line);
+
+                // Read every line of file
+                while ((_line = _sr.ReadLine()) != null)
                 {
-                    throw new NotImplementedException("ERROR:transformFileToGraph");
-                }
-                
-                _CountColoumnElements = _coloumnElements.Length;
-
-
-                _data.Add(_line);
-            }
-
-            // Decide the Type of input File Convertion
-            switch (_CountColoumnElements)
-            {
-                case 0:
-                case 1:
-                    throw new NotImplementedException("ERROR:transformFileToGraph");
-                case 2: 
-                    Debug.Print("Kantenliste");
-                    foreach (String data in _data)
+                    String[] _coloumnElements = _line.Split('\t');
+                    if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
                     {
-                        String[] _Elements = data.Split('\t');            
-                        convertListLine(_Elements,ref _graph);
+                        throw new NotImplementedException("ERROR:transformFileToGraph");
                     }
-                    break;
-                default:
-                    Debug.Print("Adjazensmatrix");
-                    
-                    // test if it is a valid number of Row elements
-                    if (_data.Count != _graph.NumberOfVertexes)
-                        throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
-                    int _counter = 0;
-                    foreach (String data in _data)
-                    {
-                        String[] _Elements = data.Split('\t');
 
-                        // test if it is a valid number of columns elements
-                        if (_Elements.Length != _graph.NumberOfVertexes)
-                            throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Column Elements!");
-                             
-                        convertMatrixLine(_counter,_Elements,ref _graph);
-                        _counter++;
-                    }                        
-                   break;             
+                    _CountColoumnElements = _coloumnElements.Length;
+
+
+                    _data.Add(_line);
+                }
+
+                // Decide the Type of input File Convertion
+                switch (_CountColoumnElements)
+                {
+                    case 0:
+                    case 1:
+                        throw new NotImplementedException("ERROR:transformFileToGraph");
+                    case 2:
+                        Debug.Print("Kantenliste");
+                        foreach (String data in _data)
+                        {
+                            String[] _Elements = data.Split('\t');
+                            convertListLine(_Elements, ref _graph);
+                        }
+                        break;
+                    default:
+                        Debug.Print("Adjazensmatrix");
+
+                        // test if it is a valid number of Row elements
+                        if (_data.Count != _graph.NumberOfVertexes)
+                            throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
+                        int _counter = 0;
+                        foreach (String data in _data)
+                        {
+                            String[] _Elements = data.Split('\t');
+
+                            // test if it is a valid number of columns elements
+                            if (_Elements.Length != _graph.NumberOfVertexes)
+                                throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Column Elements!");
+
+                            convertMatrixLine(_counter, _Elements, ref _graph);
+                            _counter++;
+                        }
+                        break;
+                }
+
+                return _graph;
             }
-
-            return _graph;
+            catch (Exception ex)
+            {
+                EventLogger.Log(ex.Message.ToString());
+                return null;
+            }
         }
 
         private static void convertMatrixLine(int counter, string[] _Elements, ref Graph _graph)

@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Edge.cs" />
+    <Compile Include="EventLogger.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphList.cs" />

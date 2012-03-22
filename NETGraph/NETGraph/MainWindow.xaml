@@ -1,11 +1,36 @@
 ﻿<Window x:Class="NETGraph.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="587" Width="525">
+        Title="NetGraph" Height="587" Width="820" Loaded="Window_Loaded">
+    
     <Grid>
-        <TextBlock Height="397" HorizontalAlignment="Left" Margin="12,139,0,0" Name="tbx_out" Text="TextBlock" VerticalAlignment="Top" Width="398" />
-        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="416,34,0,0" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,34,0,0" Name="tbx_filePath" VerticalAlignment="Top" Width="398" />
-        <Button Content="Start" Height="34" HorizontalAlignment="Left" Margin="12,80,0,0" Name="button2" VerticalAlignment="Top" Width="86" Click="button2_Click" />
+        <Menu Height="23" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="798" Foreground="Blue" OpacityMask="#FF7C2D2D">
+            <MenuItem Header="File" Cursor="None">
+                <MenuItem Header="Open" Click="menuFileOpen_Click" />
+                <MenuItem Header="Save" />
+            </MenuItem>
+            <MenuItem Header="Algorithm" />
+            <MenuItem Header="Output" />
+            <MenuItem Header="Help">
+                <MenuItem Header="Version" />
+                <MenuItem Header="LogFile" />
+            </MenuItem>
+        </Menu>
+        <RichTextBox Height="449" HorizontalAlignment="Left" Margin="12,69,0,0" Name="richTextBoxLog" VerticalAlignment="Top" Width="218" />
+        <RichTextBox Height="449" HorizontalAlignment="Left" Margin="247,69,0,0" Name="richTextInput" VerticalAlignment="Top" Width="218" />
+        <Label Content="Log:" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="labelLog" VerticalAlignment="Top" Width="109" />
+        <Label Content="Input:" Height="28" HorizontalAlignment="Left" Margin="247,34,0,0" Name="labelInput" VerticalAlignment="Top" Width="109" />
+        <GroupBox Header="Statistics" Height="186" HorizontalAlignment="Left" Margin="484,47,0,0" Name="groupBox1" VerticalAlignment="Top" Width="294">
+            <WrapPanel Height="146" Name="wrapPanel1" Width="257">
+                <Label Content="Graph-Size [kB]:" Height="28" Name="label1" Width="109" Margin="2" HorizontalAlignment="Left" />
+                <Label Content="0" Height="28" Name="labelGraphSizeValue" Width="109" Margin="2" HorizontalAlignment="Right" />
+                <Label Content="Process Time [ms]:" Height="28" Name="label6" Width="109" Margin="2" />
+                <Label Content="0" Height="28" Name="labelAlgoTimeValue" Width="109" Margin="2"/>
+                <Label Content="Vertexes:" Height="28" Name="labelVertexesValue" Width="109" Margin="2" />
+                <Label Content="0" Height="28" Name="label4" Width="109" Margin="2" />
+                <Label Content="Edges:" Height="28" Name="label5" Width="109" Margin="2" />
+                <Label Content="0" Height="28" Name="labelEdgesValue" Width="109" Margin="2" />
+            </WrapPanel>
+        </GroupBox>
     </Grid>
 </Window>
