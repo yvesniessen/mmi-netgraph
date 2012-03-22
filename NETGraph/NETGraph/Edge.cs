@@ -5,6 +5,8 @@ using System.Text;
 
 namespace NETGraph
 {
+
+    //ToDO: Change Generics to template!
     class Edge
     {
         #region members

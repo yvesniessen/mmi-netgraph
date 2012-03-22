@@ -34,14 +34,17 @@ namespace NETGraph
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Import.openFileDialog();
+            Graph _graph = Import.openFileDialog();
+            GraphList _graphList;
+            _graphList = Export.showGraph(ref _graph );
+
         }
 
        
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-
+/*
             String s1 = "0,9 0,13 1,4 1,8 1,14 2,7 2,11 2,12 3,5 3,6 3,9 4,7 5,10 6,9 7,12 8,14 8,14";
             String[] temp = s1.Split(' ');
 
@@ -72,6 +75,7 @@ namespace NETGraph
             tbx_out.Text += g.getVertexes().Count.ToString() + "\n";
             tbx_out.Text += "Knoten-Kollisionen: " + g.CollisionOfVertexes.ToString() + "\n";
             tbx_out.Text += "Kanten-Kollisionen: " + g.CollisionOfEdges.ToString() + "\n";
-        }
+ * */
+        } 
     }
 }

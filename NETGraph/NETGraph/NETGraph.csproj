@@ -59,6 +59,7 @@
     <Compile Include="Edge.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphList.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="Vertex.cs" />
     <Page Include="MainWindow.xaml">

@@ -11,7 +11,7 @@ namespace NETGraph
    static  class Import
    {
        #region functions
-       public static void openFileDialog()
+       public static Graph openFileDialog()
         {
             //OpenFileDialog
             string _path = string.Empty;
@@ -19,11 +19,8 @@ namespace NETGraph
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 _path = openFileDialog1.FileName; 
-            // 
 
-            transformFileToGraph(_path);
-
-
+            return transformFileToGraph(_path);
         }
 
         private static Graph transformFileToGraph(String file)
@@ -63,8 +60,7 @@ namespace NETGraph
                     Debug.Print("Kantenliste");
                     foreach (String data in _data)
                     {
- String[] _Elements = data.Split('\t');
-                        
+                        String[] _Elements = data.Split('\t');            
                         convertListLine(_Elements,ref _graph);
                     }
                     break;
@@ -74,7 +70,6 @@ namespace NETGraph
                     // test if it is a valid number of Row elements
                     if (_data.Count != _graph.NumberOfVertexes)
                         throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
-
                     int _counter = 0;
                     foreach (String data in _data)
                     {
@@ -100,7 +95,7 @@ namespace NETGraph
 
         private static void convertListLine(string[] Elements, ref Graph _graph)
         {
-            throw new NotImplementedException();
+            _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]));
         }
        #endregion
    }
