@@ -106,6 +106,7 @@ namespace NETGraph
             start = addVertex(start);
             end = addVertex(end);
 
+         
             if (!ParallelEdges)
             {
                 if (!_directedEdges)
@@ -153,12 +154,12 @@ namespace NETGraph
 
             if (!this.vertexes.Contains(vertex))
             {
+
                 foreach (Vertex<String> v in vertexes)
                 {
                     if (v.VertexName.Equals(vertex.VertexName))
                     {
                         check = true;
-                        //MessageBox.Show("Knoten schon da!");
                         System.Diagnostics.Debug.WriteLine("Knoten schon da: " + vertex.VertexName.ToString());
                         CollisionOfVertexes++;
                         return v;
