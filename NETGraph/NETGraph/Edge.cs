@@ -23,7 +23,6 @@ namespace NETGraph
             EdgeName = StartVertex.ToString() + ":" + EndVertex.ToString();
 
             StartVertex.Edges.Add(this);
-            StartVertex.Edges.Add(this);
             EndVertex.Edges.Add(this);
         }
         #endregion
