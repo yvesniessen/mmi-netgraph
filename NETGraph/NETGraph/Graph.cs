@@ -234,6 +234,63 @@ namespace NETGraph
 
             return null;
         }
+                
+        public GraphList breathSearch(Vertex<String> startVertex)
+        {
+            List<String> outputedges = new List<String>();
+            List<String> outputvertexes = new List<String>();
+
+            List<Vertex<String>> Schlange = new List<Vertex<string>>();
+
+            Schlange.Add(startVertex);
+
+            do
+            {
+                Vertex<String> vertex = Schlange.First();
+                Schlange.Remove(vertex);
+
+                vertex.Marked = true;
+                outputvertexes.Add(vertex.VertexName.ToString());
+
+                List<Vertex<String>> neighbors = vertex.findNeighbors(this.DirectedEdges);
+
+                foreach (Vertex<String> neighbor in neighbors)
+                {
+                    if (!neighbor.Marked)
+                    {
+                        Schlange.Add(neighbor);
+                    }
+                    //neighbor.Marked = true;
+                }
+
+            } while (Schlange.Count != 0);
+            
+            /*
+            //Alle Knoten auf nicht-markiert setzen
+            foreach (Vertex<String> vertex in this.Vertexes)
+            {
+                vertex.Marked = false;
+            }
+
+            //Start Knoten in die Liste hauen und als markiert setzen
+            outputvertexes.Add(startVertex.VertexName.ToString());
+            startVertex.Marked = true;
+
+            //foreach (Vertex<String> vertex in Vertexes)
+            //{
+                foreach (Vertex<String> neighbor in startVertex.findNeighbors(this.DirectedEdges))
+                {
+                    if (!neighbor.Marked)
+                    {
+                        //Schreibe alle Nachbarn, die nicht markiert sind weg und markiere sie als besucht
+                        outputvertexes.Add(neighbor.VertexName.ToString());
+                        neighbor.Marked = true;
+                    }
+                }
+            //}*/
+                        
+            return new GraphList(outputedges,outputvertexes);
+        }
 
         #endregion
     }
