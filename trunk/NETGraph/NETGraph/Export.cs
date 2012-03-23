@@ -10,6 +10,7 @@ namespace NETGraph
     {
         public static GraphList showGraph( ref Graph graph)
         {
+
             List<String> _edges = showEdges(ref graph);
             List<String> _vertexes = showVertexes(ref graph);
             return new GraphList(_edges, _vertexes);
