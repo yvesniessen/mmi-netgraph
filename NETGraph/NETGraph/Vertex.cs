@@ -73,7 +73,10 @@ namespace NETGraph
             {
                 foreach(Edge e in this.Edges)
                 {
-                    neighbors.Add(e.EndVertex);
+                    if (e.EndVertex.VertexName.ToString() != this.VertexName.ToString())
+                    {
+                        neighbors.Add(e.EndVertex);
+                    }
                 }
             }
             else
