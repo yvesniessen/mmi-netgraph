@@ -16,7 +16,7 @@ namespace NETGraph
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
-        private bool _directedEdges = true;
+        private bool _directedEdges = false;
         private int _numberOfVertexes = 0;
         #endregion
 
@@ -188,6 +188,105 @@ namespace NETGraph
             }
             return null;
         }
+
+        public Vertex<String> findVertex(String name)
+        {
+            foreach(Vertex<String> v in _vertexes)
+            {
+                if (v.VertexName == name)
+                    return v;
+            }
+            return null;              
+        }
+
+        public List<Edge> getway(String start, String end)
+        {
+            
+
+            //Vertex<String> startvertex = this.findVertex(start);
+
+            //int lengh = 0;
+            //List<Vertex<String>> stack = null;
+            ////List<Vertex> = startvertex.nachbarn
+            //List<Edge> path = new List<Edge>();
+
+            //while (stack.Count() != 0)
+            //{
+            //    for (int i = 0; i < size; ++i)
+            //    {
+                
+                
+            //    }
+
+
+            //    int length = 
+
+            //}
+
+            return null;
+        }
+                
+        public GraphList breathSearch(Vertex<String> startVertex)
+        {
+            List<String> outputedges = new List<String>();
+            List<String> outputvertexes = new List<String>();
+
+            List<Vertex<String>> Schlange = new List<Vertex<string>>();
+
+            Schlange.Add(startVertex);
+
+            do
+            {
+                Vertex<String> vertex = Schlange.First();
+                Schlange.Remove(vertex);
+
+                if (!vertex.Marked)
+                {
+                    vertex.Marked = true;
+                    outputvertexes.Add(vertex.VertexName.ToString());
+                }
+
+                List<Vertex<String>> neighbors = vertex.findNeighbors(this.DirectedEdges);
+
+                foreach (Vertex<String> neighbor in neighbors)
+                {
+                    if (!neighbor.Marked)
+                    {
+                        Schlange.Add(neighbor);
+                    }
+                    //neighbor.Marked = true;
+                }
+
+                
+            } while (Schlange.Count != 0);
+            
+            return new GraphList(outputedges, outputvertexes);
+
+            /*
+            //Alle Knoten auf nicht-markiert setzen
+            foreach (Vertex<String> vertex in this.Vertexes)
+            {
+                vertex.Marked = false;
+            }
+
+            //Start Knoten in die Liste hauen und als markiert setzen
+            outputvertexes.Add(startVertex.VertexName.ToString());
+            startVertex.Marked = true;
+
+            //foreach (Vertex<String> vertex in Vertexes)
+            //{
+                foreach (Vertex<String> neighbor in startVertex.findNeighbors(this.DirectedEdges))
+                {
+                    if (!neighbor.Marked)
+                    {
+                        //Schreibe alle Nachbarn, die nicht markiert sind weg und markiere sie als besucht
+                        outputvertexes.Add(neighbor.VertexName.ToString());
+                        neighbor.Marked = true;
+                    }
+                }
+            //}*/
+        }
+
         #endregion
     }
 }
