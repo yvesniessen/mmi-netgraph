@@ -69,6 +69,23 @@ namespace NETGraph
             Graph _graph = Import.openFileDialog();
             GraphList _graphList;
             _graphList = Export.showGraph(ref _graph);
+
+            foreach (Vertex<String> v in _graph.Vertexes)
+            {
+                foreach (Edge ed in v.Edges)
+                {
+                    Debug.Print("Vertex: " + v.VertexName.ToString() +
+                                " --EDGE: " + ed.EdgeName + " START: " +
+                                ed.StartVertex.VertexName.ToString() + " ENDE: " +
+                                ed.EndVertex.VertexName.ToString());
+                }
+            }
+
+            GraphList depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+
+            foreach (String s in depthsarchgraph.Vertexes)
+               Console.WriteLine(s);
+
         }
         private void menuHelpLogFileOpen_Click(object sender, RoutedEventArgs e)
         {
