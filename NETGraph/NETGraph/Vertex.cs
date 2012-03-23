@@ -65,6 +65,39 @@ namespace NETGraph
             VertexName = name;
         }
 
+        public List<Vertex<String>> findNeighbors(bool directedEdges)
+        {
+            List<Vertex<String>> neighbors = new List<Vertex<string>>();
+
+            if (directedEdges)
+            {
+                foreach(Edge e in this.Edges)
+                {
+                    neighbors.Add(e.EndVertex);
+                }
+            }
+            else
+            {
+                foreach (Edge e in this.Edges)
+                {
+                    if (e.StartVertex.VertexName.ToString() == this.VertexName.ToString())
+                    {
+                        neighbors.Add(e.EndVertex);
+                    }
+                    else if (e.EndVertex.VertexName.ToString() == this.VertexName.ToString())
+                    {
+                        neighbors.Add(e.StartVertex);
+                    }
+                    else
+                    {
+                        //Exception?!
+                    }
+                }
+            }
+
+            return neighbors;
+        }
+
         public override String ToString()
         {
             return "V: " + VertexName.ToString();
