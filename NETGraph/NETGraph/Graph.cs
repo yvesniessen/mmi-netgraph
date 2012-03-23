@@ -11,8 +11,8 @@ namespace NETGraph
     {
         #region members
         private String _graphName;
-        private List<Edge> edges = new List<Edge>();
-        private List<Vertex<String>> vertexes = new List<Vertex<String>>();
+        private List<Edge> _edges = new List<Edge>();
+        private List<Vertex<String>> _vertexes = new List<Vertex<String>>();
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
@@ -93,12 +93,36 @@ namespace NETGraph
             }
         }
 
+        public List<Vertex<String>> Vertexes
+        {
+            get
+            {
+                return _vertexes;
+            }
+            set
+            {
+                _vertexes = value;
+            }
+        }
+
+        public List<Edge> Edges
+        {
+            get
+            {
+                return _edges;
+            }
+            set
+            {
+                _edges = value;
+            }
+        }
+
         #endregion
 
         #region public functions
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
-            foreach (Edge edge in edges)
+            foreach (Edge edge in Edges)
             {
                 if ((edge.StartVertex.VertexName == start.VertexName && edge.EndVertex.VertexName == end.VertexName))
                 {
@@ -113,7 +137,7 @@ namespace NETGraph
 
          public List<Vertex<String>> getVertexes()
         {
-            return this.vertexes;
+            return this.Vertexes;
         }
 
          public void addEdge(Vertex<String> start, Vertex<String> end)
@@ -129,7 +153,7 @@ namespace NETGraph
                     if( (checkEdgeExists(start, end) == null) && (checkEdgeExists(end, start) == null) )
                     {
                         Edge tempEdge = new Edge(start, end);
-                        edges.Add(tempEdge);
+                        Edges.Add(tempEdge);
                     }
                 }
                 else
@@ -137,7 +161,7 @@ namespace NETGraph
                     if ((checkEdgeExists(start, end) == null))
                     {
                         Edge tempEdge = new Edge(start, end);
-                        edges.Add(tempEdge);
+                        Edges.Add(tempEdge);
                     }
                 }
             }
@@ -148,29 +172,29 @@ namespace NETGraph
                     //TO FIX ?? Fall mal prüfen...
 
                     Edge tempEdge = new Edge(start, end);
-                    edges.Add(tempEdge);
+                    Edges.Add(tempEdge);
                 }
                 else
                 {
                     Edge tempEdge = new Edge(start, end);
-                    edges.Add(tempEdge);
+                    Edges.Add(tempEdge);
                 }
             }
         }
 
         public List<Edge> getEdges()
         {
-            return edges;
+            return Edges;
         }
 
         public Vertex<String> addVertex(Vertex<String> vertex)
         {
             bool check = false;
 
-            if (!this.vertexes.Contains(vertex))
+            if (!this.Vertexes.Contains(vertex))
             {
 
-                foreach (Vertex<String> v in vertexes)
+                foreach (Vertex<String> v in _vertexes)
                 {
                     if (v.VertexName.Equals(vertex.VertexName))
                     {
@@ -182,7 +206,7 @@ namespace NETGraph
                 }
                 if (!check)
                 {
-                    this.vertexes.Add(vertex);
+                    this.Vertexes.Add(vertex);
                     return vertex;
                 }
             }
@@ -191,8 +215,7 @@ namespace NETGraph
 
         public Vertex<String> findVertex(String name)
         {
-            
-            foreach(Vertex<String> v in _vertexes)
+            foreach(Vertex<String> v in Vertexes)
             {
                 if (v.VertexName == name)
                     return v;
