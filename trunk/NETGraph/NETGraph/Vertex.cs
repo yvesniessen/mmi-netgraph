@@ -20,6 +20,7 @@ namespace NETGraph
         private T _vertexName;
         private int _costs = 0;
         private List<Edge> _edges = new List<Edge>();
+        private bool _marked = false;
         #endregion
 
         #region properties
@@ -32,6 +33,18 @@ namespace NETGraph
             set
             {
                 _vertexName = value;
+            }
+        }
+
+        public bool Marked
+        {
+            get
+            {
+                return _marked;
+            }
+            set
+            {
+                _marked = value;
             }
         }
 
