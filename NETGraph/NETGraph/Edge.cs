@@ -80,9 +80,9 @@ namespace NETGraph
         #endregion
 
         #region public functions
-        public String ToString()
+        public override String ToString()
         {
-            return "E: " + _edgeName.ToString() + " " + this._startVertex.ToString() + " "+  this._endVertex.ToString();
+            return "Edge: " + _edgeName.ToString() + " Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString();
         }
         #endregion
     }

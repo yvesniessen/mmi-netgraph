@@ -65,7 +65,7 @@ namespace NETGraph
             VertexName = name;
         }
 
-        public String ToString()
+        public override String ToString()
         {
             return "V: " + VertexName.ToString();
         }
