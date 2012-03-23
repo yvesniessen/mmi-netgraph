@@ -202,8 +202,8 @@ namespace NETGraph
         {
             foreach(Vertex<String> v in _vertexes)
             {
-                v.VertexName = name;
-                return v;
+                if (v.VertexName == name)
+                    return v;
             }
             return null;              
         }
