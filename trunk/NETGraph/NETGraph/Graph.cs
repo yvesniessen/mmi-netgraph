@@ -191,6 +191,7 @@ namespace NETGraph
 
         public Vertex<String> findVertex(String name)
         {
+            
             foreach(Vertex<String> v in _vertexes)
             {
                 if (v.VertexName == name)
@@ -198,6 +199,44 @@ namespace NETGraph
             }
             return null;              
         }
+            
+        public GraphList depthsearch(Vertex<String> startvertex)
+        {
+            GraphList tmp = new GraphList(new List<string>(), new List<string>());
+            
+            Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
+            
+            if (!startvertex.Marked)
+            {
+                startvertex.Marked = true;
+                tmp.Vertexes.Add(startvertex.VertexName);
+
+                foreach (Vertex<String> v in startvertex.findNeighbors(DirectedEdges))
+                {
+                    if (!v.Marked && !stack.Contains(v))
+                    {
+                        stack.Push(v);
+                    }    
+                }
+
+                while (stack.Count != 0)
+                {
+                    Vertex<String> currentvertex = stack.Pop();
+
+                        GraphList tmp2 = depthsearch(currentvertex);
+
+                        foreach (String s in tmp2.Vertexes)
+                        {
+                            tmp.Vertexes.Add(s);
+                        }
+                    } 
+                
+                }
+
+            return tmp;
+
+        
+        } 
 
         public List<Edge> getway(String start, String end)
         {
