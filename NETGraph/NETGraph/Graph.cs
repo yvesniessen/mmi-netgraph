@@ -173,6 +173,12 @@ namespace NETGraph
             }
             return null;
         }
+
+        public Vertex<String> findVertex(Vertex<String> vertex)
+        {
+            return null;       
+        }
+
         #endregion
     }
 }
