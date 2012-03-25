@@ -11,6 +11,7 @@ namespace NETGraph
     {
         #region members
         private int _costs = 0;
+        private bool _marked = false;
         private String _edgeName;      
         private Vertex<string> _startVertex, _endVertex;
         #endregion
@@ -37,6 +38,18 @@ namespace NETGraph
             set
             {
                 _costs = value;
+            }
+        }
+
+        public bool Marked
+        {
+            get
+            {
+                return _marked;
+            }
+            set
+            {
+                _marked = value;
             }
         }
 
