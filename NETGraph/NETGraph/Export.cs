@@ -8,12 +8,12 @@ namespace NETGraph
 {
     class Export 
     {
-        public static GraphList showGraph( ref Graph graph)
+        public static GraphListData showGraph( ref Graph graph)
         {
             //shows all Edges and Vertexes
             List<String> _edges = showEdges(ref graph);
             List<String> _vertexes = showVertexes(ref graph);
-            return new GraphList(_edges, _vertexes);
+            return new GraphListData(_edges, _vertexes);
         }
 
         public static List<String> showEdges(ref Graph graph)
@@ -37,7 +37,7 @@ namespace NETGraph
             return _output;
         }
 
-        public static void printGraph(GraphList graphlist)
+        public static void printGraph(GraphListData graphlist)
         {
             Debug.Print("Vertexes");
             foreach(String vertex in graphlist.Vertexes)

@@ -42,6 +42,8 @@ namespace NETGraph
                 fileWriter.WriteLine (logMessage);
                 fileWriter.Close();
             }
+
+            
     }
 
     public class LogEventArgs

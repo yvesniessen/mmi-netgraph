@@ -67,7 +67,7 @@ namespace NETGraph
         private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
             Graph _graph = Import.openFileDialog();
-            GraphList _graphList;
+            GraphListData _graphList;
             _graphList = Export.showGraph(ref _graph);
 
             foreach (Vertex<String> v in _graph.Vertexes)
@@ -81,7 +81,7 @@ namespace NETGraph
                 }
             }
 
-            GraphList depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+            GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
 
             foreach (String s in depthsarchgraph.Vertexes)
                Console.WriteLine(s);

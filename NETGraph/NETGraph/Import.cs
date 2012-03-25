@@ -47,7 +47,8 @@ namespace NETGraph
         {
             if (file == null)
             {
-                throw new NotImplementedException("ERRORvvv:transformFileToGraph");
+                EventLogger.writeIntoLogFile("private static Graph transformFileToGraph(String file) --> File Handle Errror");
+                throw new NotImplementedException("ERROR:transformFileToGraph");
             }
 
 
