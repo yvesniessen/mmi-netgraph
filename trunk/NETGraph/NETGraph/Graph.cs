@@ -217,7 +217,7 @@ namespace NETGraph
         {
             foreach(Vertex<String> v in Vertexes)
             {
-                if (v.VertexName == name)
+                if (v.VertexName.Equals(name))
                     return v;
             }
             return null;              
