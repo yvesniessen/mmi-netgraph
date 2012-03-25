@@ -13,6 +13,7 @@ namespace NETGraph
         private String _graphName;
         private List<Edge> _edges = new List<Edge>();
         private List<Vertex<String>> _vertexes = new List<Vertex<String>>();
+        private List<GraphList> _connectingComponents = new List<GraphList>();
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
@@ -34,6 +35,19 @@ namespace NETGraph
 
         #region properties
         public String GraphName { get; set; }
+
+        //@SD: Ist der Getter so okay?
+        public List<GraphList> ConnectingComponents
+        {
+            get
+            {
+                return getConnectingComponents();
+            }
+            set
+            {
+                _connectingComponents = value;
+            }
+        }
 
         public int CollisionOfVertexes
         {
@@ -347,6 +361,149 @@ namespace NETGraph
                     }
                 }
             //}*/
+        }
+
+
+        /* Zusammenhangskomponenten
+         * 
+         * Überlegungen: 
+         * 
+         * Zusammenhangskomponente: mindestens zwei Knoten, die durch eine Kante verbunden sind
+         * 
+         * Algo: (richtig?)
+         * #1 Gehe über alle Knoten
+         * #2 Mache von jedem Knoten, der noch nicht besucht ist eine Breitensuche
+         * #3 Wenn der Knoten keinen Nachbarn / keine Kante (Edges==null) hat => keine Zusammenhangskomponente
+         * #4 Packe jede Zusammenhangskomponente in einer Liste von GraphListen
+         * 
+         */
+
+        public List<GraphList> getConnectingComponents()
+        {
+            List<String> outputedges = new List<String>();
+            List<String> outputvertexes = new List<String>();
+
+            foreach (Vertex<String> vertex in Vertexes)
+            {
+                if ((vertex.Marked == false) && (vertex.Edges.Count > 0))
+                {
+                    _connectingComponents.Add(breathSearch(this.Vertexes.First()));
+                }
+            }
+
+            return _connectingComponents;
+        }
+
+        /*
+         * Euler Wege / Kreise
+         * 
+         * Überlegungen: 
+         * 
+         * Euler = Jede Kante darf einmal besucht werden, aber nicht öfters
+         * Wenn am Ende der StartKnoten == EndKnoten ist => EulerKreis
+         * 
+         * ein Graph kann mehrere Euler Wege / Kreis haben (Je nach Anzahl der Zusammenhangskomponenten)
+         * 
+         * Parameter = Ein Knoten einer Zusammenhangskomponente
+         * Algorithmus: Hierholzer
+         * 
+         * Geht nur bei ungerichteten Graphen!
+         *
+         */
+
+        public bool hasEulerWay(Vertex<String> vertexFromConnectingComponent)
+        {
+            //Eingangsvorraussetzungen prüfen: Maximal 2 Grade der Knoten sind ungerade & Graph ist nicht gerichtet
+            int countOddGrades = 0;
+            foreach(Vertex<String> vertex in Vertexes)
+            {
+                if((vertex.Grade % 2) > 0 )
+                {
+                    countOddGrades++;
+                }
+            }
+
+            if ((DirectedEdges) && (countOddGrades >= 2))
+            {
+                EventLogger.Log("Graph erfüllt die Vorraussetzungen für einen Euler-Weg/Kreis nicht.");
+                return false;
+            }
+
+            return false;
+        }
+
+        private Edge getEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            foreach (Edge edge in Edges)
+            {
+                /*
+                 * #1 Start=Start und Ende=Ende  => Richtige Edge gefunden
+                 * #2 Nur wenn gerichtete Kanten nicht zugelassen sind (sonst gibts den Fall nicht): Start=Ende und Ende=Start => Richtige Edge gefunden
+                 */
+                if (edge.StartVertex.VertexName.Equals(startVertex.VertexName) && edge.EndVertex.VertexName.Equals(endVertex.VertexName))
+                {
+                    return edge;
+                }
+                else if(!DirectedEdges && edge.EndVertex.VertexName.Equals(startVertex.VertexName) && edge.StartVertex.VertexName.Equals(endVertex.VertexName))
+                {
+                    return edge;
+                }
+            }
+            EventLogger.Log("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
+            return null;
+        }
+
+        private void unmarkGraph()
+        {
+            foreach (Vertex<String> vertex in Vertexes)
+            {
+                vertex.Marked = false;
+            }
+
+            foreach (Edge edge in Edges)
+            {
+                edge.Marked = false;
+            }
+        }
+
+        //NEEDS FIX A: Funktioniert noch nicht.
+
+        private List<Vertex<String>> findWay(Vertex<String> from, Vertex<String> to)
+        {
+            /*
+             * Eventuelle Markierungen aufheben!
+             */
+            unmarkGraph();
+
+            List<Vertex<String>> way = new List<Vertex<string>>();
+            List<Vertex<String>> neighbors = new List<Vertex<string>>();
+            Vertex<String> current = from;
+
+            do
+            {
+                way.Add(current);
+                neighbors = current.findNeighbors(DirectedEdges);
+
+                current.Marked = true;
+
+                foreach (Vertex<String> neighbor in neighbors)
+                {
+                    //Nehme die Edge zwischen dem Current und einem Neighbor und checke ob die Edge schon besucht worden ist:
+                    Edge currentEdge = getEdge(current, neighbor);
+
+                    if (!neighbor.Marked && !currentEdge.Marked)
+                    {
+                        current = neighbor;
+                        current.Marked = true;
+                        currentEdge.Marked = true;
+                        way.Add(current);
+                        break;
+                    }
+                }
+
+            } while (current != to);
+
+            return way;
         }
 
         #endregion
