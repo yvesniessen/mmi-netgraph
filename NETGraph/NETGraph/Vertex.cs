@@ -21,6 +21,7 @@ namespace NETGraph
         private int _costs = 0;
         private List<Edge> _edges = new List<Edge>();
         private bool _marked = false;
+        private int _grade = 0;
         #endregion
 
         #region properties
@@ -71,6 +72,15 @@ namespace NETGraph
                 _edges = value;
             }
         }
+
+        public int Grade
+        {
+            get
+            {
+                return _edges.Count;
+            }
+        }
+
         #endregion
 
         public Vertex(T name)
