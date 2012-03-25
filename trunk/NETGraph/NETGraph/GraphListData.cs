@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NETGraph
 {
-    class GraphList
+    class GraphListData
     {
         #region members
         private List<String> _edges;
@@ -13,7 +13,7 @@ namespace NETGraph
         #endregion
 
         #region constructors
-        public GraphList(List<String> edges, List<String> vertexes)
+        public GraphListData(List<String> edges, List<String> vertexes)
         {
             Edges = edges;
             Vertexes = vertexes;

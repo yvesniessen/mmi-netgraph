@@ -13,7 +13,7 @@ namespace NETGraph
         private String _graphName;
         private List<Edge> _edges = new List<Edge>();
         private List<Vertex<String>> _vertexes = new List<Vertex<String>>();
-        private List<GraphList> _connectingComponents = new List<GraphList>();
+        private List<GraphListData> _connectingComponents = new List<GraphListData>();
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
@@ -24,7 +24,7 @@ namespace NETGraph
         #region constructors
         public Graph()
         {
-            MainWindow._ViewData.Add( new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
+            MainWindow._ViewData.Add(new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
         }
         
         public Graph(String graphName)
@@ -37,7 +37,7 @@ namespace NETGraph
         public String GraphName { get; set; }
 
         //@SD: Ist der Getter so okay?
-        public List<GraphList> ConnectingComponents
+        public List<GraphListData> ConnectingComponents
         {
             get
             {
@@ -237,9 +237,9 @@ namespace NETGraph
             return null;              
         }
             
-        public GraphList depthsearch(Vertex<String> startvertex)
+        public GraphListData depthsearch(Vertex<String> startvertex)
         {
-            GraphList tmp = new GraphList(new List<string>(), new List<string>());
+            GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
             
             Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
             
@@ -260,7 +260,7 @@ namespace NETGraph
                 {
                     Vertex<String> currentvertex = stack.Pop();
 
-                        GraphList tmp2 = depthsearch(currentvertex);
+                        GraphListData tmp2 = depthsearch(currentvertex);
 
                         foreach (String s in tmp2.Vertexes)
                         {
@@ -302,7 +302,7 @@ namespace NETGraph
             return null;
         }
                 
-        public GraphList breathSearch(Vertex<String> startVertex)
+        public GraphListData breathSearch(Vertex<String> startVertex)
         {
             List<String> outputedges = new List<String>();
             List<String> outputvertexes = new List<String>();
@@ -336,7 +336,7 @@ namespace NETGraph
                 
             } while (Schlange.Count != 0);
             
-            return new GraphList(outputedges, outputvertexes);
+            return new GraphListData(outputedges, outputvertexes);
 
             /*
             //Alle Knoten auf nicht-markiert setzen
@@ -378,7 +378,7 @@ namespace NETGraph
          * 
          */
 
-        public List<GraphList> getConnectingComponents()
+        public List<GraphListData> getConnectingComponents()
         {
             List<String> outputedges = new List<String>();
             List<String> outputvertexes = new List<String>();
