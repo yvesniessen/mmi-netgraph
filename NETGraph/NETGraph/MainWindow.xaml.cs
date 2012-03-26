@@ -70,21 +70,60 @@ namespace NETGraph
             GraphListData _graphList;
             _graphList = Export.showGraph(ref _graph);
 
-            foreach (Vertex<String> v in _graph.Vertexes)
+            #region Praktikum 1
+
+            Debug.Print("Praktikum 1: ");
+            Debug.Print("--------------");
+
+            Debug.Print("Anzahl Knoten: " + _graph.Vertexes.Count.ToString());
+            Debug.Print("Anzahl Kanten: " + _graph.Edges.Count.ToString());
+
+            Debug.Print("--------------");
+            Debug.Print("");
+
+            #endregion
+            
+            #region Praktikum 2
+
+            Debug.Print("Praktikum 2: ");
+            Debug.Print("--------------");
+
+            Debug.Print("Tiefensuche: ");
+            GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+            foreach (String s in depthsarchgraph.Vertexes)
             {
-                foreach (Edge ed in v.Edges)
-                {
-                    Debug.Print("Vertex: " + v.VertexName.ToString() +
-                                " --EDGE: " + ed.EdgeName + " START: " +
-                                ed.StartVertex.VertexName.ToString() + " ENDE: " +
-                                ed.EndVertex.VertexName.ToString());
-                }
+                Debug.Print(s);
             }
 
-            GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+            Debug.Print("--------------");
 
-            foreach (String s in depthsarchgraph.Vertexes)
-               Console.WriteLine(s);
+            Debug.Print("Breitensuche: ");
+            Graph breathSeach = _graph.breathSearch(_graph.Vertexes.First());
+            foreach (Vertex<String> vertex in breathSeach.Vertexes)
+                Debug.Print(vertex.VertexName.ToString());
+
+            Debug.Print("--------------");
+
+            #endregion
+
+            #region Auskommentiert um Hr. Hoever bei der Abgabe nicht zu verwirren:
+
+            /*foreach (Vertex<String> v in _graph.Vertexes)
+                        {
+                            foreach (Edge ed in v.Edges)
+                            {
+                                Debug.Print("Vertex: " + v.VertexName.ToString() +
+                                            " --EDGE: " + ed.EdgeName + " START: " +
+                                            ed.StartVertex.VertexName.ToString() + " ENDE: " +
+                                            ed.EndVertex.VertexName.ToString());
+                            }
+                        }*/
+
+                        /*GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+                
+                        foreach (String s in depthsarchgraph.Vertexes)
+                           Console.WriteLine(s);*/
+            #endregion
 
         }
         private void menuHelpLogFileOpen_Click(object sender, RoutedEventArgs e)
