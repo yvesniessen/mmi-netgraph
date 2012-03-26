@@ -136,7 +136,7 @@ namespace NETGraph
         #region public functions
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
-            foreach (Edge edge in Edges)
+            foreach (Edge edge in getEdges())
             {
                 if ((edge.StartVertex.VertexName == start.VertexName && edge.EndVertex.VertexName == end.VertexName))
                 {
@@ -164,7 +164,7 @@ namespace NETGraph
             {
                 if (!_directedEdges)
                 {
-                    if( (checkEdgeExists(start, end) == null) && (checkEdgeExists(end, start) == null) )
+                    if ((checkEdgeExists(start, end) == null) && (checkEdgeExists(end, start) == null))
                     {
                         Edge tempEdge = new Edge(start, end);
                         Edges.Add(tempEdge);
@@ -210,6 +210,7 @@ namespace NETGraph
 
                 foreach (Vertex<String> v in _vertexes)
                 {
+                    //Zuerst prüfen, ob der Knoten schon in der Vertex-Liste vorhanden ist
                     if (v.VertexName.Equals(vertex.VertexName))
                     {
                         check = true;
@@ -218,6 +219,7 @@ namespace NETGraph
                         return v;
                     }
                 }
+                //Wenn nicht da: füge ihn hinzu!
                 if (!check)
                 {
                     this.Vertexes.Add(vertex);
@@ -237,9 +239,9 @@ namespace NETGraph
             return null;              
         }
             
-        public GraphList depthsearch(Vertex<String> startvertex)
+        public GraphListData depthsearch(Vertex<String> startvertex)
         {
-            GraphList tmp = new GraphList(new List<string>(), new List<string>());
+            GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
             
             Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
             
@@ -260,7 +262,7 @@ namespace NETGraph
                 {
                     Vertex<String> currentvertex = stack.Pop();
 
-                        GraphList tmp2 = depthsearch(currentvertex);
+                    GraphListData tmp2 = depthsearch(currentvertex);
 
                         foreach (String s in tmp2.Vertexes)
                         {
@@ -304,6 +306,7 @@ namespace NETGraph
                 
         public Graph breathSearch(Vertex<String> startVertex)
         {
+            unmarkGraph();
             //List<String> outputedges = new List<String>();
             //List<String> outputvertexes = new List<String>();
 
