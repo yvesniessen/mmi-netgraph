@@ -13,7 +13,7 @@ namespace NETGraph
         private String _graphName;
         private List<Edge> _edges = new List<Edge>();
         private List<Vertex<String>> _vertexes = new List<Vertex<String>>();
-        private List<GraphListData> _connectingComponents = new List<GraphListData>();
+        private List<Graph> _connectingComponents = new List<Graph>();
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
@@ -24,7 +24,7 @@ namespace NETGraph
         #region constructors
         public Graph()
         {
-            MainWindow._ViewData.Add(new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
+            MainWindow._ViewData.Add( new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
         }
         
         public Graph(String graphName)
@@ -37,7 +37,7 @@ namespace NETGraph
         public String GraphName { get; set; }
 
         //@SD: Ist der Getter so okay?
-        public List<GraphListData> ConnectingComponents
+        public List<Graph> ConnectingComponents
         {
             get
             {
@@ -237,9 +237,9 @@ namespace NETGraph
             return null;              
         }
             
-        public GraphListData depthsearch(Vertex<String> startvertex)
+        public GraphList depthsearch(Vertex<String> startvertex)
         {
-            GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
+            GraphList tmp = new GraphList(new List<string>(), new List<string>());
             
             Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
             
@@ -260,7 +260,7 @@ namespace NETGraph
                 {
                     Vertex<String> currentvertex = stack.Pop();
 
-                        GraphListData tmp2 = depthsearch(currentvertex);
+                        GraphList tmp2 = depthsearch(currentvertex);
 
                         foreach (String s in tmp2.Vertexes)
                         {
@@ -302,10 +302,12 @@ namespace NETGraph
             return null;
         }
                 
-        public GraphListData breathSearch(Vertex<String> startVertex)
+        public Graph breathSearch(Vertex<String> startVertex)
         {
-            List<String> outputedges = new List<String>();
-            List<String> outputvertexes = new List<String>();
+            //List<String> outputedges = new List<String>();
+            //List<String> outputvertexes = new List<String>();
+
+            Graph result = new Graph();
 
             List<Vertex<String>> Schlange = new List<Vertex<string>>();
 
@@ -319,7 +321,7 @@ namespace NETGraph
                 if (!vertex.Marked)
                 {
                     vertex.Marked = true;
-                    outputvertexes.Add(vertex.VertexName.ToString());
+                    result.Vertexes.Add(vertex);
                 }
 
                 List<Vertex<String>> neighbors = vertex.findNeighbors(this.DirectedEdges);
@@ -336,7 +338,7 @@ namespace NETGraph
                 
             } while (Schlange.Count != 0);
             
-            return new GraphListData(outputedges, outputvertexes);
+            return result;
 
             /*
             //Alle Knoten auf nicht-markiert setzen
@@ -378,10 +380,10 @@ namespace NETGraph
          * 
          */
 
-        public List<GraphListData> getConnectingComponents()
+        public List<Graph> getConnectingComponents()
         {
-            List<String> outputedges = new List<String>();
-            List<String> outputvertexes = new List<String>();
+            //List<String> outputedges = new List<String>();
+            //List<String> outputvertexes = new List<String>();
 
             foreach (Vertex<String> vertex in Vertexes)
             {
@@ -504,6 +506,78 @@ namespace NETGraph
             } while (current != to);
 
             return way;
+        }
+
+        /*
+         * Prim
+         * 
+         * Überlegungen:
+         * 
+         * #1 Gebe einen Knoten an und schaue die alle Kanten von diesem Knoten an
+         * #2 gehe über die "günstigste" Kante zum neuen Knoten
+         * #3 Füge diese günstigste Kante und den Knoten zu einem neuen Graphen (Ergebnis) T hinzu
+         * #4 Mache das solange bis alle Kanten in einer Zusammengehörigkeitskomponente erreicht worden
+         * 
+         * Problem: Es können mehrere Zusammengehörigkeitskomponenten in G vorhanden sein -> erstmal alle Knoten und Kanten
+         * von eine Punkt startVertex rausfinden um eine ZKomponente zu identifizieren ==> startGraph
+         * 
+         * resultGraph = T
+         * 
+         */
+
+        public Graph prim(Vertex<String> startVertex)
+        {
+            this.unmarkGraph();
+            Graph resultGraph = new Graph();
+
+            //Hole alle Knoten, die mit dem start-Knoten verbunden sind (BREITENSUCHE LIEFERT NICHT ALLE KANTEN!!)
+            Graph startGraph = breathSearch(startVertex);
+
+            //Die Kanten müssen aus den Knoteninformationen geholt werden!
+            startGraph.Edges.Clear();
+
+            //Hole alle Edges aus den Knoten
+            foreach (Vertex<String> vertex in startGraph.Vertexes)
+            {
+                foreach(Edge edge in vertex.Edges)
+                {
+                    //Hole die Edge nur, wenn sie nicht schon vorhanden ist (zwei Richtungen!!)
+                    if (!edge.Marked)
+                    {
+                        startGraph.Edges.Add(edge);
+                        edge.Marked = true;
+                    }
+                }
+            }
+
+            //Alles auf 0, b jetzt wird auf dem extrahierten Graph gearbeitet!
+            startGraph.unmarkGraph();
+
+            //Füge die günstiste Edge zum Graphen
+            //resultGraph.Edges.Add( getCheapestEdge( startVertex.Edges ) );
+            
+
+
+
+            List<Vertex<String>> neighbors = startVertex.findNeighbors(startGraph.DirectedEdges);
+            
+            return resultGraph;
+        }
+
+        private Edge getCheapestEdge(List<Edge> edges)
+        {
+            Edge cheapestEdge = new Edge(null, null);
+            cheapestEdge.Costs = 99999;
+
+            foreach (Edge edge in edges)
+            {
+                if (edge.Costs < cheapestEdge.Costs)
+                {
+                    cheapestEdge = edge;
+                }
+            }
+
+            return cheapestEdge;
         }
 
         #endregion
