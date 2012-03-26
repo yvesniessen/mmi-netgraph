@@ -124,9 +124,21 @@ namespace NETGraph
             }
         }
 
+        //counter == Zeile in der ich mich befinde, startend bei 0
         private static void convertMatrixLine(int counter, string[] _Elements, ref Graph _graph)
         {
-            throw new NotImplementedException();
+            //Name Counter dient zum mitzählen der Spalten um später den Vertex korrekt zu benennen
+            int nameCounter = 0;
+
+            foreach (String vertex in _Elements)
+            {
+                //Wenn der Knoten "1" ist füge an dieser Stelle eine Kante hinzu
+                if(vertex.Equals("1"))
+                {
+                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
+                }
+                nameCounter++;
+            }
         }
 
         private static void convertListLine(string[] Elements, ref Graph _graph)
