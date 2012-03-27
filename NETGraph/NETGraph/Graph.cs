@@ -559,12 +559,12 @@ namespace NETGraph
              */
             List<Edge> sortedges = this.Edges;
 
-            sortedges.Sort();
+            //sortedges.Sort();
 
-            System.Diagnostics.Debug.WriteLine(sortedges);
+            //System.Diagnostics.Debug.WriteLine(sortedges);
             //dhhdhd
 
-            return null;
+            return new Graph();
         }
 
         private Edge getCheapestEdge(List<Edge> edges)
