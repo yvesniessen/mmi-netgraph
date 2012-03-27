@@ -109,6 +109,15 @@ namespace NETGraph
             _graph.unmarkGraph();
             Debug.Print("--------------");
 
+            Debug.Print("MST-Kruskal: ");
+            Graph krusal = _graph.kruskal();
+            foreach (Vertex<String> vertex in krusal.Vertexes)
+                Debug.Print(vertex.VertexName.ToString());
+
+            _graph.unmarkGraph();
+            Debug.Print("--------------");
+
+
             #endregion
 
             #region Auskommentiert um Hr. Hoever bei der Abgabe nicht zu verwirren:

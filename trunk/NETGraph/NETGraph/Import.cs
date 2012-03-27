@@ -132,11 +132,10 @@ namespace NETGraph
 
             foreach (String vertex in _Elements)
             {
-                //Wenn der Knoten "1" ist füge an dieser Stelle eine Kante hinzu
-                //TODO: hier müssen auch andere Werte als nur eins akzeptiert werden und dann als Kosten eingetragen werden
-                if(vertex.Equals("1"))
+                //Wenn der Knoten ungleich "0" ist füge an dieser Stelle eine Kante hinzu
+                if(!vertex.Equals("0"))
                 {
-                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
+                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
                 }
                 nameCounter++;
             }
