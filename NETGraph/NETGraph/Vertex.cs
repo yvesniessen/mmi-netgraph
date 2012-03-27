@@ -24,6 +24,15 @@ namespace NETGraph
         private int _grade = 0;
         #endregion
 
+        #region constructors
+        
+        public Vertex(T name)
+        {
+            VertexName = name;
+        }
+        
+        #endregion
+
         #region properties
         public T VertexName
         {
@@ -77,16 +86,14 @@ namespace NETGraph
         {
             get
             {
-                return _edges.Count;
+                _grade = _edges.Count;
+                return _grade;
             }
         }
 
         #endregion
 
-        public Vertex(T name)
-        {
-            VertexName = name;
-        }
+        #region public functions
 
         public List<Vertex<String>> findNeighbors(bool directedEdges)
         {
@@ -129,4 +136,6 @@ namespace NETGraph
             return "V: " + VertexName.ToString();
         }
     }
+
+        #endregion
 }
