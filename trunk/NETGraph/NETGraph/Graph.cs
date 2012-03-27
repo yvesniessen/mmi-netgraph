@@ -142,6 +142,8 @@ namespace NETGraph
                 {
                     //MessageBox.Show("Edge schon vorhanden: " + e.ToString());
                     System.Diagnostics.Debug.WriteLine("Edge schon vorhanden: " + edge.ToString());
+                    
+                    //BUG: Wird auch bei public aufruf hoch gesetzt! 
                     _collisionOfEdges++;
                     return edge;
                 }
@@ -154,36 +156,29 @@ namespace NETGraph
             return this.Vertexes;
         }
 
-        public Edge addEdge(Vertex<String> start, Vertex<String> end, int Costs)
-        {
-            Edge e = addEdge(start, end);
-            e.Costs = Costs;
-
-            return e;
-        }
-
-        public Edge addEdge(Vertex<String> start, Vertex<String> end)
+        //startVertex! nicht start
+        public void addEdge(Vertex<String> start, Vertex<String> end)
         { 
             start = addVertex(start);
             end = addVertex(end);
 
-            Edge tempEdge = null;
-            
+         
             if (!ParallelEdges)
             {
-                if (!_directedEdges)
+                if (!DirectedEdges)
                 {
                     if ((checkEdgeExists(start, end) == null) && (checkEdgeExists(end, start) == null))
                     {
-                        tempEdge = new Edge(start, end);
+                        Edge tempEdge = new Edge(start, end);
                         Edges.Add(tempEdge);
                     }
+                    //hier collisions hochzählen, entfernen bei checkEdgeExists
                 }
                 else
                 {
                     if ((checkEdgeExists(start, end) == null))
                     {
-                        tempEdge = new Edge(start, end);
+                        Edge tempEdge = new Edge(start, end);
                         Edges.Add(tempEdge);
                     }
                 }
@@ -194,17 +189,15 @@ namespace NETGraph
                 {
                     //TO FIX ?? Fall mal prüfen...
 
-                    tempEdge = new Edge(start, end);
+                    Edge tempEdge = new Edge(start, end);
                     Edges.Add(tempEdge);
                 }
                 else
                 {
-                    tempEdge = new Edge(start, end);
+                    Edge tempEdge = new Edge(start, end);
                     Edges.Add(tempEdge);
                 }
             }
-
-            return tempEdge;
         }
 
         public List<Edge> getEdges()
@@ -237,6 +230,7 @@ namespace NETGraph
                     return vertex;
                 }
             }
+            //Checken!
             return null;
         }
 
@@ -530,41 +524,32 @@ namespace NETGraph
                     //Hole die Edge nur, wenn sie nicht schon vorhanden ist (zwei Richtungen!!)
                     if (!edge.Marked)
                     {
-                        startGraph.Edges.Add(edge);
+                        startGraph.addEdge(edge.StartVertex, edge.EndVertex);
                         edge.Marked = true;
                     }
                 }
             }
 
-            //Alles auf 0, b jetzt wird auf dem extrahierten Graph gearbeitet!
+            //Alles auf 0, ab jetzt wird auf dem extrahierten Graph gearbeitet!
             startGraph.unmarkGraph();
 
             //Füge die günstiste Edge zum Graphen
-            //resultGraph.Edges.Add( getCheapestEdge( startVertex.Edges ) );
-            
+            resultGraph.addVertex(startVertex);
+
+            do
+            {
+                Edge tempEdge = getCheapestEdge(startVertex.Edges);
+                tempEdge.Marked = true;
+
+                resultGraph.addEdge(tempEdge.StartVertex, tempEdge.EndVertex);
+
+                startGraph.getEdge();
 
 
+            } while ((resultGraph.Vertexes.Count+1) != startGraph.Vertexes.Count);
+            //über alle Nachbarn des Resultgraph
 
-            List<Vertex<String>> neighbors = startVertex.findNeighbors(startGraph.DirectedEdges);
-            
             return resultGraph;
-        }
-
-        public Graph kruskal(/*Vertex<String> startVertex*/) 
-        {
-            /* Überlegung: 
-             *  #1 Sortieren sie die Kanten aufsteigend nach den Gewichten
-             *  #2 Gehen Sie die Kanten der Reihenfolge nach durch und fügen Sie sie in den Baum ein, falls sie keinen Kreis schließen 
-             * 
-             */
-            List<Edge> sortedges = this.Edges;
-
-            //sortedges.Sort();
-
-            //System.Diagnostics.Debug.WriteLine(sortedges);
-            //dhhdhd
-
-            return new Graph();
         }
 
         private Edge getCheapestEdge(List<Edge> edges)
