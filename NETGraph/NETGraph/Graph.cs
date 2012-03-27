@@ -666,7 +666,43 @@ namespace NETGraph
             else return false; //Einer der Knoten nicht gefunden
         }
 
+        public bool deleteVertex(Vertex<String> delVertex)
+        {
+            foreach (Vertex<String> v in Vertexes)
+            {
+                //Zuerst alle Kanten löschen die den Knoten beinhalten
+                foreach (Edge e in v.Edges)
+                {
+                    if ( (e.StartVertex.Equals(v)) || (e.EndVertex.Equals(v)) )
+                    {
+                        deleteEdge(e);
+                    }
+                }
+                if (v.Equals(delVertex)) 
+                {
+                    Vertexes.Remove(v);
+                    return true;
+                }
+            }
+            return false;
+        }
 
+        public bool deleteVertex(String VertexName)
+        {
+            //Suche Vertex der den VertexName trägt
+            Vertex<String> _vertex = findVertex(VertexName);
+            //Wenn gefunden
+            if (_vertex != null)
+            {
+                //Lösche den Knoten
+                return deleteVertex(_vertex);
+            }
+            //Nicht gefunden
+            else
+            {
+                return false;
+            }
+        }
 
 
         #endregion
