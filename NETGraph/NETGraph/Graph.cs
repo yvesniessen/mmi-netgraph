@@ -136,7 +136,7 @@ namespace NETGraph
         #region public functions
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
-            foreach (Edge edge in getEdges())
+            foreach (Edge edge in Edges)
             {
                 if ((edge.StartVertex.VertexName == start.VertexName && edge.EndVertex.VertexName == end.VertexName))
                 {
@@ -151,10 +151,12 @@ namespace NETGraph
             return null;
         }
 
-        public List<Vertex<String>> getVertexes()
-        {
-            return this.Vertexes;
-        }
+
+        //brauchen wir nicht mehr aufgrund der Property
+        //public List<Vertex<String>> getVertexes()
+        //{
+        //    return this.Vertexes;
+        //}
 
         //startVertex! nicht start
         public void addEdge(Vertex<String> start, Vertex<String> end)
@@ -200,10 +202,11 @@ namespace NETGraph
             }
         }
 
-        public List<Edge> getEdges()
-        {
-            return Edges;
-        }
+        //brauchen wir nicht mehr aufgrund der Property
+        //public List<Edge> getEdges()
+        //{
+        //    return Edges;
+        //}
 
         public Vertex<String> addVertex(Vertex<String> vertex)
         {
@@ -242,6 +245,33 @@ namespace NETGraph
                     return v;
             }
             return null;              
+        }
+
+        public Edge findEdge(String startVertex, String endVertex)
+        {
+            Vertex<String> _startVertex = findVertex(startVertex);
+            Vertex<String> _endVertex = findVertex(endVertex);
+
+            if ((_startVertex != null) && (_endVertex != null))
+            {
+                return findEdge(_startVertex, _endVertex);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Edge findEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            foreach (Edge e in Edges)
+            {
+                if ((e.StartVertex == startVertex) && (e.EndVertex == endVertex))
+                {
+                    return e;
+                }
+            }
+            return null;
         }
             
         public Graph depthsearch(Vertex<String> startvertex)
@@ -555,7 +585,8 @@ namespace NETGraph
         private Edge getCheapestEdge(List<Edge> edges)
         {
             Edge cheapestEdge = new Edge(null, null);
-            cheapestEdge.Costs = 99999;
+            cheapestEdge.Costs = int.MaxValue; //Hier Max, da 99999 überschritten werden "könnte"
+            
 
             foreach (Edge edge in edges)
             {
@@ -567,6 +598,76 @@ namespace NETGraph
 
             return cheapestEdge;
         }
+
+        public bool deleteEdge(Edge edge)
+        {
+            //Wenn Kante in Liste der Kanten
+            if (Edges.Contains(edge))
+            {
+                //Lösche Kante aus Liste der Kanten
+                Edges.Remove(edge);
+                //Durchsuche Liste der Knoten nach der Kante
+                foreach(Vertex<String> v in Vertexes)
+                {
+                    //Wenn Kante in der Liste der Kanten des Knotens
+                    if (v.Edges.Contains(edge))
+                    {
+                        //Lösche Kante aus der Liste des Knotens
+                        v.Edges.Remove(edge);
+                    }
+                }
+                return true; //Kante ist gelöscht und aus allen Knoten entfernt
+            }
+            else return false; //Kante nicht gefunden
+        }
+
+        public bool deleteEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            //TODO
+            Edge _edge = findEdge(startVertex, endVertex);
+
+            if (_edge != null)
+            {
+                if (deleteEdge(_edge))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool deleteEdge(String startVertex, String endVertex)
+        {
+            Vertex<String> _startVertex;
+            Vertex<String> _endVertex;
+
+            //Suche Start&Endknoten
+            _startVertex = findVertex(startVertex);
+            _endVertex = findVertex(endVertex);
+
+            if ((_startVertex != null) && (_endVertex != null))
+            {
+                if (deleteEdge(_startVertex, _endVertex))
+                {
+                    return true; //Kante wurde gelöscht
+                }
+                else
+                {
+                    return false; //Kante wurde nicht gelöscht
+                }
+            }
+            else return false; //Einer der Knoten nicht gefunden
+        }
+
+
+
 
         #endregion
     }

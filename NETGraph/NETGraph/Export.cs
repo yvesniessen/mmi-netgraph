@@ -19,7 +19,7 @@ namespace NETGraph
         public static List<String> showEdges(ref Graph graph)
         {
             List<String> _output = new List<string>();
-            foreach (Edge edge in graph.getEdges())
+            foreach (Edge edge in graph.Edges)
             {
                 _output.Add(edge.ToString());
             }
@@ -30,7 +30,7 @@ namespace NETGraph
         public static List<String> showVertexes(ref Graph graph)
         {
             List<String> _output = new List<string>();
-            foreach (Vertex<String> vertex in graph.getVertexes())
+            foreach (Vertex<String> vertex in graph.Vertexes)
             {
                 _output.Add(vertex.ToString());
             }
