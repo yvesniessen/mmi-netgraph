@@ -149,12 +149,12 @@ namespace NETGraph
             return null;
         }
 
-         public List<Vertex<String>> getVertexes()
+        public List<Vertex<String>> getVertexes()
         {
             return this.Vertexes;
         }
 
-         public void addEdge(Vertex<String> start, Vertex<String> end)
+        public void addEdge(Vertex<String> start, Vertex<String> end)
         { 
             start = addVertex(start);
             end = addVertex(end);
@@ -239,16 +239,18 @@ namespace NETGraph
             return null;              
         }
             
-        public GraphListData depthsearch(Vertex<String> startvertex)
+        public Graph depthsearch(Vertex<String> startvertex)
         {
-            GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
-            
+            //GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
+            Graph result = new Graph();
+
             Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
             
             if (!startvertex.Marked)
             {
                 startvertex.Marked = true;
-                tmp.Vertexes.Add(startvertex.VertexName);
+                result.Vertexes.Add(startvertex) ;
+                //tmp.Vertexes.Add(startvertex.VertexName);
 
                 foreach (Vertex<String> v in startvertex.findNeighbors(DirectedEdges))
                 {
@@ -262,47 +264,23 @@ namespace NETGraph
                 {
                     Vertex<String> currentvertex = stack.Pop();
 
-                    GraphListData tmp2 = depthsearch(currentvertex);
+                    Graph tmp2 = depthsearch(currentvertex);
+                    //GraphListData tmp2 = depthsearch(currentvertex);
 
-                        foreach (String s in tmp2.Vertexes)
+                        foreach (Vertex<String> s in tmp2.Vertexes)
                         {
-                            tmp.Vertexes.Add(s);
+                            result.Vertexes.Add(s);
+                            //tmp.Vertexes.Add(s);
                         }
                     } 
                 
                 }
 
-            return tmp;
+            return result;
+            //return tmp;
 
         
         } 
-
-        public List<Edge> getway(String start, String end)
-        {
-            
-
-            //Vertex<String> startvertex = this.findVertex(start);
-
-            //int lengh = 0;
-            //List<Vertex<String>> stack = null;
-            ////List<Vertex> = startvertex.nachbarn
-            //List<Edge> path = new List<Edge>();
-
-            //while (stack.Count() != 0)
-            //{
-            //    for (int i = 0; i < size; ++i)
-            //    {
-                
-                
-            //    }
-
-
-            //    int length = 
-
-            //}
-
-            return null;
-        }
                 
         public Graph breathSearch(Vertex<String> startVertex)
         {
@@ -366,7 +344,6 @@ namespace NETGraph
                 }
             //}*/
         }
-
 
         /* Zusammenhangskomponenten
          * 
