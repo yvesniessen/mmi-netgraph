@@ -306,7 +306,6 @@ namespace NETGraph
                 
         public Graph breathSearch(Vertex<String> startVertex)
         {
-            unmarkGraph();
             //List<String> outputedges = new List<String>();
             //List<String> outputvertexes = new List<String>();
 
@@ -392,7 +391,8 @@ namespace NETGraph
             {
                 if ((vertex.Marked == false) && (vertex.Edges.Count > 0))
                 {
-                    _connectingComponents.Add(breathSearch(this.Vertexes.First()));
+                    //Fehler: dadurch dass die suche immer unmarkGraph() ausführt, sind die Knoten im
+                    _connectingComponents.Add(breathSearch(vertex));//this.Vertexes.First()));
                 }
             }
 
@@ -458,7 +458,7 @@ namespace NETGraph
             return null;
         }
 
-        private void unmarkGraph()
+        public void unmarkGraph()
         {
             foreach (Vertex<String> vertex in Vertexes)
             {
@@ -475,10 +475,6 @@ namespace NETGraph
 
         private List<Vertex<String>> findWay(Vertex<String> from, Vertex<String> to)
         {
-            /*
-             * Eventuelle Markierungen aufheben!
-             */
-            unmarkGraph();
 
             List<Vertex<String>> way = new List<Vertex<string>>();
             List<Vertex<String>> neighbors = new List<Vertex<string>>();
@@ -530,7 +526,6 @@ namespace NETGraph
 
         public Graph prim(Vertex<String> startVertex)
         {
-            this.unmarkGraph();
             Graph resultGraph = new Graph();
 
             //Hole alle Knoten, die mit dem start-Knoten verbunden sind (BREITENSUCHE LIEFERT NICHT ALLE KANTEN!!)
