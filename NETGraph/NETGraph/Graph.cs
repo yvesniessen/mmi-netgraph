@@ -133,6 +133,84 @@ namespace NETGraph
 
         #endregion
 
+
+        #region private functions
+
+        private Edge getCheapestEdge(List<Edge> edges)
+        {
+            Edge cheapestEdge = new Edge(null, null);
+            cheapestEdge.Costs = int.MaxValue; //Hier Max, da 99999 überschritten werden "könnte"
+
+
+            foreach (Edge edge in edges)
+            {
+                if (edge.Costs < cheapestEdge.Costs)
+                {
+                    cheapestEdge = edge;
+                }
+            }
+
+            return cheapestEdge;
+        }
+
+        //NEEDS FIX A: Funktioniert noch nicht.
+        private List<Vertex<String>> findWay(Vertex<String> from, Vertex<String> to)
+        {
+
+            List<Vertex<String>> way = new List<Vertex<string>>();
+            List<Vertex<String>> neighbors = new List<Vertex<string>>();
+            Vertex<String> current = from;
+
+            do
+            {
+                way.Add(current);
+                neighbors = current.findNeighbors(DirectedEdges);
+
+                current.Marked = true;
+
+                foreach (Vertex<String> neighbor in neighbors)
+                {
+                    //Nehme die Edge zwischen dem Current und einem Neighbor und checke ob die Edge schon besucht worden ist:
+                    Edge currentEdge = getEdge(current, neighbor);
+
+                    if (!neighbor.Marked && !currentEdge.Marked)
+                    {
+                        current = neighbor;
+                        current.Marked = true;
+                        currentEdge.Marked = true;
+                        way.Add(current);
+                        break;
+                    }
+                }
+
+            } while (current != to);
+
+            return way;
+        }
+
+        private Edge getEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            foreach (Edge edge in Edges)
+            {
+                /*
+                 * #1 Start=Start und Ende=Ende  => Richtige Edge gefunden
+                 * #2 Nur wenn gerichtete Kanten nicht zugelassen sind (sonst gibts den Fall nicht): Start=Ende und Ende=Start => Richtige Edge gefunden
+                 */
+                if (edge.StartVertex.VertexName.Equals(startVertex.VertexName) && edge.EndVertex.VertexName.Equals(endVertex.VertexName))
+                {
+                    return edge;
+                }
+                else if(!DirectedEdges && edge.EndVertex.VertexName.Equals(startVertex.VertexName) && edge.StartVertex.VertexName.Equals(endVertex.VertexName))
+                {
+                    return edge;
+                }
+            }
+            EventLogger.Log("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
+            return null;
+        }
+        #endregion
+
+
         #region public functions
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
@@ -264,14 +342,8 @@ namespace NETGraph
 
         public Edge findEdge(Vertex<String> startVertex, Vertex<String> endVertex)
         {
-            foreach (Edge e in Edges)
-            {
-                if ((e.StartVertex == startVertex) && (e.EndVertex == endVertex))
-                {
-                    return e;
-                }
-            }
-            return null;
+
+            return getEdge(startVertex, endVertex);
         }
             
         public Graph depthsearch(Vertex<String> startvertex)
@@ -449,27 +521,6 @@ namespace NETGraph
             return false;
         }
 
-        private Edge getEdge(Vertex<String> startVertex, Vertex<String> endVertex)
-        {
-            foreach (Edge edge in Edges)
-            {
-                /*
-                 * #1 Start=Start und Ende=Ende  => Richtige Edge gefunden
-                 * #2 Nur wenn gerichtete Kanten nicht zugelassen sind (sonst gibts den Fall nicht): Start=Ende und Ende=Start => Richtige Edge gefunden
-                 */
-                if (edge.StartVertex.VertexName.Equals(startVertex.VertexName) && edge.EndVertex.VertexName.Equals(endVertex.VertexName))
-                {
-                    return edge;
-                }
-                else if(!DirectedEdges && edge.EndVertex.VertexName.Equals(startVertex.VertexName) && edge.StartVertex.VertexName.Equals(endVertex.VertexName))
-                {
-                    return edge;
-                }
-            }
-            EventLogger.Log("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
-            return null;
-        }
-
         public void unmarkGraph()
         {
             foreach (Vertex<String> vertex in Vertexes)
@@ -483,41 +534,6 @@ namespace NETGraph
             }
         }
 
-        //NEEDS FIX A: Funktioniert noch nicht.
-
-        private List<Vertex<String>> findWay(Vertex<String> from, Vertex<String> to)
-        {
-
-            List<Vertex<String>> way = new List<Vertex<string>>();
-            List<Vertex<String>> neighbors = new List<Vertex<string>>();
-            Vertex<String> current = from;
-
-            do
-            {
-                way.Add(current);
-                neighbors = current.findNeighbors(DirectedEdges);
-
-                current.Marked = true;
-
-                foreach (Vertex<String> neighbor in neighbors)
-                {
-                    //Nehme die Edge zwischen dem Current und einem Neighbor und checke ob die Edge schon besucht worden ist:
-                    Edge currentEdge = getEdge(current, neighbor);
-
-                    if (!neighbor.Marked && !currentEdge.Marked)
-                    {
-                        current = neighbor;
-                        current.Marked = true;
-                        currentEdge.Marked = true;
-                        way.Add(current);
-                        break;
-                    }
-                }
-
-            } while (current != to);
-
-            return way;
-        }
 
         /*
          * Prim
@@ -582,22 +598,6 @@ namespace NETGraph
             return resultGraph;
         }
 
-        private Edge getCheapestEdge(List<Edge> edges)
-        {
-            Edge cheapestEdge = new Edge(null, null);
-            cheapestEdge.Costs = int.MaxValue; //Hier Max, da 99999 überschritten werden "könnte"
-            
-
-            foreach (Edge edge in edges)
-            {
-                if (edge.Costs < cheapestEdge.Costs)
-                {
-                    cheapestEdge = edge;
-                }
-            }
-
-            return cheapestEdge;
-        }
 
         public bool deleteEdge(Edge edge)
         {
