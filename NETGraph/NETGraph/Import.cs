@@ -65,20 +65,27 @@ namespace NETGraph
                 if ((_line = _sr.ReadLine()) != null)
                     _graph.NumberOfVertexes = Int32.Parse(_line);
 
-                // Read every line of file
-                while ((_line = _sr.ReadLine()) != null)
+
+                //TODO: HIER FRAGEN OB OK, WENN NICHT ANZ Vertexes anlegen mit "leerem Namen" und bei AddVertex den ersten leeren anpacken und ihm Namen geben
+                for (int i = 0; i < _graph.NumberOfVertexes; i++)
                 {
-                    String[] _coloumnElements = _line.Split('\t');
-                    if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
-                    {
-                        throw new NotImplementedException("ERROR:transformFileToGraph");
-                    }
-
-                    _CountColoumnElements = _coloumnElements.Length;
-
-
-                    _data.Add(_line);
+                    _graph.addVertex(new Vertex<string>(i.ToString()));
                 }
+
+                    // Read every line of file
+                    while ((_line = _sr.ReadLine()) != null)
+                    {
+                        String[] _coloumnElements = _line.Split('\t');
+                        if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
+                        {
+                            throw new NotImplementedException("ERROR:transformFileToGraph");
+                        }
+
+                        _CountColoumnElements = _coloumnElements.Length;
+
+
+                        _data.Add(_line);
+                    }
 
                 // Decide the Type of input File Convertion
                 switch (_CountColoumnElements)
@@ -135,7 +142,8 @@ namespace NETGraph
                 //Wenn der Knoten ungleich "0" ist füge an dieser Stelle eine Kante hinzu
                 if(!vertex.Equals("0"))
                 {
-                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
+                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
+                    //_graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
                 }
                 nameCounter++;
             }
