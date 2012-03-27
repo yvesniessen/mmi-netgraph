@@ -92,10 +92,10 @@ namespace NETGraph
             Debug.Print("--------------");
 
             Debug.Print("Tiefensuche: ");
-            GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
-            foreach (String s in depthsarchgraph.Vertexes)
+            Graph depthsarchgraph = _graph.depthsearch(_graph.Vertexes.First());
+            foreach (Vertex<String> vertex in depthsarchgraph.Vertexes)
             {
-                Debug.Print(s);
+                Debug.Print(vertex.VertexName.ToString());
             }
 
             _graph.unmarkGraph();
