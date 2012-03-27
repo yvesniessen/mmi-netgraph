@@ -78,6 +78,9 @@ namespace NETGraph
             Debug.Print("Anzahl Knoten: " + _graph.Vertexes.Count.ToString());
             Debug.Print("Anzahl Kanten: " + _graph.Edges.Count.ToString());
 
+            Debug.Print("Anzahl der Zusammenhangskomponenten: " + _graph.getConnectingComponents().Count.ToString());
+            _graph.unmarkGraph();
+
             Debug.Print("--------------");
             Debug.Print("");
 
@@ -95,6 +98,7 @@ namespace NETGraph
                 Debug.Print(s);
             }
 
+            _graph.unmarkGraph();
             Debug.Print("--------------");
 
             Debug.Print("Breitensuche: ");
@@ -102,6 +106,7 @@ namespace NETGraph
             foreach (Vertex<String> vertex in breathSeach.Vertexes)
                 Debug.Print(vertex.VertexName.ToString());
 
+            _graph.unmarkGraph();
             Debug.Print("--------------");
 
             #endregion
