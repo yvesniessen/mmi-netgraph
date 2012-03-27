@@ -543,7 +543,7 @@ namespace NETGraph
 
                 resultGraph.addEdge(tempEdge.StartVertex, tempEdge.EndVertex);
 
-                startGraph.getEdge();
+                //startGraph.getEdge();
 
 
             } while ((resultGraph.Vertexes.Count+1) != startGraph.Vertexes.Count);
