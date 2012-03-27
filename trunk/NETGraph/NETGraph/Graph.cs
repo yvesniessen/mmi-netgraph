@@ -34,14 +34,25 @@ namespace NETGraph
         #endregion
 
         #region properties
-        public String GraphName { get; set; }
+        public String GraphName 
+        { 
+            get
+            {
+                return _graphName;
+            }
+            set
+            {
+                _graphName = value;
+            }
+        }
 
         //@SD: Ist der Getter so okay?
         public List<Graph> ConnectingComponents
         {
             get
             {
-                return getConnectingComponents();
+                _connectingComponents = getConnectingComponents();
+                return _connectingComponents;
             }
             set
             {
@@ -133,7 +144,6 @@ namespace NETGraph
 
         #endregion
 
-
         #region private functions
 
         private Edge getCheapestEdge(List<Edge> edges)
@@ -210,7 +220,6 @@ namespace NETGraph
         }
         #endregion
 
-
         #region public functions
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
@@ -221,8 +230,6 @@ namespace NETGraph
                     //MessageBox.Show("Edge schon vorhanden: " + e.ToString());
                     System.Diagnostics.Debug.WriteLine("Edge schon vorhanden: " + edge.ToString());
                     
-                    //BUG: Wird auch bei public aufruf hoch gesetzt! 
-                    _collisionOfEdges++;
                     return edge;
                 }
             }
@@ -252,7 +259,10 @@ namespace NETGraph
                         Edge tempEdge = new Edge(start, end);
                         Edges.Add(tempEdge);
                     }
-                    //hier collisions hochzählen, entfernen bei checkEdgeExists
+                    else
+                    {
+                        _collisionOfEdges++;
+                    }
                 }
                 else
                 {
@@ -260,6 +270,10 @@ namespace NETGraph
                     {
                         Edge tempEdge = new Edge(start, end);
                         Edges.Add(tempEdge);
+                    }
+                    else
+                    {
+                        _collisionOfEdges++;
                     }
                 }
             }
