@@ -103,6 +103,7 @@ namespace NETGraph
             {
                 foreach(Edge e in this.Edges)
                 {
+                    //TODO: schleifen werden nicht berücksichtigt, aber unten werden sie beachtet
                     if (e.EndVertex.VertexName.ToString() != this.VertexName.ToString())
                     {
                         neighbors.Add(e.EndVertex);

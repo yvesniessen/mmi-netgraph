@@ -365,6 +365,8 @@ namespace NETGraph
             //GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
             Graph result = new Graph();
 
+            this.unmarkGraph();
+
             Stack<Vertex<String>> stack = new Stack<Vertex<string>>();
             
             if (!startvertex.Marked)
@@ -409,6 +411,8 @@ namespace NETGraph
             //List<String> outputvertexes = new List<String>();
 
             Graph result = new Graph();
+
+            this.unmarkGraph();
 
             List<Vertex<String>> Schlange = new List<Vertex<string>>();
 
