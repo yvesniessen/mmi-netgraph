@@ -362,6 +362,8 @@ namespace NETGraph
             
         public Graph depthsearch(Vertex<String> startvertex)
         {
+            //TODO: genutzte Kanten in result Graph eintragen
+            
             //GraphListData tmp = new GraphListData(new List<string>(), new List<string>());
             Graph result = new Graph();
 
@@ -409,6 +411,9 @@ namespace NETGraph
         {
             //List<String> outputedges = new List<String>();
             //List<String> outputvertexes = new List<String>();
+
+
+            //TODO: genutzte Kanten in result Graph eintragen
 
             Graph result = new Graph();
 
