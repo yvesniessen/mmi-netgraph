@@ -10,37 +10,19 @@ namespace NETGraph.GraphAlgorithms
     {
         #region IGraphAlgorithm Member
 
-        public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
-        {
-            Graph T = new Graph();
-            /*Führe eine Breitensuche auf dem graphen aus um alle Knoten zu erhalten
-            IGraphAlgorithm tempAlgo = new BreathSearch();
-            Graph extracedGraph = tempAlgo.performAlgorithm(graph, startVertex);
-
-            //Ergebnisgraph
-           
-               /* 
-            extracedGraph.Edges.Clear(); //Breitensuche liefert nicht alle Kanten!
-
-            //Tüte alle Edges in den extrahierten Graphen
-            foreach (Vertex<String> vertex in graph.Vertexes)
-            {
-                foreach (Edge e in vertex.Edges)
-                {
-                    extracedGraph.addEdge(e.StartVertex, e.EndVertex); 
-                }
-            }
-
-            extracedGraph.unmarkGraph();
-            
-
-            /*Vorgehen - Algorithmus von Prim:
+        /*
+         * Vorgehen - Algorithmus von Prim:
 
                 1. Ausgangspunkt für das Verfahren ist ein beliebiger Startknoten
                 2. alle Kanten zu Nachbarknoten werden in eine Nachbarliste eingefügt, man wählt eine Kante minimaler Länge aus der Nachbarliste und fügt diese Kante dem bereits initialisierten Spannbaum zu
                 3. von dort wird wieder der minimale Weg, basierend auf der ausgewählten Kante, zum nächsten Knoten gewählt, ist dieser Knoten bereits besucht worden, wird er nicht berücksichtigt
                 4. dieses Verfahren führt man durch, bis alle Knoten besucht wurden
-             */
+         * 
+        */
+
+        public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
+        {
+            Graph T = new Graph();
 
             //Startvertex wird nicht betrachtet
             startVertex.Marked = true;
@@ -50,30 +32,28 @@ namespace NETGraph.GraphAlgorithms
             T.addVertex(startVertex);
             
             //Gehe solange über die Liste bis sie leer ist
-            do
+            while (unmarkedVertexes.Count > 0)
             {
-                unmarkedVertexes = getUnmarkedVertexes(graph.Vertexes);
-
                 //Hole alle unbesuchten Kanten, von den Knoten die bereits in T sind
                 //Marked = schon in T
 
                 nachbarListe.Clear();
 
                 List<Vertex<String>> markedVertexes = getMarkedVertexes(graph.Vertexes);
-                foreach (Vertex<String> vertex in markedVertexes)
+
+                foreach (Edge edge in graph.Edges)
                 {
-                    foreach (Edge edge in vertex.Edges)
+                    //Die Egde darf nicht markiert (besucht) sein UND muss entweder den Start oder Endpunkt in T haben, damit sie in Frage kommt
+                    if (!edge.Marked && (markedVertexes.Contains(edge.StartVertex) || markedVertexes.Contains(edge.EndVertex)))
                     {
-                        if (!edge.Marked)
+                        if (!edge.StartVertex.Marked || !edge.EndVertex.Marked)
                         {
                             nachbarListe.Add(edge);
                         }
                     }
                 }
 
-                //Hole aus der Nachbarliste die günstigste Kante
-                //Min() vergleicht die Kosten der Edges!
-                Edge cheapestEdge = nachbarListe.Min();
+                Edge cheapestEdge = getCheapestEdge(nachbarListe);
 
                 //Setze (zur Sicherheit) beide Knoten und die Kante auf markiert
                 cheapestEdge.StartVertex.Marked = true;
@@ -81,12 +61,29 @@ namespace NETGraph.GraphAlgorithms
                 cheapestEdge.Marked = true;
 
                 //Füge die Kante in T ein (und somit auch den Knoten)
-                T.addEdge(cheapestEdge.StartVertex, cheapestEdge.EndVertex);  
-                
+                T.addEdge(cheapestEdge.StartVertex, cheapestEdge.EndVertex, cheapestEdge.Costs);
 
-            } while (unmarkedVertexes.Count != 0);
+                unmarkedVertexes = getUnmarkedVertexes(graph.Vertexes);
+            } 
 
             return T;
+        }
+
+        #endregion
+
+        #region Private Methoden
+
+        private Edge getCheapestEdge(List<Edge> edges)
+        {
+            Edge tempEdge = edges.First();
+            foreach (Edge e in edges)
+            {
+                if (e.Costs < tempEdge.Costs)
+                {
+                    tempEdge = e;
+                }
+            }
+            return tempEdge;
         }
 
         private List<Vertex<String>> getMarkedVertexes(List<Vertex<String>> vertexes)
