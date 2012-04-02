@@ -243,20 +243,20 @@ namespace NETGraph
         //    return this.Vertexes;
         //}
 
-        //startVertex! nicht start
-        public void addEdge(Vertex<String> start, Vertex<String> end)
-        { 
-            start = addVertex(start);
-            end = addVertex(end);
+        
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            startVertex = addVertex(startVertex);
+            endVertex = addVertex(endVertex);
 
          
             if (!ParallelEdges)
             {
                 if (!DirectedEdges)
                 {
-                    if ((checkEdgeExists(start, end) == null) && (checkEdgeExists(end, start) == null))
+                    if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
                     {
-                        Edge tempEdge = new Edge(start, end);
+                        Edge tempEdge = new Edge(startVertex, endVertex);
                         Edges.Add(tempEdge);
                     }
                     else
@@ -266,9 +266,9 @@ namespace NETGraph
                 }
                 else
                 {
-                    if ((checkEdgeExists(start, end) == null))
+                    if ((checkEdgeExists(startVertex, endVertex) == null))
                     {
-                        Edge tempEdge = new Edge(start, end);
+                        Edge tempEdge = new Edge(startVertex, endVertex);
                         Edges.Add(tempEdge);
                     }
                     else
@@ -283,12 +283,67 @@ namespace NETGraph
                 {
                     //TO FIX ?? Fall mal prüfen...
 
-                    Edge tempEdge = new Edge(start, end);
+                    Edge tempEdge = new Edge(startVertex, endVertex);
                     Edges.Add(tempEdge);
                 }
                 else
                 {
-                    Edge tempEdge = new Edge(start, end);
+                    Edge tempEdge = new Edge(startVertex, endVertex);
+                    Edges.Add(tempEdge);
+                }
+            }
+        }
+
+        //TODO: schöner machen....
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, int costs)
+        {
+            startVertex = addVertex(startVertex);
+            endVertex = addVertex(endVertex);
+
+
+            if (!ParallelEdges)
+            {
+                if (!DirectedEdges)
+                {
+                    if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
+                    {
+                        Edge tempEdge = new Edge(startVertex, endVertex);
+                        tempEdge.Costs = costs;
+                        Edges.Add(tempEdge);
+                    }
+                    else
+                    {
+                        _collisionOfEdges++;
+                    }
+                }
+                else
+                {
+                    if ((checkEdgeExists(startVertex, endVertex) == null))
+                    {
+                        Edge tempEdge = new Edge(startVertex, endVertex);
+                        tempEdge.Costs = costs;
+                        Edges.Add(tempEdge);
+                    }
+                    else
+                    {
+                        _collisionOfEdges++;
+                    }
+                }
+            }
+            else
+            {
+                if (!DirectedEdges)
+                {
+                    //TO FIX ?? Fall mal prüfen...
+
+                    Edge tempEdge = new Edge(startVertex, endVertex);
+                    tempEdge.Costs = costs;
+                    Edges.Add(tempEdge);
+                }
+                else
+                {
+                    Edge tempEdge = new Edge(startVertex, endVertex);
+                    tempEdge.Costs = costs;
                     Edges.Add(tempEdge);
                 }
             }
@@ -326,7 +381,7 @@ namespace NETGraph
                 }
             }
             //Checken!
-            return null;
+            return vertex;
         }
 
         public Vertex<String> findVertex(String name)
