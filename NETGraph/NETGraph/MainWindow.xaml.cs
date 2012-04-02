@@ -151,7 +151,7 @@ namespace NETGraph
             #endregion
 
             #region Prim
-
+            /*
 
             _graph.findEdge("0", "3").Costs = 1;
             _graph.findEdge("0", "2").Costs = 7;
@@ -160,7 +160,7 @@ namespace NETGraph
 
             m_graphAlgorithm = new Prim();
             m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-
+            */
             #endregion
 
             #region Auskommentiert um Hr. Hoever bei der Abgabe nicht zu verwirren:
