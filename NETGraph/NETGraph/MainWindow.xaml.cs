@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
+using NETGraph.Algorithm;
+using NETGraph.GraphAlgorithms;
 
 namespace NETGraph
 {
@@ -31,6 +33,9 @@ namespace NETGraph
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
         { get { return _ViewData; } }
+
+        private IGraphAlgorithm m_graphAlgorithm;
+
         #region constructor
 
         #endregion
@@ -70,19 +75,42 @@ namespace NETGraph
             GraphListData _graphList;
             _graphList = Export.showGraph(ref _graph);
 
+            
+
             #region Praktikum 1
 
             Debug.Print("Praktikum 1: ");
             Debug.Print("--------------");
 
             Debug.Print("Anzahl Knoten: " + _graph.Vertexes.Count.ToString());
+
+            Debug.Print("--------------");
+
+            foreach (Vertex<String> vertex in _graph.Vertexes)
+            {
+                Debug.Print("Knoten: " + vertex.VertexName.ToString());
+            }
+
+            Debug.Print("--------------");
+
             Debug.Print("Anzahl Kanten: " + _graph.Edges.Count.ToString());
+
+            Debug.Print("--------------");
+
+            foreach (Edge edge in _graph.Edges)
+            {
+                Debug.Print("Kante: " + edge.ToString());
+            }
+
+            Debug.Print("--------------");
 
             Debug.Print("Anzahl der Zusammenhangskomponenten: " + _graph.getConnectingComponents().Count.ToString());
             _graph.unmarkGraph();
 
             Debug.Print("--------------");
             Debug.Print("");
+            Debug.Print("");
+
 
             #endregion
             
@@ -92,21 +120,23 @@ namespace NETGraph
             Debug.Print("--------------");
 
             Debug.Print("Tiefensuche: ");
-            Graph depthsarchgraph = _graph.depthsearch(_graph.Vertexes.First());
+            m_graphAlgorithm = new DepthSearch();
+            Graph depthsarchgraph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
             foreach (Vertex<String> vertex in depthsarchgraph.Vertexes)
             {
                 Debug.Print(vertex.VertexName.ToString());
             }
-
             _graph.unmarkGraph();
+
             Debug.Print("--------------");
 
             Debug.Print("Breitensuche: ");
-            Graph breathSeach = _graph.breathSearch(_graph.Vertexes.First());
+            m_graphAlgorithm = new BreathSearch();
+            Graph breathSeach = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
             foreach (Vertex<String> vertex in breathSeach.Vertexes)
                 Debug.Print(vertex.VertexName.ToString());
-
             _graph.unmarkGraph();
+
             Debug.Print("--------------");
 
             /*Debug.Print("MST-Kruskal: ");
@@ -117,6 +147,19 @@ namespace NETGraph
             _graph.unmarkGraph();
             Debug.Print("--------------");
             */
+
+            #endregion
+
+            #region Prim
+
+
+            _graph.findEdge("0", "3").Costs = 1;
+            _graph.findEdge("0", "2").Costs = 7;
+            _graph.findEdge("0", "1").Costs = 10;
+            _graph.findEdge("3", "2").Costs = 4;
+
+            m_graphAlgorithm = new Prim();
+            m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
 
             #endregion
 
