@@ -7,13 +7,17 @@ namespace NETGraph
 {
 
     //ToDO: Change Generics to template!
-    class Edge
+    class Edge : IComparable
     {
         #region members
         private int _costs = 0;
         private bool _marked = false;
         private String _edgeName;      
         private Vertex<string> _startVertex, _endVertex;
+
+        // The value holder for compareTo-Implementation
+        protected int m_value;
+
         #endregion
 
         #region constructors
@@ -97,5 +101,17 @@ namespace NETGraph
             return "Edge: " + _edgeName.ToString() + " Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString();
         }
         #endregion
+
+        public int CompareTo(Object obj)
+        {
+            if (obj is Edge)
+            {
+                Edge temp = (Edge)obj;
+
+                return m_value.CompareTo(temp.m_value);
+            }
+
+            throw new ArgumentException("object is not an Edge");  
+        }
     }
 }
