@@ -56,10 +56,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GraphAlgorithms\DepthSearch.cs" />
+    <Compile Include="GraphAlgorithms\IGraphAlgorithm.cs" />
+    <Compile Include="GraphAlgorithms\BreathSearch.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="EventLogger.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphAlgorithms\Prim.cs" />
     <Compile Include="GraphListData.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="Vertex.cs" />
@@ -115,6 +119,7 @@
   <ItemGroup>
     <Resource Include="Adjazenzmatrix2.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
