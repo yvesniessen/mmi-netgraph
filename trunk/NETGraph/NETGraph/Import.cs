@@ -67,10 +67,12 @@ namespace NETGraph
 
 
                 //TODO: HIER FRAGEN OB OK, WENN NICHT ANZ Vertexes anlegen mit "leerem Namen" und bei AddVertex den ersten leeren anpacken und ihm Namen geben
-                for (int i = 0; i < _graph.NumberOfVertexes; i++)
+                //Antwort: Die Knoten sind immer korrekt durch nummeriert - ansonsten müssen wir hier im Zweifel nochmal ran
+
+                /*for (int i = 0; i < _graph.NumberOfVertexes; i++)
                 {
                     _graph.addVertex(new Vertex<string>(i.ToString()));
-                }
+                }*/
 
                     // Read every line of file
                     while ((_line = _sr.ReadLine()) != null)
