@@ -151,12 +151,12 @@ namespace NETGraph
             #endregion
 
             #region Prim
+            
             /*
-
-            _graph.findEdge("0", "3").Costs = 1;
-            _graph.findEdge("0", "2").Costs = 7;
-            _graph.findEdge("0", "1").Costs = 10;
-            _graph.findEdge("3", "2").Costs = 4;
+            _graph.findEdge("0", "3").Costs = 200;
+            _graph.findEdge("0", "2").Costs = 199;
+            _graph.findEdge("0", "1").Costs = 1;
+            _graph.findEdge("3", "2").Costs = 1;
 
             m_graphAlgorithm = new Prim();
             m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
