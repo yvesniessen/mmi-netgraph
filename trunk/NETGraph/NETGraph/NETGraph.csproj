@@ -63,6 +63,7 @@
     <Compile Include="EventLogger.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="GraphAlgorithms\Kruskal.cs" />
     <Compile Include="GraphAlgorithms\Prim.cs" />
     <Compile Include="GraphListData.cs" />
     <Compile Include="Import.cs" />
