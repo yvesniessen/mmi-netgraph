@@ -12,7 +12,7 @@ namespace NETGraph
     {
             public static event LoggingEvent OnLoggingEvent;
 
-            public static void Log(string Text)
+            public static void GuiLog(string Text)
             {
 
                 if (OnLoggingEvent != null)

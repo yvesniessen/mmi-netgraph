@@ -215,7 +215,7 @@ namespace NETGraph
                     return edge;
                 }
             }
-            EventLogger.Log("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
+            EventLogger.GuiLog("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
             return null;
         }
         #endregion
@@ -256,8 +256,7 @@ namespace NETGraph
                 {
                     if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
                     {
-                        Edge tempEdge = new Edge(startVertex, endVertex);
-                        Edges.Add(tempEdge);
+                        Edges.Add(new Edge(startVertex, endVertex));
                     }
                     else
                     {
@@ -268,8 +267,7 @@ namespace NETGraph
                 {
                     if ((checkEdgeExists(startVertex, endVertex) == null))
                     {
-                        Edge tempEdge = new Edge(startVertex, endVertex);
-                        Edges.Add(tempEdge);
+                        Edges.Add(new Edge(startVertex, endVertex));
                     }
                     else
                     {
@@ -592,7 +590,7 @@ namespace NETGraph
 
             if ((DirectedEdges) && (countOddGrades >= 2))
             {
-                EventLogger.Log("Graph erfüllt die Vorraussetzungen für einen Euler-Weg/Kreis nicht.");
+                EventLogger.GuiLog("Graph erfüllt die Vorraussetzungen für einen Euler-Weg/Kreis nicht.");
                 return false;
             }
 
