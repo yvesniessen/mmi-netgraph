@@ -60,7 +60,7 @@
     <Compile Include="GraphAlgorithms\IGraphAlgorithm.cs" />
     <Compile Include="GraphAlgorithms\BreathSearch.cs" />
     <Compile Include="Edge.cs" />
-    <Compile Include="EventLogger.cs" />
+    <Compile Include="EventManagement.cs" />
     <Compile Include="Export.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphAlgorithms\Kruskal.cs" />
@@ -120,7 +120,9 @@
   <ItemGroup>
     <Resource Include="Adjazenzmatrix2.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="errorlog.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

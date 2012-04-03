@@ -29,13 +29,14 @@ namespace NETGraph
        #region functions
        public static Graph openFileDialog()
         {
-            EventLogger.GuiLog("test");
+           
             //OpenFileDialog
             string _path = string.Empty;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 _path = openFileDialog1.FileName;
+            EventManagement.GuiLog("open file: " + _path);
            // Prevent "Cancel-Button" Error 
            if (transformFileToGraph(_path) != null)
                 return transformFileToGraph(_path);
@@ -47,7 +48,7 @@ namespace NETGraph
         {
             if (file == null)
             {
-                EventLogger.writeIntoLogFile("private static Graph transformFileToGraph(String file) --> File Handle Errror");
+                EventManagement.writeIntoLogFile("private static Graph transformFileToGraph(String file) --> File Handle Errror");
                 throw new NotImplementedException("ERROR:transformFileToGraph");
             }
 
@@ -90,8 +91,11 @@ namespace NETGraph
                 {
                     case 0:
                     case 1:
+                        EventManagement.GuiLog("ERROR:transformFileToGraph");
+                        EventManagement.writeIntoLogFile("ERROR:transformFileToGraph");
                         throw new NotImplementedException("ERROR:transformFileToGraph");
                     case 2:
+                        EventManagement.GuiLog("parse file to edgelist");
                         Debug.Print("Kantenliste");
                         foreach (String data in _data)
                         {
@@ -100,6 +104,7 @@ namespace NETGraph
                         }
                         break;
                     default:
+                        EventManagement.GuiLog("parse file to Adjazensmatrix");
                         Debug.Print("Adjazensmatrix");
 
                         // test if it is a valid number of Row elements
@@ -124,7 +129,7 @@ namespace NETGraph
             }
             catch (Exception ex)
             {
-                EventLogger.GuiLog(ex.Message.ToString());
+                EventManagement.GuiLog(ex.Message.ToString());
                 return null;
             }
         }
