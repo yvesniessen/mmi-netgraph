@@ -21,12 +21,13 @@ namespace NETGraph
         private bool _directedEdges = false;
         private int _numberOfVertexes = 0;
         private IGraphAlgorithm m_graphAlgorithm;
+        private double _processTime = .0;
         #endregion
 
         #region constructors
         public Graph()
         {
-            MainWindow._ViewData.Add( new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
+           
         }
         
         public Graph(String graphName)
@@ -36,6 +37,19 @@ namespace NETGraph
         #endregion
 
         #region properties
+        public double ProcessTime
+        {
+            get
+            {
+                return _processTime;
+            }
+            set
+            {
+                EventManagement.GuiLog("process time calculated: " + ProcessTime);
+                _processTime = value;
+            }
+        }
+
         public String GraphName 
         { 
             get
@@ -165,13 +179,16 @@ namespace NETGraph
                     return edge;
                 }
             }
-            EventLogger.GuiLog("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
+            EventManagement.GuiLog("Es wurde keine Edge von " + startVertex.VertexName.ToString() + " nach " + endVertex.VertexName.ToString() + " gefunden.");
             return null;
         }
         #endregion
 
         #region public functions
-
+        public void updateGUI()
+        {
+            EventManagement.updateGuiGraph(this);
+        }
         public Edge checkEdgeExists(Vertex<String> start, Vertex<String> end)
         {
             foreach (Edge edge in Edges)

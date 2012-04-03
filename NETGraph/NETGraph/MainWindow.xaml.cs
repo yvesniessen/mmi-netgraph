@@ -44,14 +44,14 @@ namespace NETGraph
         {
             InitializeComponent();
             richTextBoxLog.AppendText("NetGraph Version 1.0 Alpha 1");
-            EventLogger.writeIntoLogFile("program start ");
+            EventManagement.writeIntoLogFile("program start ");
             registerEvents();
-            _ViewData.Add(new ViewData { Vertex = "v1", Edges = "e1", Costs = "42" });
+            
         }
         ~MainWindow()
         {
             unRegisterEvents();
-            EventLogger.writeIntoLogFile("program closed ");
+            EventManagement.writeIntoLogFile("program closed ");
         }
         #endregion
 
@@ -59,12 +59,16 @@ namespace NETGraph
         void registerEvents()
         {
             //This event updates an String the gui textfield
-            EventLogger.OnLoggingEvent += new LoggingEvent(EventLogger_OnLoggingEvent);
+            EventManagement.OnLoggingEvent += new EventManagement.LoggingEvent(EventManagement_OnLoggingEvent);
+            EventManagement.OnUpdateGuiGraph += new EventManagement.UpdateGuiGraph(EventManagement_OnUpdateGuiGraph);
         }
-    
+
+
+
         void unRegisterEvents()
         {
-            EventLogger.OnLoggingEvent += new LoggingEvent(EventLogger_OnLoggingEvent);
+            EventManagement.OnLoggingEvent -= new EventManagement.LoggingEvent(EventManagement_OnLoggingEvent);
+            EventManagement.OnUpdateGuiGraph -= new EventManagement.UpdateGuiGraph(EventManagement_OnUpdateGuiGraph);
         }
         #endregion
 
@@ -74,7 +78,7 @@ namespace NETGraph
             Graph _graph = Import.openFileDialog();
             GraphListData _graphList;
             _graphList = Export.showGraph(ref _graph);
-
+            _graph.updateGUI();
             
 
             #region Praktikum 1
@@ -203,18 +207,34 @@ namespace NETGraph
 
         #region react 2 subscribed events
         //This event updates an String the gui textfield
-        void EventLogger_OnLoggingEvent(object sender, LogEventArgs a)
+        void EventManagement_OnUpdateGuiGraph(object sender, Graph graph)
+        {
+            Debug.WriteLine("Updating Graph 2 Gui...");
+            EventManagement.GuiLog("Updating Graph to GUI ...");
+            ViewData.Clear();
+            foreach (var item in graph.Edges)
+            {
+                _ViewData.Add(new ViewData { StartVertex = item.StartVertex.ToString(), EndVertex = item.EndVertex.ToString(), Costs = item.Costs.ToString() });
+            }
+            labelVertexesValue.Content = graph.NumberOfVertexes.ToString();
+            labelEdgesValue.Content = graph.Edges.Count.ToString();
+            labelVertexCollision.Content = graph.CollisionOfVertexes.ToString();
+            labelEdgeCollision.Content = graph.CollisionOfEdges.ToString();
+        }
+
+        void EventManagement_OnLoggingEvent(object sender, LogEventArgs a)
         {
             richTextBoxLog.AppendText("\n");
             richTextBoxLog.AppendText(a.Text);
         }
+    
         #endregion
     }
 
         public class ViewData
         {
-            public String Vertex {get;set;}
-            public String Edges {get;set;}
+            public String StartVertex {get;set;}
+            public String EndVertex {get;set;}
             public String Costs {get;set;}
         }
 }
