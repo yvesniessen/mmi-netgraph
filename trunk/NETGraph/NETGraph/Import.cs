@@ -29,7 +29,7 @@ namespace NETGraph
        #region functions
        public static Graph openFileDialog()
         {
-            EventLogger.Log("test");
+            EventLogger.GuiLog("test");
             //OpenFileDialog
             string _path = string.Empty;
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -128,7 +128,7 @@ namespace NETGraph
             }
             catch (Exception ex)
             {
-                EventLogger.Log(ex.Message.ToString());
+                EventLogger.GuiLog(ex.Message.ToString());
                 return null;
             }
         }
