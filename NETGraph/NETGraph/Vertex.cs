@@ -18,7 +18,7 @@ namespace NETGraph
     {
         #region members 
         private T _vertexName;
-        private int _costs = 0;
+        private double _costs = 0;
         private List<Edge> _edges = new List<Edge>();
         private bool _marked = false;
         private int _grade = 0;
@@ -58,7 +58,7 @@ namespace NETGraph
             }
         }
 
-        public int Costs
+        public double Costs
         {
             get
             {

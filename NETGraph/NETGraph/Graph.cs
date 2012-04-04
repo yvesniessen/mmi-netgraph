@@ -248,7 +248,7 @@ namespace NETGraph
             }
         }
         
-        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, int costs)
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, double costs)
         {
             startVertex = addVertex(startVertex);
             endVertex = addVertex(endVertex);
