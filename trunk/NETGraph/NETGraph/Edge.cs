@@ -100,8 +100,7 @@ namespace NETGraph
         {
             return "Edge: " + _edgeName.ToString() + " Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString();
         }
-        #endregion
-
+        
         public int CompareTo(Object obj)
         {
             if (obj is Edge)
@@ -111,7 +110,8 @@ namespace NETGraph
                 return m_value.CompareTo(temp.m_value);
             }
 
-            throw new ArgumentException("object is not an Edge");  
+            throw new ArgumentException("object is not an Edge");
         }
+        #endregion
     }
 }

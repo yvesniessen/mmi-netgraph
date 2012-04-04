@@ -145,8 +145,8 @@ namespace NETGraph
                 //Wenn der Knoten ungleich "0" ist füge an dieser Stelle eine Kante hinzu
                 if(!vertex.Equals("0"))
                 {
-                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
-                    //_graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
+                    //_graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
+                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
                 }
                 nameCounter++;
             }

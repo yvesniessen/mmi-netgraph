@@ -23,7 +23,6 @@ namespace NETGraph
                 OnLoggingEvent(null, a);
             }
         }
-
         public static void writeIntoLogFile(String logMessage)
         {
             String logFileName = "errorlog.txt";
@@ -42,8 +41,7 @@ namespace NETGraph
             fileWriter.Write(Environment.UserName.ToString() + ":  ");
             fileWriter.WriteLine (logMessage);
             fileWriter.Close();
-        }
-   
+        } 
         public delegate void UpdateGuiGraph(object sender, Graph graph);
         public static event UpdateGuiGraph OnUpdateGuiGraph;
         public static void updateGuiGraph(Graph graph)
@@ -54,8 +52,7 @@ namespace NETGraph
                 OnUpdateGuiGraph(null, graph);
             }
         }
-
-            
+           
     }
 
     public class LogEventArgs

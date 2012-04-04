@@ -106,19 +106,19 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Graph2.txt" />
+    <Resource Include="Graphen\Graph2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Graph_klein.txt" />
+    <Resource Include="Graphen\Graph_klein.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Graph_klein2.txt" />
+    <Resource Include="Graphen\Graph_klein2.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Adjazensmatrix1.txt" />
+    <Resource Include="Graphen\Adjazensmatrix1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Adjazenzmatrix2.txt" />
+    <Resource Include="Graphen\Adjazenzmatrix2.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="errorlog.txt" />
