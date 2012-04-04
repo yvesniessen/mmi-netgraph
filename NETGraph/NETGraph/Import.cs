@@ -76,14 +76,11 @@ namespace NETGraph
                     {
                         String[] _coloumnElements = _line.Split('\t');
 
-                        //DAS MUSS DOCH HIER HIN!!!!
-                        _CountColoumnElements = _coloumnElements.Length;
-
                         if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
                         {
                             throw new NotImplementedException("ERROR:transformFileToGraph");
                         }
-                        // HIER IST DAS DOCH FALSCH
+
                         //_CountColoumnElements = _coloumnElements.Length;
 
 
@@ -170,6 +167,7 @@ namespace NETGraph
                     //Wenn kosten im Format 1.5 dann zu Format 1,5 wandeln für Convert.toString
                     Elements[2] = Elements[2].Replace(".", ",");
 
+                    //Hier wäre Double.tryParse eher angebracht
                     _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]), Convert.ToDouble(Elements[2]));
                     break;
                 default:
