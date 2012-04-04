@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System;
 using NETGraph.Algorithm;
 
 namespace NETGraph
@@ -248,7 +247,7 @@ namespace NETGraph
             }
         }
         
-        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, double costs)
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, double edgecosts)
         {
             startVertex = addVertex(startVertex);
             endVertex = addVertex(endVertex);
@@ -261,7 +260,7 @@ namespace NETGraph
                     if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
                     {
                         Edge tempEdge = new Edge(startVertex, endVertex);
-                        tempEdge.Costs = costs;
+                        tempEdge.Costs = edgecosts;
                         Edges.Add(tempEdge);
                     }
                     else
@@ -274,7 +273,7 @@ namespace NETGraph
                     if ((checkEdgeExists(startVertex, endVertex) == null))
                     {
                         Edge tempEdge = new Edge(startVertex, endVertex);
-                        tempEdge.Costs = costs;
+                        tempEdge.Costs = edgecosts;
                         Edges.Add(tempEdge);
                     }
                     else
@@ -290,13 +289,13 @@ namespace NETGraph
                     //TO FIX ?? Fall mal prüfen...
 
                     Edge tempEdge = new Edge(startVertex, endVertex);
-                    tempEdge.Costs = costs;
+                    tempEdge.Costs = edgecosts;
                     Edges.Add(tempEdge);
                 }
                 else
                 {
                     Edge tempEdge = new Edge(startVertex, endVertex);
-                    tempEdge.Costs = costs;
+                    tempEdge.Costs = edgecosts;
                     Edges.Add(tempEdge);
                 }
             }
