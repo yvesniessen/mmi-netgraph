@@ -25,23 +25,24 @@ namespace NETGraph
     /// </summary>
     /// 
 
-    public class ViewData
-    {
-        public String StartVertex { get; set; }
-        public String EndVertex { get; set; }
-        public String Costs { get; set; }
-    }
-
-    public class ViewDataVertexes
-    {
-        public String Vertex { get; set; }
-        public String Costs { get; set; }
-    }
-
     public partial class MainWindow : Window
     {
 
+        #region constructor
+        public MainWindow()
+        {
+            InitializeComponent();
+            richTextBoxLog.AppendText("NetGraph Version 1.0 Alpha 1");
+            EventManagement.writeIntoLogFile("program start ");
+            registerEvents();
 
+        }
+        ~MainWindow()
+        {
+            unRegisterEvents();
+            EventManagement.writeIntoLogFile("program closed ");
+        }
+        #endregion
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
@@ -57,24 +58,7 @@ namespace NETGraph
         private IGraphAlgorithm m_graphAlgorithm;
         private Graph _graph;
         private GraphListData _graphList;
-
-            #region constructor
-
-        #endregion
- 
-        public MainWindow()
-        {
-            InitializeComponent();
-            richTextBoxLog.AppendText("NetGraph Version 1.0 Alpha 1");
-            EventManagement.writeIntoLogFile("program start ");
-            registerEvents();
-            
-        }
-        ~MainWindow()
-        {
-            unRegisterEvents();
-            EventManagement.writeIntoLogFile("program closed ");
-        }
+        private Stack<Graph> _graphStateStack = new Stack<Graph>(); 
         #endregion
 
         #region un/-register events
@@ -95,16 +79,71 @@ namespace NETGraph
         #endregion
 
         #region react 2 gui events
+        private void BreathSearch_Click(object sender, RoutedEventArgs e)
+        {
+            //Debug.WriteLine("Algorithemen");
+            EventManagement.GuiLog("running Breathsearch ...");
+
+            Debug.Print("--------------");
+            Debug.Print("Breitensuche: ");
+
+            if (_graph != null)
+            {
+                m_graphAlgorithm = new BreathSearch();
+
+                //TODO @chris: Diese Funktion liefer nen leeren Graphen zurück!!
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+
+                foreach (Vertex<String> vertex in _graph.Vertexes)
+                    Debug.Print(vertex.VertexName.ToString());
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
+        private void DepthSearch_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Depthsearch ...");
+        }
+
+        private void Prim_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Prim ...");
+        }
+
+        private void Kruskal_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Kruskal ...");
+        }
+
+        private void buttonStateRecover_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                _graph = _graphStateStack.Pop();
+                //Label Ausgabe inkrementieren
+                labelState.Content = (Int32.Parse(labelState.Content.ToString()) -1).ToString();
+                _graph.updateGUI();
+            }
+            catch
+            (InvalidOperationException ex) { System.Windows.MessageBox.Show("There is no Last Graph State \n" + ex.Message.ToString()); }
+        }
+
         private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
-            Graph _graph = Import.openFileDialog();
+             _graph = Import.openFileDialog();
             if (_graph == null)
             {
                 EventManagement.GuiLog("Problem beim einlesen des Graphens -> Abbruch");
                 return;
             }
-            GraphListData _graphList;
 
+            GraphListData _graphList;
+            saveGraphState(_graph);
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
             
@@ -228,41 +267,28 @@ namespace NETGraph
     
         #endregion
 
-        private void BreathSearch_Click(object sender, RoutedEventArgs e)
+        #region functions
+        private void saveGraphState(Graph graph)
         {
-            //Debug.WriteLine("Algorithemen");
-            EventManagement.GuiLog("running Breathsearch ...");
-
-            Debug.Print("--------------");
-            Debug.Print("Breitensuche: ");
-
-            m_graphAlgorithm = new BreathSearch();
-
-            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-
-            foreach (Vertex<String> vertex in _graph.Vertexes)
-                Debug.Print(vertex.VertexName.ToString());
-
-            _graphList = Export.showGraph(ref _graph);
-            _graph.updateGUI();
-            _graph.unmarkGraph();
+            _graphStateStack.Push(graph);
+            labelState.Content = (Int32.Parse(labelState.Content.ToString()) + 1).ToString();
         }
-
-        private void DepthSearch_Click(object sender, RoutedEventArgs e)
-        {
-            EventManagement.GuiLog("running Depthsearch ...");
-        }
-
-        private void Prim_Click(object sender, RoutedEventArgs e)
-        {
-            EventManagement.GuiLog("running Prim ...");
-        }
-
-        private void Kruskal_Click(object sender, RoutedEventArgs e)
-        {
-            EventManagement.GuiLog("running Kruskal ...");
-        }
-
+        #endregion
 
     }
+
+    #region Observer dataClasses
+    public class ViewData
+    {
+        public String StartVertex { get; set; }
+        public String EndVertex { get; set; }
+        public String Costs { get; set; }
+    }
+
+    public class ViewDataVertexes
+    {
+        public String Vertex { get; set; }
+        public String Costs { get; set; }
+    }
+    #endregion
 }

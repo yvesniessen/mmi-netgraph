@@ -64,5 +64,14 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
+        <GroupBox Header="Graph Properties" Height="100" HorizontalAlignment="Left" Margin="956,337,0,0" Name="groupBox2" VerticalAlignment="Top" Width="294">
+            <Grid Width="242">
+                <CheckBox Content="Directed" Height="16" HorizontalAlignment="Left" Margin="19,16,0,0" Name="checkBox1" VerticalAlignment="Top" />
+                <CheckBox Content="Paralell" Height="16" HorizontalAlignment="Left" Margin="19,38,0,0" Name="checkBox2" VerticalAlignment="Top" />
+                <Label Content="State:" Height="28" HorizontalAlignment="Left" Margin="108,11,0,0" Name="label2" VerticalAlignment="Top" />
+                <Button Height="23" HorizontalAlignment="Left" Margin="108,38,0,0" Name="buttonStateRecover" VerticalAlignment="Top" Width="75" Content="Recover" DataContext="{Binding}" Click="buttonStateRecover_Click" />
+                <Label Content="0" Height="28" HorizontalAlignment="Left" Margin="144,11,0,0" Name="labelState" VerticalAlignment="Top" />
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>
