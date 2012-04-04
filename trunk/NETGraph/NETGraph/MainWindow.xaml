@@ -21,7 +21,7 @@
             </MenuItem>
         </Menu>
 
-        <RichTextBox Height="449" HorizontalAlignment="Left" Margin="12,69,0,0" Name="richTextBoxLog" VerticalAlignment="Top" Width="218" VerticalScrollBarVisibility="Auto" />
+        <RichTextBox Height="449" HorizontalAlignment="Left" Margin="12,69,0,0" Name="richTextBoxLog" VerticalAlignment="Top" Width="218" VerticalScrollBarVisibility="Auto" DataContext="{Binding}" />
         <Label Content="Log:" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="labelLog" VerticalAlignment="Top" Width="109" />
         <Label Content="Graph:" Height="28" HorizontalAlignment="Left" Margin="246,36,0,0" Name="labelGraph" VerticalAlignment="Top" Width="109" />
         <GroupBox Header="Statistics" Height="249" HorizontalAlignment="Left" Margin="697,69,0,0" Name="groupBox1" VerticalAlignment="Top" Width="294">

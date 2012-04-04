@@ -13,17 +13,21 @@ namespace NETGraph.GraphAlgorithms
             Graph T = new Graph();
             Graph temp = new Graph();
 
+            // Kopiere die Vertexliste in den Temp-Graphen
             temp.Vertexes = graph.Vertexes;
 
             foreach (Vertex<String> v in temp.Vertexes)
             {
+                // Entferne alle Kanten aus Temp (um sie später wieder zu füllen)
                 foreach (Edge e in v.Edges)
                 {
                     temp.deleteEdge(e);
                 }
             }
 
+            // Kopiere die Vertexes in T
             T.Vertexes = temp.Vertexes;
+
 
             List<Edge> edges = graph.Edges;
 
