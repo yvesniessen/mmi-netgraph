@@ -28,9 +28,8 @@ namespace NETGraph.GraphAlgorithms
             // Kopiere die Vertexes in T
             T.Vertexes = temp.Vertexes;
 
-
             List<Edge> edges = graph.Edges;
-
+            
             edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
 
             while(edges.Count > 0)

@@ -168,7 +168,6 @@ namespace NETGraph
 
                     //Wenn kosten im Format 1.5 dann zu Format 1,5 wandeln für Convert.toString
                     Elements[2] = Elements[2].Replace(".", ",");
-
                     //Hier wäre Double.tryParse eher angebracht
                     _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]), Convert.ToDouble(Elements[2]));
                     break;
