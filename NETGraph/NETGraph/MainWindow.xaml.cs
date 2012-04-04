@@ -32,14 +32,26 @@ namespace NETGraph
         public String Costs { get; set; }
     }
 
+    public class ViewDataVertexes
+    {
+        public String Vertex { get; set; }
+        public String Costs { get; set; }
+    }
+
     public partial class MainWindow : Window
     {
 
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
+                    { get { return _ViewData; } }
 
-        { get { return _ViewData; } }
+        
+        public static ObservableCollection<ViewDataVertexes> _ViewDataVertexes = new ObservableCollection<ViewDataVertexes>();
+        public ObservableCollection<ViewDataVertexes> ViewDataVertexes
+                    { get { return _ViewDataVertexes; } }
+
+
 
         private IGraphAlgorithm m_graphAlgorithm;
         private Graph _graph;
@@ -190,10 +202,16 @@ namespace NETGraph
             Debug.WriteLine("Updating Graph 2 Gui...");
             EventManagement.GuiLog("Updating Graph to GUI ...");
             ViewData.Clear();
+            ViewDataVertexes.Clear();
             foreach (var item in graph.Edges)
             {
                 _ViewData.Add(new ViewData { StartVertex = item.StartVertex.ToString(), EndVertex = item.EndVertex.ToString(), Costs = item.Costs.ToString() });
             }
+            foreach (var v in graph.Vertexes)
+            {
+                _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = v.ToString(), Costs = v.Costs.ToString() });
+            }
+
             labelVertexesValue.Content = graph.NumberOfVertexes.ToString();
             labelEdgesValue.Content = graph.Edges.Count.ToString();
             labelVertexCollision.Content = graph.CollisionOfVertexes.ToString();
