@@ -75,12 +75,16 @@ namespace NETGraph
                     while ((_line = _sr.ReadLine()) != null)
                     {
                         String[] _coloumnElements = _line.Split('\t');
+
+                        //DAS MUSS DOCH HIER HIN!!!!
+                        _CountColoumnElements = _coloumnElements.Length;
+
                         if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
                         {
                             throw new NotImplementedException("ERROR:transformFileToGraph");
                         }
-
-                        _CountColoumnElements = _coloumnElements.Length;
+                        // HIER IST DAS DOCH FALSCH
+                        //_CountColoumnElements = _coloumnElements.Length;
 
 
                         _data.Add(_line);
@@ -89,12 +93,14 @@ namespace NETGraph
                 // Decide the Type of input File Convertion
                 switch (_CountColoumnElements)
                 {
-                    case 0:
                     case 1:
                         EventManagement.GuiLog("ERROR:transformFileToGraph");
                         EventManagement.writeIntoLogFile("ERROR:transformFileToGraph");
                         throw new NotImplementedException("ERROR:transformFileToGraph");
+                        //break; //unereichbar wegen exception
+                    case 0:
                     case 2:
+                    case 3: //TODO: ANDERS ÜBERLEGEN DA SO 3x3 und 2x2 Matrix nicht erkannt wird
                         EventManagement.GuiLog("parse file to edgelist");
                         //Debug.Print("Kantenliste");
                         foreach (String data in _data)
@@ -146,7 +152,7 @@ namespace NETGraph
                 if(!vertex.Equals("0"))
                 {
                     //_graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()));
-                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToInt32(vertex));
+                    _graph.addEdge(new Vertex<string>(counter.ToString()), new Vertex<string>(nameCounter.ToString()), Convert.ToDouble(vertex));
                 }
                 nameCounter++;
             }
@@ -154,7 +160,22 @@ namespace NETGraph
 
         private static void convertListLine(string[] Elements, ref Graph _graph)
         {
-            _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]));
+            switch (Elements.Count())
+            {
+                case 2:
+                    _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]));
+                    break;
+                case 3:
+
+                    //Wenn kosten im Format 1.5 dann zu Format 1,5 wandeln für Convert.toString
+                    Elements[2] = Elements[2].Replace(".", ",");
+
+                    _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]), Convert.ToDouble(Elements[2]));
+                    break;
+                default:
+                    Debug.Print("ConvertListLine: dieser Fall dürfte nicht eintreten ;)");
+                    break;
+            }
         }
        #endregion
    }
