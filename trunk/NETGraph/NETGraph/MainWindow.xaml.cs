@@ -29,6 +29,13 @@ namespace NETGraph
     public partial class MainWindow : Window
     {
 
+        public class ViewData
+        {
+            public String StartVertex { get; set; }
+            public String EndVertex { get; set; }
+            public String Costs { get; set; }
+        }
+
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
@@ -240,11 +247,4 @@ namespace NETGraph
 
 
     }
-
-        public class ViewData
-        {
-            public String StartVertex {get;set;}
-            public String EndVertex {get;set;}
-            public String Costs {get;set;}
-        }
 }
