@@ -24,17 +24,16 @@ namespace NETGraph
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
     /// 
-     
+
+    public class ViewData
+    {
+        public String StartVertex { get; set; }
+        public String EndVertex { get; set; }
+        public String Costs { get; set; }
+    }
 
     public partial class MainWindow : Window
     {
-
-        public class ViewData
-        {
-            public String StartVertex { get; set; }
-            public String EndVertex { get; set; }
-            public String Costs { get; set; }
-        }
 
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
