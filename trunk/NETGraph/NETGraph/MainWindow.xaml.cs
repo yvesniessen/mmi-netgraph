@@ -32,11 +32,14 @@ namespace NETGraph
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
+
         { get { return _ViewData; } }
 
         private IGraphAlgorithm m_graphAlgorithm;
+        private Graph _graph;
+        private GraphListData _graphList;
 
-        #region constructor
+            #region constructor
 
         #endregion
  
@@ -75,8 +78,8 @@ namespace NETGraph
         #region react 2 gui events
         private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
-            Graph _graph = Import.openFileDialog();
-            GraphListData _graphList;
+            _graph = Import.openFileDialog();
+            
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
             
@@ -230,12 +233,43 @@ namespace NETGraph
     
         #endregion
 
-        // Breitensuche
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void BreathSearch_Click(object sender, RoutedEventArgs e)
         {
             //Debug.WriteLine("Algorithemen");
-            richTextBoxLog.AppendText("Breitensuche:");
+            EventManagement.GuiLog("running Breathsearch ...");
+
+            Debug.Print("--------------");
+            Debug.Print("Breitensuche: ");
+
+            m_graphAlgorithm = new BreathSearch();
+
+            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+
+            foreach (Vertex<String> vertex in _graph.Vertexes)
+                Debug.Print(vertex.VertexName.ToString());
+
+            _graphList = Export.showGraph(ref _graph);
+            _graph.updateGUI();
+
+            _graph.unmarkGraph();
         }
+
+        private void DepthSearch_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Depthsearch ...");
+        }
+
+        private void Prim_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Prim ...");
+        }
+
+        private void Kruskal_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running Kruskal ...");
+        }
+
+
     }
 
         public class ViewData

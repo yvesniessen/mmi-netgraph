@@ -12,7 +12,10 @@
                 <MenuItem Header="Save" />
             </MenuItem>
             <MenuItem Header="Algorithm">
-                <MenuItem Header="Breitensuche" Click="MenuItem_Click" />
+                <MenuItem Header="Breitensuche" Click="BreathSearch_Click" />
+                <MenuItem Header="Tiefensuche" Click="DepthSearch_Click" />
+                <MenuItem Header="Prim" Click="Prim_Click" />
+                <MenuItem Header="Kruskal" Click="Kruskal_Click" />
             </MenuItem>
             <MenuItem Header="Output" />
             <MenuItem Header="Help">
