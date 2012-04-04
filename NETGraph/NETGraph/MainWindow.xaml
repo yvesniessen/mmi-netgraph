@@ -11,7 +11,9 @@
                 <MenuItem Header="Open" Click="menuFileOpen_Click" />
                 <MenuItem Header="Save" />
             </MenuItem>
-            <MenuItem Header="Algorithm" />
+            <MenuItem Header="Algorithm">
+                <MenuItem Header="Breitensuche" Click="MenuItem_Click" />
+            </MenuItem>
             <MenuItem Header="Output" />
             <MenuItem Header="Help">
                 <MenuItem Header="Version" />
@@ -38,7 +40,7 @@
                 <Label Content="0" Height="28" Name="labelEdgeCollision" Width="109"  Margin="2"/>
             </WrapPanel>
         </GroupBox>
-        <StackPanel Height="449" HorizontalAlignment="Left" Margin="246,69,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="428" CanVerticallyScroll="True" CanHorizontallyScroll="False" >
+        <StackPanel Height="449" HorizontalAlignment="Left" Margin="246,69,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="428" CanVerticallyScroll="True" CanHorizontallyScroll="True" >
             <ListView Name="listview" ItemsSource="{Binding ViewData}">
                 <ListView.View>
                     <GridView>

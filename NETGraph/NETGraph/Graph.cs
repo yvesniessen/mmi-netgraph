@@ -204,11 +204,10 @@ namespace NETGraph
             return null;
         }
 
-        public Edge addEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex)
         {
             startVertex = addVertex(startVertex);
             endVertex = addVertex(endVertex);
-            Edge newEdge = null;
          
             if (!ParallelEdges)
             {
@@ -216,8 +215,7 @@ namespace NETGraph
                 {
                     if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
                     {
-                        newEdge = (new Edge(startVertex, endVertex));
-                        Edges.Add(newEdge);
+                        Edges.Add(new Edge(startVertex, endVertex));
                     }
                     else
                     {
@@ -228,8 +226,7 @@ namespace NETGraph
                 {
                     if ((checkEdgeExists(startVertex, endVertex) == null))
                     {
-                        newEdge = (new Edge(startVertex, endVertex));
-                        Edges.Add(newEdge);
+                        Edges.Add(new Edge(startVertex, endVertex));
                     }
                     else
                     {
@@ -242,27 +239,14 @@ namespace NETGraph
                 if (!DirectedEdges)
                 {
                     //TODO: Diesen Fall mal überprüfen
-                    newEdge = (new Edge(startVertex, endVertex));
-                    Edges.Add(newEdge);
+                    Edges.Add(new Edge(startVertex, endVertex));
                 }
                 else
                 {
-                    newEdge = (new Edge(startVertex, endVertex));
-                    Edges.Add(newEdge);
+                    Edges.Add(new Edge(startVertex, endVertex));
                 }
             }
-            return newEdge;
         }
-        
-        public Edge addEdge2(Vertex<String> startVertex, Vertex<String> endVertex, int costs)
-        {
-            Edge e = addEdge(startVertex, endVertex);
-            e.Costs = costs;
-
-            return e;
-        }
-
-        //TODO: schöner machen: Kasskadieren?
         
         public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, int costs)
         {
