@@ -10,7 +10,7 @@ namespace NETGraph
     class Edge : IComparable
     {
         #region members
-        private int _costs = 0;
+        private double _costs = 0;
         private bool _marked = false;
         private String _edgeName;      
         private Vertex<string> _startVertex, _endVertex;
@@ -33,7 +33,7 @@ namespace NETGraph
         #endregion
 
         # region properties
-        public int Costs
+        public double Costs
         {
             get
             {
