@@ -41,6 +41,7 @@ namespace NETGraph
     public partial class MainWindow : Window
     {
 
+
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
@@ -216,6 +217,7 @@ namespace NETGraph
             labelEdgesValue.Content = graph.Edges.Count.ToString();
             labelVertexCollision.Content = graph.CollisionOfVertexes.ToString();
             labelEdgeCollision.Content = graph.CollisionOfEdges.ToString();
+
         }
 
         void EventManagement_OnLoggingEvent(object sender, LogEventArgs a)
@@ -243,7 +245,6 @@ namespace NETGraph
 
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
-
             _graph.unmarkGraph();
         }
 

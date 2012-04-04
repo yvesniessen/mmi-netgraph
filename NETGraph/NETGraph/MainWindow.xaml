@@ -49,7 +49,7 @@
                     <GridView>
                         <GridViewColumn Width="140" Header="Start-Vertex"  DisplayMemberBinding="{Binding StartVertex}" />
                         <GridViewColumn Width="140" Header="End-Vertex" DisplayMemberBinding="{Binding EndVertex}"/>
-                            <GridViewColumn Width="140" Header="Costs" DisplayMemberBinding="{Binding Costs}"/>
+                        <GridViewColumn Width="140" Header="Costs" DisplayMemberBinding="{Binding Costs}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

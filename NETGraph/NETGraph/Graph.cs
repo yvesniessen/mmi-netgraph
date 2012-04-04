@@ -501,6 +501,13 @@ namespace NETGraph
             }
         }
 
+        public String findNearestNeighbor(String startVertex)
+        {
+            String nearestNeigbor = default(String);
+            
+            return null;
+        }
+
         #endregion
     }
 }
