@@ -78,48 +78,16 @@ namespace NETGraph
         #region react 2 gui events
         private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
-            _graph = Import.openFileDialog();
-            
+            Graph _graph = Import.openFileDialog();
+            if (_graph == null)
+            {
+                EventManagement.GuiLog("Problem beim einlesen des Graphens -> Abbruch");
+                return;
+            }
+            GraphListData _graphList;
+
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
-            
-
-            #region Praktikum 1
-
-            Debug.Print("Praktikum 1: ");
-            Debug.Print("--------------");
-
-            Debug.Print("Anzahl Knoten: " + _graph.Vertexes.Count.ToString());
-
-            Debug.Print("--------------");
-
-            foreach (Vertex<String> vertex in _graph.Vertexes)
-            {
-                Debug.Print("Knoten: " + vertex.VertexName.ToString());
-            }
-
-            Debug.Print("--------------");
-
-            Debug.Print("Anzahl Kanten: " + _graph.Edges.Count.ToString());
-
-            Debug.Print("--------------");
-
-            foreach (Edge edge in _graph.Edges)
-            {
-                Debug.Print("Kante: " + edge.ToString());
-            }
-
-            Debug.Print("--------------");
-
-            Debug.Print("Anzahl der Zusammenhangskomponenten: " + _graph.getConnectingComponents().Count.ToString());
-            _graph.unmarkGraph();
-
-            Debug.Print("--------------");
-            Debug.Print("");
-            Debug.Print("");
-
-
-            #endregion
             
             #region Praktikum 2
 
@@ -190,6 +158,7 @@ namespace NETGraph
             #endregion
 
         }
+
         private void menuHelpLogFileOpen_Click(object sender, RoutedEventArgs e)
         {
             try
