@@ -156,15 +156,15 @@ namespace NETGraph
 
             #region Prim
             
-            /*
-            _graph.findEdge("0", "3").Costs = 200;
-            _graph.findEdge("0", "2").Costs = 199;
-            _graph.findEdge("0", "1").Costs = 1;
-            _graph.findEdge("3", "2").Costs = 1;
+            
+            //_graph.findEdge("0", "3").Costs = 200;
+            //_graph.findEdge("0", "2").Costs = 199;
+            //_graph.findEdge("0", "1").Costs = 1;
+            //_graph.findEdge("3", "2").Costs = 1;
 
-            m_graphAlgorithm = new Prim();
-            m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-            */
+            //m_graphAlgorithm = new Prim();
+            //m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            
             #endregion
 
             #region Auskommentiert um Hr. Hoever bei der Abgabe nicht zu verwirren:
@@ -230,9 +230,11 @@ namespace NETGraph
     
         #endregion
 
+        // Breitensuche
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Algorithemen");
+            //Debug.WriteLine("Algorithemen");
+            richTextBoxLog.AppendText("Breitensuche:");
         }
     }
 

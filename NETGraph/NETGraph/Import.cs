@@ -96,11 +96,11 @@ namespace NETGraph
                         throw new NotImplementedException("ERROR:transformFileToGraph");
                     case 2:
                         EventManagement.GuiLog("parse file to edgelist");
-                        Debug.Print("Kantenliste");
+                        //Debug.Print("Kantenliste");
                         foreach (String data in _data)
                         {
-                            String[] _Elements = data.Split('\t');
-                            convertListLine(_Elements, ref _graph);
+                            String[] _Elements = data.Split('\t');   
+                            convertListLine(_Elements, ref _graph);   
                         }
                         break;
                     default:
