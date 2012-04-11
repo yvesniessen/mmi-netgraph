@@ -128,6 +128,20 @@ namespace NETGraph
         private void Prim_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Prim ...");
+
+            Debug.Print("--------------");
+            Debug.Print("Prim: ");
+
+            m_graphAlgorithm = new Prim();
+
+            _graph.unmarkGraph();
+            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            //foreach (Vertex<String> vertex in _graph.Vertexes)
+            //    Debug.Print(vertex.VertexName.ToString());
+
+            //_graphList = Export.showGraph(ref _graph);
+            _graph.updateGUI();
+            _graph.unmarkGraph();
         }
 
         private void Kruskal_Click(object sender, RoutedEventArgs e)
@@ -143,7 +157,7 @@ namespace NETGraph
             foreach (Vertex<String> vertex in _graph.Vertexes)
                 Debug.Print(vertex.VertexName.ToString());
 
-                 _graphList = Export.showGraph(ref _graph);
+                //_graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
                 _graph.unmarkGraph();
 
