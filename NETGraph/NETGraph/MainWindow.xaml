@@ -55,7 +55,7 @@
             </ListView>
         </StackPanel>
         <StackPanel CanHorizontallyScroll="True" CanVerticallyScroll="True" Height="449" HorizontalAlignment="Left" Margin="246,69,0,0" Name="stackPanel2" VerticalAlignment="Top" Width="254">
-            <ListView Name="listView1" ItemsSource="{Binding ViewDataVertex}">
+            <ListView Name="listView1" ItemsSource="{Binding ViewDataVertexes}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width ="120" Header="Vertex" DisplayMemberBinding="{Binding Vertex}" />
