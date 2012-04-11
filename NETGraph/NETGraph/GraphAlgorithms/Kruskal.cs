@@ -40,7 +40,8 @@ namespace NETGraph.GraphAlgorithms
 
                 temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
 
-                if (temp.getConnectingComponents().Count < T.getConnectingComponents().Count)
+                //prüfen ob beide Vertexes bereits in selber Komponente
+                if (!temp.checkIfTwoVertexesInSameComponent(currentEdge.StartVertex,currentEdge.EndVertex))
                 {
                     T.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
                 }
