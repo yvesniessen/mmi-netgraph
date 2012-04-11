@@ -44,13 +44,14 @@ namespace NETGraph.GraphAlgorithms
                 if (!temp.checkIfTwoVertexesInSameComponent(currentEdge.StartVertex,currentEdge.EndVertex))
                 {
                     T.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
+                    temp.deleteEdge(currentEdge);
                 }
                 else
                 {
                     temp.deleteEdge(currentEdge);
                 }
 
-                temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
+                //temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
             }
 
             return T;
