@@ -84,11 +84,11 @@ namespace NETGraph
             //Debug.WriteLine("Algorithemen");
             EventManagement.GuiLog("running Breathsearch ...");
 
-            Debug.Print("--------------");
-            Debug.Print("Breitensuche: ");
-
             if (_graph != null)
             {
+                Debug.Print("--------------");
+                Debug.Print("Breitensuche: ");
+
                 m_graphAlgorithm = new BreathSearch();
 
                 //TODO @chris: Diese Funktion liefer nen leeren Graphen zurück!!
@@ -108,6 +108,23 @@ namespace NETGraph
         private void DepthSearch_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Depthsearch ...");
+
+            if (_graph != null)
+            {
+
+                Debug.Print("--------------");
+                Debug.Print("Tiefensuche: ");
+                m_graphAlgorithm = new DepthSearch();
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                foreach (Vertex<String> vertex in _graph.Vertexes)
+                   Debug.Print(vertex.VertexName.ToString());
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
         }
 
         private void Prim_Click(object sender, RoutedEventArgs e)
@@ -149,28 +166,28 @@ namespace NETGraph
             
             #region Praktikum 2
 
-            Debug.Print("Praktikum 2: ");
-            Debug.Print("--------------");
+            //Debug.Print("Praktikum 2: ");
+            //Debug.Print("--------------");
 
-            Debug.Print("Tiefensuche: ");
-            m_graphAlgorithm = new DepthSearch();
-            Graph depthsarchgraph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-            foreach (Vertex<String> vertex in depthsarchgraph.Vertexes)
-            {
-                Debug.Print(vertex.VertexName.ToString());
-            }
-            _graph.unmarkGraph();
+            //Debug.Print("Tiefensuche: ");
+            //m_graphAlgorithm = new DepthSearch();
+            //Graph depthsarchgraph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            //foreach (Vertex<String> vertex in depthsarchgraph.Vertexes)
+            //{
+            //    Debug.Print(vertex.VertexName.ToString());
+            //}
+            //_graph.unmarkGraph();
 
-            Debug.Print("--------------");
+            //Debug.Print("--------------");
 
-            Debug.Print("Breitensuche: ");
-            m_graphAlgorithm = new BreathSearch();
-            Graph breathSeach = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-            foreach (Vertex<String> vertex in breathSeach.Vertexes)
-                Debug.Print(vertex.VertexName.ToString());
-            _graph.unmarkGraph();
+            //Debug.Print("Breitensuche: ");
+            //m_graphAlgorithm = new BreathSearch();
+            //Graph breathSeach = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            //foreach (Vertex<String> vertex in breathSeach.Vertexes)
+            //    Debug.Print(vertex.VertexName.ToString());
+            //_graph.unmarkGraph();
 
-            Debug.Print("--------------");
+            //Debug.Print("--------------");
 
             /*Debug.Print("MST-Kruskal: ");
             Graph krusal = _graph.kruskal();
