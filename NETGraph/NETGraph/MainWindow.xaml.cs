@@ -104,7 +104,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void DepthSearch_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Depthsearch ...");
@@ -126,7 +125,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void Prim_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Prim ...");
@@ -135,6 +133,23 @@ namespace NETGraph
         private void Kruskal_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Kruskal ...");
+
+            Debug.Print("--------------");
+            Debug.Print("Kuskal: ");
+
+            m_graphAlgorithm = new Kruskal();
+
+            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            foreach (Vertex<String> vertex in _graph.Vertexes)
+                Debug.Print(vertex.VertexName.ToString());
+
+                 _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+
+
+
+
         }
 
         private void buttonStateRecover_Click(object sender, RoutedEventArgs e)
