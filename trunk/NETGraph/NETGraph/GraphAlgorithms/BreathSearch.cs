@@ -44,6 +44,41 @@ namespace NETGraph.Algorithm
             return result;
         }
 
+        public bool checkIfTwoVertexesinSameComponent(Graph graph, Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            List<Vertex<String>> Schlange = new List<Vertex<string>>();
+
+            Schlange.Add(startVertex);
+
+            do
+            {
+                Vertex<String> vertex = Schlange.First();
+                Schlange.Remove(vertex);
+
+                if (!vertex.Marked)
+                {
+                    vertex.Marked = true;
+                }
+
+                List<Vertex<String>> neighbors = vertex.findNeighbors(graph.DirectedEdges);
+
+                foreach (Vertex<String> neighbor in neighbors)
+                {
+                    if (neighbor == endVertex)
+                        return true;
+
+                    if (!neighbor.Marked)
+                    {
+                        Schlange.Add(neighbor);
+                    }
+                }
+
+
+            } while (Schlange.Count != 0);
+
+            return false;
+        }
+
         #endregion
     }
 }
