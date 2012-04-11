@@ -38,7 +38,7 @@ namespace NETGraph
                 _path = openFileDialog1.FileName;
             EventManagement.GuiLog("open file: " + _path);
            // Prevent "Cancel-Button" Error 
-           if (transformFileToGraph(_path) != null)
+           if (_path != null)
                 return transformFileToGraph(_path);
             else
                return null;
@@ -68,7 +68,15 @@ namespace NETGraph
 
                 for (int i = 0; i < _graph.NumberOfVertexes; i++)
                 {
-                    _graph.addVertex(new Vertex<string>(i.ToString()));
+                    // Alle Knoten werden angelegt
+                    if ((i % 10000 == 0))
+                    {
+                        Debug.WriteLine(i + " Knoten angelegt");
+                    }
+
+                    // Besser direkt einfügen, da Knoten nicht eh vorhanden sind. Viel viel schneller
+                    _graph.Vertexes.Add(new Vertex<string>(i.ToString()));
+                    //_graph.addVertex(new Vertex<string>(i.ToString()));
                 }
 
                     // Read every line of file
