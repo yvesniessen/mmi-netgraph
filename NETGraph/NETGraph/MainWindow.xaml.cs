@@ -260,13 +260,35 @@ namespace NETGraph
             EventManagement.GuiLog("Updating Graph to GUI ...");
             ViewData.Clear();
             ViewDataVertexes.Clear();
-            foreach (var item in graph.Edges)
+            if (graph.Edges.Count <= 100)
             {
-                _ViewData.Add(new ViewData { StartVertex = item.StartVertex.ToString(), EndVertex = item.EndVertex.ToString(), Costs = item.Costs.ToString() });
+                foreach (var item in graph.Edges)
+                {
+                    _ViewData.Add(new ViewData { StartVertex = item.StartVertex.ToString(), EndVertex = item.EndVertex.ToString(), Costs = item.Costs.ToString() });
+                }
             }
-            foreach (var v in graph.Vertexes)
+            else
             {
-                _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = v.ToString(), Costs = v.Costs.ToString() });
+                for (int i = 0; i <= 100; i++)
+                {
+                    _ViewData.Add(new ViewData { StartVertex = graph.Edges[i].StartVertex.ToString(), EndVertex = graph.Edges[i].EndVertex.ToString(), Costs = graph.Edges[i].Costs.ToString() });
+                }
+                _ViewData.Add(new ViewData {StartVertex = "Nur ersten 100 angezeigt"});
+            }
+            if (graph.Vertexes.Count <=100)
+            {
+            foreach (var v in graph.Vertexes)
+                {
+                    _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = v.ToString(), Costs = v.Costs.ToString() });
+                }
+            }
+            else
+            {
+                for (int i = 0; i<= 100; i++)
+                {
+                    _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = graph.Vertexes[i].ToString(), Costs = graph.Vertexes[i].Costs.ToString() });
+                }
+                _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = "Nur ersten 100 angezeigt" });
             }
 
             labelVertexesValue.Content = graph.NumberOfVertexes.ToString();
