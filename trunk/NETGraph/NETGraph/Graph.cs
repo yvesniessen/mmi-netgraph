@@ -337,7 +337,7 @@ namespace NETGraph
                 if (v.VertexName.Equals(name))
                     return v;
             }
-            return null;              
+            return new Vertex<string>("FAIL");              
         }
 
         public Edge findEdge(String startVertex, String endVertex)
@@ -371,10 +371,27 @@ namespace NETGraph
 
         public List<Graph> getConnectingComponents()
         {
+            _connectingComponents.Clear();
             m_graphAlgorithm = new BreathSearch();
             foreach (Vertex<String> vertex in Vertexes)
             {
                 if ((!vertex.Marked) ) //&& (vertex.Edges.Count > 0))
+                {
+                    _connectingComponents.Add(m_graphAlgorithm.performAlgorithm(this, vertex));
+                }
+            }
+
+            return _connectingComponents;
+        }
+
+        //Hole nur Vertexes, die auch eine Edge haben!
+        public List<Graph> getConnectingComponentsWithoutLooseVertexes()
+        {
+            _connectingComponents.Clear();
+            m_graphAlgorithm = new BreathSearch();
+            foreach (Vertex<String> vertex in Vertexes)
+            {
+                if ((!vertex.Marked) && (vertex.Edges.Count > 0))
                 {
                     _connectingComponents.Add(m_graphAlgorithm.performAlgorithm(this, vertex));
                 }
