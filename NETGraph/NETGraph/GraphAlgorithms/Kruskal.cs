@@ -10,24 +10,21 @@ namespace NETGraph.GraphAlgorithms
     {
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
-            Graph T = new Graph();
-            Graph temp = new Graph();
+            Graph resultGraph = new Graph();
 
-            // Kopiere die Vertexliste in den Temp-Graphen
-            temp.Vertexes = graph.Vertexes;
+            Graph resultForStartVertex = new Graph();
+            Graph resultForEndVertex = new Graph();
 
-            foreach (Vertex<String> v in temp.Vertexes)
-            {
-                // Entferne alle Kanten aus Temp (um sie später wieder zu füllen)
-                v.Edges.Clear();
-            }
+            IGraphAlgorithm breathSearch = new BreathSearch();
 
-            //// Kopiere die Vertexes in T
-            //T.Vertexes = temp.Vertexes;
-
+            //Liste aller Edges des Eingangsgraphen
             List<Edge> edges = graph.Edges;
             
+            //Sortiere die Liste nach den Kosten
             edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
+
+            //Sichere die sortierte Edgelist für evtl. spätere Verbindung
+            List<Edge> backupEdgeList = new List<Edge>();
 
             while(edges.Count > 0)
             {
@@ -35,26 +32,79 @@ namespace NETGraph.GraphAlgorithms
                 Edge currentEdge = edges.First();
                 edges.Remove(currentEdge);
 
-                
-                
+                //Erzeuge die Vertexes NEU um sie in den neuen result Graph einzufügen
+                Vertex<String> startVertexForNewEdge = new Vertex<string>(currentEdge.StartVertex.VertexName);
+                Vertex<String> endVertexForNewEdge = new Vertex<string>(currentEdge.EndVertex.VertexName);
 
-                //prüfen ob beide Vertexes bereits in selber Komponente
-                Vertex<String> StartVertex = temp.findVertex(currentEdge.StartVertex.VertexName);
-                Vertex<String> EndVertex = temp.findVertex(currentEdge.EndVertex.VertexName);
+                /*
+                 * Problem: die Vertexes kennen ihre Nachbarn -> Deswegen funktioniert die Breitensuche nur auf dem neuen Graph
+                 * 
+                 * Dazu muss man allerdings erstmal die Vertexes in dem NEUEN Grauph finden!
+                 * 
+                */
 
-                if (!temp.checkIfTwoVertexesInSameComponent(StartVertex, EndVertex))
+                resultGraph.unmarkGraph();
+
+                if (resultGraph.findVertex(startVertexForNewEdge.VertexName).Edges.Count > 0)
                 {
-                    temp.addEdge(StartVertex, EndVertex, currentEdge.Costs);
-                    T.addEdge(StartVertex, EndVertex, currentEdge.Costs);
-                  //  temp.deleteEdge(currentEdge);
+                    resultForStartVertex = breathSearch.performAlgorithm(resultGraph, resultGraph.findVertex(startVertexForNewEdge.VertexName));
                 }
-                //else
-                //{
-                //    temp.deleteEdge(currentEdge);
-                //}
 
-                //temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
+                resultGraph.unmarkGraph();
+
+                if (resultGraph.findVertex(endVertexForNewEdge.VertexName).Edges.Count > 0)
+                {
+                    resultForEndVertex = breathSearch.performAlgorithm(resultGraph, resultGraph.findVertex(endVertexForNewEdge.VertexName));
+                }
+
+                /*
+                 * Überlegung:
+                 * 1. Wenn der Start oder Endknoten bereits in einer Komponente ist -> ok (hinzufügen)
+                 * 2. Wenn kein Knoten in einer Komponente ist -> ok (hinzufügen!)
+                 * 3. Wenn beide Knoten bereits in einer Komponente sind -> fail!
+                 * 
+                 * also: Prüfe ob die Anzahl der Vertexes im resultGraph, ausgehend von current.StartVertex UND current.EndVertex NICHT größer 1 ist
+                 * 
+                 */
+
+                if (!(resultForStartVertex.Vertexes.Count > 1 && resultForEndVertex.Vertexes.Count > 1))
+                {
+                    resultGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge);
+                }
+                else
+                {
+                    //Speichere die nicht genutzen Edges für später... (siehe unten)
+                    backupEdgeList.Add(currentEdge);
+                }
             }
+
+            /*
+             * Problem 1: es kann sein, dass zwar alle Knoten drin sind, aber diese nicht miteinander verbunden sind -> es gibt mehrere ZKomponenten,
+             * die jetzt verbunden werden müssen
+             * 
+             * Problem 2: Lose Kanten wurden von den normalen ConnectingComponents mitgezählt - deswegen jetzt die neue Funktion: getConnectingComponentsWithoutLooseVertexes!
+             * 
+             */
+
+            resultGraph.unmarkGraph();
+            while (resultGraph.getConnectingComponentsWithoutLooseVertexes().Count > 1)
+            {
+                resultGraph = connectLooseComponents(resultGraph, backupEdgeList);
+                resultGraph.unmarkGraph();
+            }
+            
+            return resultGraph;
+        }
+
+        private Graph connectLooseComponents(Graph T, List<Edge> backupEdgeList)
+        {
+            Edge currentEdge = backupEdgeList.First();
+            backupEdgeList.Remove(currentEdge);
+
+            Vertex<String> startVertexForNewEdge = T.findVertex(currentEdge.StartVertex.VertexName);
+            Vertex<String> endVertexForNewEdge = T.findVertex(currentEdge.EndVertex.VertexName);
+
+            T.addEdge(startVertexForNewEdge, endVertexForNewEdge);
 
             return T;
         }
