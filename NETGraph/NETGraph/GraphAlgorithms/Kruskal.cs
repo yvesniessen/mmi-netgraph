@@ -19,14 +19,11 @@ namespace NETGraph.GraphAlgorithms
             foreach (Vertex<String> v in temp.Vertexes)
             {
                 // Entferne alle Kanten aus Temp (um sie später wieder zu füllen)
-                foreach (Edge e in v.Edges)
-                {
-                    temp.deleteEdge(e);
-                }
+                v.Edges.Clear();
             }
 
-            // Kopiere die Vertexes in T
-            T.Vertexes = temp.Vertexes;
+            //// Kopiere die Vertexes in T
+            //T.Vertexes = temp.Vertexes;
 
             List<Edge> edges = graph.Edges;
             
@@ -38,18 +35,23 @@ namespace NETGraph.GraphAlgorithms
                 Edge currentEdge = edges.First();
                 edges.Remove(currentEdge);
 
-                temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
+                
+                
 
                 //prüfen ob beide Vertexes bereits in selber Komponente
-                if (!temp.checkIfTwoVertexesInSameComponent(currentEdge.StartVertex,currentEdge.EndVertex))
+                Vertex<String> StartVertex = temp.findVertex(currentEdge.StartVertex.VertexName);
+                Vertex<String> EndVertex = temp.findVertex(currentEdge.EndVertex.VertexName);
+
+                if (!temp.checkIfTwoVertexesInSameComponent(StartVertex, EndVertex))
                 {
-                    T.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
-                    temp.deleteEdge(currentEdge);
+                    temp.addEdge(StartVertex, EndVertex, currentEdge.Costs);
+                    T.addEdge(StartVertex, EndVertex, currentEdge.Costs);
+                  //  temp.deleteEdge(currentEdge);
                 }
-                else
-                {
-                    temp.deleteEdge(currentEdge);
-                }
+                //else
+                //{
+                //    temp.deleteEdge(currentEdge);
+                //}
 
                 //temp.addEdge(currentEdge.StartVertex, currentEdge.EndVertex, currentEdge.Costs);
             }
