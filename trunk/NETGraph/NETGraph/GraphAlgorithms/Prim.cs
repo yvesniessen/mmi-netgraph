@@ -89,7 +89,7 @@ namespace NETGraph.GraphAlgorithms
         private List<Vertex<String>> getMarkedVertexes(List<Vertex<String>> vertexes)
         {
             var vertexList = from vertex in vertexes
-                             where vertex.Marked
+                             where (vertex.Marked) && (vertex.Edges.Count > 0)
                              select vertex;
 
             return vertexList.ToList(); ;
@@ -98,7 +98,7 @@ namespace NETGraph.GraphAlgorithms
         private List<Vertex<String>> getUnmarkedVertexes(List<Vertex<String>> vertexes)
         {
             var vertexList = from vertex in vertexes
-                             where !vertex.Marked
+                             where (!vertex.Marked) && (vertex.Edges.Count > 0)
                              select vertex;
 
             return vertexList.ToList(); ;
