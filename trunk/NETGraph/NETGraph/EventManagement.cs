@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Windows;
 
 namespace NETGraph
 {
@@ -22,12 +23,20 @@ namespace NETGraph
 
         public static void stopTimer()
         {
-            _stopwatch.Stop();
-            Debug.WriteLine("Estimated Timer: " + _stopwatch.ElapsedMilliseconds.ToString());
-            GuiLog ("Estimated Process Time: " + _stopwatch.ElapsedMilliseconds.ToString() );
-            GuiLog(" Estimated CPU Ticks: " + _stopwatch.ElapsedTicks.ToString());
-            TimerLog(_stopwatch.ElapsedMilliseconds.ToString());
-            _stopwatch.Reset();
+            try
+            {
+                _stopwatch.Stop();
+                Debug.WriteLine("Estimated Timer: " + _stopwatch.ElapsedMilliseconds.ToString());
+                GuiLog("Estimated Process Time: " + _stopwatch.ElapsedMilliseconds.ToString());
+                GuiLog(" Estimated CPU Ticks: " + _stopwatch.ElapsedTicks.ToString());
+                TimerLog(_stopwatch.ElapsedMilliseconds.ToString());
+                _stopwatch.Reset();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("Timer Exception : " +ex.Message.ToString() );
+                MessageBox.Show("Timer Exception : " +ex.Message.ToString() );
+            }
         }
 
         public delegate void TimerEvent(object sender, String ms_time);

@@ -29,8 +29,8 @@
         <Label Content="Graph:" Height="28" HorizontalAlignment="Left" Margin="246,36,0,0" Name="labelGraph" VerticalAlignment="Top" Width="109" />
         <GroupBox Header="Statistics" Height="249" HorizontalAlignment="Left" Margin="956,69,0,0" Name="groupBox1" VerticalAlignment="Top" Width="294">
             <WrapPanel Height="200" Name="wrapPanel1" Width="257">
-                <Label Content="Graph-Size [kB]:" Height="28" Name="label1" Width="109" Margin="2" HorizontalAlignment="Left" />
-                <Label Content="0" Height="28" Name="labelGraphSizeValue" Width="109" Margin="2" HorizontalAlignment="Right" />
+                <Label Content="Graph-Weight:" Height="28" Name="label1" Width="109" Margin="2" HorizontalAlignment="Left" />
+                <Label Content="0" Height="28" Name="labelGraphWeight" Width="109" Margin="2" HorizontalAlignment="Right" />
                 <Label Content="Process Time [ms]:" Height="28" Name="labelProcessTime" Width="109" Margin="2" />
                 <Label Content="0" Height="28" Name="labelAlgoTimeValue" Width="109" Margin="2"/>
                 <Label Content="Vertexes:" Height="28" Name="label4" Width="109" Margin="2" />
