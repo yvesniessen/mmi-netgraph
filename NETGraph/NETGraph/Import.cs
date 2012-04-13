@@ -61,6 +61,7 @@ namespace NETGraph
 
             try
             {
+                EventManagement.startTimer();
                 StreamReader _sr = new StreamReader(file);
                 //Write Number of Vertexes in Object Graph
                 if ((_line = _sr.ReadLine()) != null)
@@ -135,12 +136,13 @@ namespace NETGraph
                         }
                         break;
                 }
-
+                EventManagement.stopTimer();
                 return _graph;
             }
             catch (Exception ex)
             {
                 EventManagement.GuiLog(ex.Message.ToString());
+                EventManagement.stopTimer();
                 return null;
             }
         }
