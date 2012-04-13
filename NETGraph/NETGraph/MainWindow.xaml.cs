@@ -300,7 +300,9 @@ namespace NETGraph
             EventManagement.GuiLog("Updating Graph to GUI ...");
             ViewData.Clear();
             ViewDataVertexes.Clear();
-            if (graph.Edges.Count <= 100)
+            const int maxcount = 100;
+
+            if (graph.Edges.Count <= maxcount)
             {
                 foreach (var item in graph.Edges)
                 {
@@ -309,13 +311,13 @@ namespace NETGraph
             }
             else
             {
-                for (int i = 0; i <= 100; i++)
+                for (int i = 0; i <= maxcount; i++)
                 {
                     _ViewData.Add(new ViewData { StartVertex = graph.Edges[i].StartVertex.ToString(), EndVertex = graph.Edges[i].EndVertex.ToString(), Costs = graph.Edges[i].Costs.ToString() });
                 }
-                _ViewData.Add(new ViewData {StartVertex = "Nur ersten 100 angezeigt"});
+                _ViewData.Add(new ViewData {StartVertex = "Nur ersten "+maxcount.ToString()+" angezeigt"});
             }
-            if (graph.Vertexes.Count <=100)
+            if (graph.Vertexes.Count <= maxcount)
             {
             foreach (var v in graph.Vertexes)
                 {
@@ -324,17 +326,33 @@ namespace NETGraph
             }
             else
             {
-                for (int i = 0; i<= 100; i++)
+                for (int i = 0; i <= maxcount; i++)
                 {
                     _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = graph.Vertexes[i].ToString(), Costs = graph.Vertexes[i].Costs.ToString() });
                 }
-                _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = "Nur ersten 100 angezeigt" });
+                _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = "Nur ersten " + maxcount.ToString() + " angezeigt" });
             }
 
             labelVertexesValue.Content = graph.NumberOfVertexes.ToString();
             labelEdgesValue.Content = graph.Edges.Count.ToString();
             labelVertexCollision.Content = graph.CollisionOfVertexes.ToString();
             labelEdgeCollision.Content = graph.CollisionOfEdges.ToString();
+
+            try
+            {
+                // calculate graph weight
+                double graphWeight = .0;
+                foreach (Edge edge in _graph.Edges)
+                {
+                    graphWeight += edge.Costs;
+                }
+                labelGraphWeight.Content = graphWeight.ToString();
+            }
+            catch(Exception ex)
+            {
+                EventManagement.GuiLog("There was a Problem while counting the graph weight:" +ex.Message.ToString());
+                System.Windows.MessageBox.Show("There was a Problem while counting the graph weight");
+            }
 
         }
 
