@@ -67,20 +67,22 @@ namespace NETGraph
             //This event updates an String the gui textfield
             EventManagement.OnLoggingEvent += new EventManagement.LoggingEvent(EventManagement_OnLoggingEvent);
             EventManagement.OnUpdateGuiGraph += new EventManagement.UpdateGuiGraph(EventManagement_OnUpdateGuiGraph);
+            EventManagement.OnTimerEvent += new EventManagement.TimerEvent(EventManagement_OnTimerEvent);
         }
-
 
 
         void unRegisterEvents()
         {
             EventManagement.OnLoggingEvent -= new EventManagement.LoggingEvent(EventManagement_OnLoggingEvent);
             EventManagement.OnUpdateGuiGraph -= new EventManagement.UpdateGuiGraph(EventManagement_OnUpdateGuiGraph);
+            EventManagement.OnTimerEvent -= new EventManagement.TimerEvent(EventManagement_OnTimerEvent);
         }
         #endregion
 
         #region react 2 gui events
         private void BreathSearch_Click(object sender, RoutedEventArgs e)
         {
+
             //Debug.WriteLine("Algorithemen");
             EventManagement.GuiLog("running Breathsearch ...");
 
@@ -281,7 +283,16 @@ namespace NETGraph
         }
         #endregion
 
-        #region react 2 subscribed events
+        #region react 2 subscribed events     
+        
+        // update gui process timer
+        void EventManagement_OnTimerEvent(object sender, string ms_time)
+        {
+            labelAlgoTimeValue.Content = ms_time;
+        }
+
+
+
         //This event updates an String the gui textfield
         void EventManagement_OnUpdateGuiGraph(object sender, Graph graph)
         {
