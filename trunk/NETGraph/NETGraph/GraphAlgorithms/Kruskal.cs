@@ -109,5 +109,25 @@ namespace NETGraph.GraphAlgorithms
             return T;
         }
 
+        private bool checkIfSameVertexes(Graph g1, Graph g2)
+        {
+
+            if (g1.Vertexes.Count == g2.Vertexes.Count)
+            {
+                foreach (Vertex<String> v in g1.Vertexes)
+                {
+                    if (!g2.Vertexes.Contains(v))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }
