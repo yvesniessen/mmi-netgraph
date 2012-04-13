@@ -15,6 +15,8 @@ namespace NETGraph.GraphAlgorithms
             Graph resultForStartVertex = new Graph();
             Graph resultForEndVertex = new Graph();
 
+            List<Graph> temp = graph.getConnectingComponents();
+            int i = temp.Count;
             IGraphAlgorithm breathSearch = new BreathSearch();
 
             //Liste aller Edges des Eingangsgraphen
@@ -26,7 +28,17 @@ namespace NETGraph.GraphAlgorithms
             //Sichere die sortierte Edgelist für evtl. spätere Verbindung
             List<Edge> backupEdgeList = new List<Edge>();
 
-            while(edges.Count > 0)
+            List<Vertex<String>> vertexesWithEdge = new List<Vertex<string>>();
+            foreach(Vertex<String> vertex in graph.Vertexes)
+            {
+                if (vertex.Edges.Count > 0)
+                {
+                    vertexesWithEdge.Add(vertex);
+                }
+            }
+
+
+            while(resultGraph.Edges.Count < vertexesWithEdge.Count-1)
             {
                 //Hole die günstigste Kante aus der Liste und entferne sie
                 Edge currentEdge = edges.First();
@@ -45,12 +57,18 @@ namespace NETGraph.GraphAlgorithms
 
                 resultGraph.unmarkGraph();
 
-                if (resultGraph.findVertex(startVertexForNewEdge.VertexName).Edges.Count > 0)
+                Vertex<String> currentVertex = resultGraph.findVertex(startVertexForNewEdge.VertexName);
+
+                if (currentVertex.Edges.Count > 0)
                 {
-                    resultForStartVertex = breathSearch.performAlgorithm(resultGraph, resultGraph.findVertex(startVertexForNewEdge.VertexName));
+                    resultForStartVertex = breathSearch.performAlgorithm(resultGraph, currentVertex);
+                }
+                else
+                {
+                    resultForStartVertex = new Graph();
                 }
 
-                resultGraph.unmarkGraph();
+                /*resultGraph.unmarkGraph();
 
                 if (resultGraph.findVertex(endVertexForNewEdge.VertexName).Edges.Count > 0)
                 {
@@ -67,9 +85,14 @@ namespace NETGraph.GraphAlgorithms
                  * 
                  */
 
-                if (!(resultForStartVertex.Vertexes.Count > 1 && resultForEndVertex.Vertexes.Count > 1))
+                //if ((!(resultForStartVertex.Vertexes.Count > 1 )) //&& resultForEndVertex.Vertexes.Count > 1)))
+                //{
+                //    resultGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge);
+                //}
+
+                if( !resultForStartVertex.Vertexes.Contains(resultGraph.findVertex(endVertexForNewEdge.VertexName)) )
                 {
-                    resultGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge);
+                    resultGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge, currentEdge.Costs);
                 }
                 else
                 {
@@ -86,12 +109,12 @@ namespace NETGraph.GraphAlgorithms
              * 
              */
 
-            resultGraph.unmarkGraph();
+            /*resultGraph.unmarkGraph();
             while (resultGraph.getConnectingComponentsWithoutLooseVertexes().Count > 1)
             {
                 resultGraph = connectLooseComponents(resultGraph, backupEdgeList);
                 resultGraph.unmarkGraph();
-            }
+            }*/
             
             return resultGraph;
         }

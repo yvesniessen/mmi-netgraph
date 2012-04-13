@@ -70,14 +70,14 @@ namespace NETGraph
                 for (int i = 0; i < _graph.NumberOfVertexes; i++)
                 {
                     // Alle Knoten werden angelegt
-                    if ((i % 10000 == 0))
+                    if ((i % 1000 == 0))
                     {
-                        Debug.WriteLine(i + " Knoten angelegt");
+                        Console.WriteLine(i + " Knoten angelegt");
                     }
 
                     // Besser direkt einfügen, da Knoten nicht eh vorhanden sind. Viel viel schneller
-                    _graph.Vertexes.Add(new Vertex<string>(i.ToString()));
-                    //_graph.addVertex(new Vertex<string>(i.ToString()));
+                    //_graph.Vertexes.Add(new Vertex<string>(i.ToString()));
+                    _graph.addVertex(new Vertex<string>(i.ToString()));
                 }
 
                     // Read every line of file
