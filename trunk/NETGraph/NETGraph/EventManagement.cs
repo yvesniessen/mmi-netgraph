@@ -11,6 +11,39 @@ namespace NETGraph
 
     class EventManagement
     {
+        #region timer
+        private static Stopwatch _stopwatch;
+        public static void startTimer()
+        {
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+            
+        }
+
+        public static void stopTimer()
+        {
+            _stopwatch.Stop();
+            Debug.WriteLine("Estimated Timer: " + _stopwatch.ElapsedMilliseconds.ToString());
+            GuiLog ("Estimated Process Time: " + _stopwatch.ElapsedMilliseconds.ToString() );
+            GuiLog(" Estimated CPU Ticks: " + _stopwatch.ElapsedTicks.ToString());
+            TimerLog(_stopwatch.ElapsedMilliseconds.ToString());
+            _stopwatch.Reset();
+        }
+
+        public delegate void TimerEvent(object sender, String ms_time);
+        public static event TimerEvent OnTimerEvent;
+        public static void TimerLog(string ms_time)
+        {
+
+            if (OnTimerEvent != null)
+            {
+                OnTimerEvent(null, ms_time);
+            }
+        }
+        #endregion 
+
+
+
         public delegate void LoggingEvent(object sender, LogEventArgs a);
         public static event LoggingEvent OnLoggingEvent;
         public static void GuiLog(string Text)

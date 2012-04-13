@@ -28,7 +28,7 @@ namespace NETGraph.GraphAlgorithms
             startVertex.Marked = true;
             List<Vertex<String>> unmarkedVertexes = getUnmarkedVertexes(graph.Vertexes);
             List<Edge> nachbarListe = new List<Edge>();
-
+         
             T.addVertex(startVertex);
             
             //Gehe solange über die Liste bis sie leer ist
@@ -41,6 +41,8 @@ namespace NETGraph.GraphAlgorithms
 
                 List<Vertex<String>> markedVertexes = getMarkedVertexes(graph.Vertexes);
 
+
+                // Prüfe ob Edge Nachbar ist und füge alle Nachbarn in nachbarListe
                 foreach (Edge edge in graph.Edges)
                 {
                     //Die Egde darf nicht markiert (besucht) sein UND muss entweder den Start oder Endpunkt in T haben, damit sie in Frage kommt
