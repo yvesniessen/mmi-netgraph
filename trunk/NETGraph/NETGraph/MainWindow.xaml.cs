@@ -94,7 +94,9 @@ namespace NETGraph
                 m_graphAlgorithm = new BreathSearch();
 
                 //TODO @chris: Diese Funktion liefer nen leeren Graphen zurück!!
+                EventManagement.startTimer();
                 _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
 
                 foreach (Vertex<String> vertex in _graph.Vertexes)
                     Debug.Print(vertex.VertexName.ToString());
@@ -116,7 +118,9 @@ namespace NETGraph
                 Debug.Print("--------------");
                 Debug.Print("Tiefensuche: ");
                 m_graphAlgorithm = new DepthSearch();
+                EventManagement.startTimer();
                 _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
                 foreach (Vertex<String> vertex in _graph.Vertexes)
                    Debug.Print(vertex.VertexName.ToString());
 
@@ -137,7 +141,9 @@ namespace NETGraph
             m_graphAlgorithm = new Prim();
 
             _graph.unmarkGraph();
+            EventManagement.startTimer();
             _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            EventManagement.stopTimer();
             //foreach (Vertex<String> vertex in _graph.Vertexes)
             //    Debug.Print(vertex.VertexName.ToString());
 
@@ -155,7 +161,9 @@ namespace NETGraph
 
             m_graphAlgorithm = new Kruskal();
 
+            EventManagement.startTimer();
             _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+            EventManagement.stopTimer();
             foreach (Vertex<String> vertex in _graph.Vertexes)
                 Debug.Print(vertex.VertexName.ToString());
 
@@ -371,6 +379,11 @@ namespace NETGraph
             labelState.Content = (Int32.Parse(labelState.Content.ToString()) + 1).ToString();
         }
         #endregion
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 

@@ -400,22 +400,6 @@ namespace NETGraph
             return _connectingComponents;
         }
 
-        public bool checkIfTwoVertexesInSameComponent(Vertex<String> Vertex1, Vertex<String> Vertex2)
-        {
-        //Performanter wäre Breitensuche zu bauen, die bool zurückliefert wenn Breitensuche von Vertex1 aus gestartet bei Vertex 2 "vorbeikommt" liefert sie true;
-            BreathSearch bs = new BreathSearch();
-            return bs.checkIfTwoVertexesinSameComponent(this, Vertex1, Vertex2);
-
-        //Breitensuche von Vertex1 aus starten, in neuem Graphen schauen ob Vertex1 und Vertex2 in VertexListe
-        //    BreathSearch bs = new BreathSearch();
-        //    Graph tmp = bs.performAlgorithm(this, Vertex1);
-
-        //    if(tmp.Vertexes.Contains(Vertex2)) 
-        //    {
-        //        return true;
-        //    }
-        //    else return false;
-        }
 
         public void unmarkGraph()
         {
