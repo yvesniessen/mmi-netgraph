@@ -11,7 +11,7 @@ namespace NETGraph.GraphAlgorithms
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
             Graph T = new Graph();
-
+            //stark!!!!
             return null;
         }
     }
