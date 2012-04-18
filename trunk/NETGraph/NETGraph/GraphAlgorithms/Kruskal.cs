@@ -20,7 +20,13 @@ namespace NETGraph.GraphAlgorithms
             IGraphAlgorithm breathSearch = new BreathSearch();
 
             //Liste aller Edges des Eingangsgraphen
-            List<Edge> edges = graph.Edges;
+            //List<Edge> edges = graph.Edges;
+
+            List<Edge> edges = new List<Edge>();
+            foreach (Edge e in graph.Edges)
+            {
+                edges.Add(e);
+            }
             
             //Sortiere die Liste nach den Kosten
             edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
