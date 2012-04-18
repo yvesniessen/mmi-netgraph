@@ -380,26 +380,19 @@ namespace NETGraph
         #endregion
 
 
-        private void NextNeighbor_Click(object sender, RoutedEventArgs e)
+        private void HeuristikNN_Click(object sender, RoutedEventArgs e)
         {
-            EventManagement.GuiLog("running NextNeighbor ...");
+            EventManagement.GuiLog("running HeuristikNN ...");
 
             if (_graph != null)
             {
                 if (_graph.is_FullGraph())
                 {
-                
-                Debug.Print("--------------");
-                Debug.Print("NextNeighbor: ");
-
-                m_graphAlgorithm = new NextNeighbor();
+                m_graphAlgorithm = new HeuristikNN();
 
                 EventManagement.startTimer();
                 _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
                 EventManagement.stopTimer();
-
-                //foreach (Vertex<String> vertex in _graph.Vertexes)
-                //    Debug.Print(vertex.VertexName.ToString());
 
                 _graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
@@ -412,10 +405,37 @@ namespace NETGraph
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
 
+        private void HeuristikDS_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running HeuristikNN ...");
+
+            if (_graph != null)
+            {
+                if (_graph.is_FullGraph())
+                {
+                    m_graphAlgorithm = new HeuristikDS();
+
+                    EventManagement.startTimer();
+                    _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                    EventManagement.stopTimer();
+
+                    _graphList = Export.showGraph(ref _graph);
+                    _graph.updateGUI();
+                    _graph.unmarkGraph();
+                }
+                else
+                    System.Windows.MessageBox.Show("Please Load a FullGraph!");
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
         private void Output_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+
 
     }
 
