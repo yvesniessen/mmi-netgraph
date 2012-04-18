@@ -15,8 +15,9 @@
                 <MenuItem Header="Tiefensuche" Click="DepthSearch_Click" />
                 <MenuItem Header="Prim" Click="Prim_Click" />
                 <MenuItem Header="Kruskal" Click="Kruskal_Click" />
+                <MenuItem Header="Nachbar" Click="NextNeighbor_Click" />
             </MenuItem>
-            <MenuItem Header="Output" Click="MenuItem_Click" />
+            <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">
                 <MenuItem Header="Version" />
                 <MenuItem Header="LogFile" Click="menuHelpLogFileOpen_Click"  />

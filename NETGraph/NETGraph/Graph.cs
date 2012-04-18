@@ -519,11 +519,13 @@ namespace NETGraph
             }
         }
 
-        public String findNearestNeighbor(String startVertex)
+        public bool is_FullGraph()
         {
-            String nearestNeigbor = default(String);
-            
-            return null;
+            // Ein Vollständiger Graph hat imm n über 2 Kanten
+            if (((this.Vertexes.Count() * (this.Vertexes.Count()-1)) /2) == this.Edges.Count())
+                return true;
+
+            return false;
         }
 
         #endregion

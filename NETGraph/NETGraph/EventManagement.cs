@@ -28,7 +28,7 @@ namespace NETGraph
                 _stopwatch.Stop();
                 Debug.WriteLine("Estimated Timer: " + _stopwatch.ElapsedMilliseconds.ToString());
                 GuiLog("Estimated Process Time: " + _stopwatch.ElapsedMilliseconds.ToString());
-                GuiLog(" Estimated CPU Ticks: " + _stopwatch.ElapsedTicks.ToString());
+                GuiLog("Estimated CPU Ticks: " + _stopwatch.ElapsedTicks.ToString());
                 TimerLog(_stopwatch.ElapsedMilliseconds.ToString());
                 _stopwatch.Reset();
             }
