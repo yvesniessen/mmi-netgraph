@@ -10,8 +10,32 @@ namespace NETGraph.GraphAlgorithms
     {
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
+            // Ansatz:
+            // 1. Spanne einen MST
+            // 2. Gehe durch den Graphen mit einer Tiefensuche
+            // 3. Merke die die Reihenfolge der Knoten
+            // 4. Verbinde immer die Kanten zweier Aufeinanderfolgender Knoten
+            // 5. Verdinde den letzen und ersten Knoten zu einer Rundreise
+
+            
+
+            IGraphAlgorithm m_graphAlgorithm_Kruskal = new Kruskal();
+            Graph MST = m_graphAlgorithm_Kruskal.performAlgorithm(graph, graph.Vertexes.First());
+
+            MST.unmarkGraph();
+            IGraphAlgorithm m_graphAlgorithm_Depthsearch = new DepthSearch();
+            Graph DS = m_graphAlgorithm_Depthsearch.performAlgorithm(MST, MST.Vertexes.First());
+
             Graph resultGraph = new Graph();
-           
+            Edge e;
+            int i = 0;
+            while (resultGraph.Vertexes.Count() != DS.Vertexes.Count())
+            {
+               e = graph.findEdge(DS.Vertexes.ElementAt(i).VertexName, DS.Vertexes.ElementAt(i + 1).VertexName);
+
+               resultGraph.addEdge(new Vertex<String>(e.StartVertex.VertexName), new Vertex<String>(e.EndVertex.VertexName), e.Costs);
+               i++;
+            }
 
             return resultGraph;
         }

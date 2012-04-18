@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Graphen\Graph_gross.txt" />
+    <Resource Include="Graphen\TSP-Graph2.txt" />
     <Resource Include="Graphen\K_10.txt" />
     <Resource Include="Graphen\TSP-Graph.txt" />
     <Resource Include="Graphen\G_10_20.txt" />
