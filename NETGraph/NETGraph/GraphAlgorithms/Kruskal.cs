@@ -14,7 +14,7 @@ namespace NETGraph.GraphAlgorithms
 
             Graph resultForStartVertex = new Graph();
             Graph resultForEndVertex = new Graph();
-
+            
             List<Graph> temp = graph.getConnectingComponents();
             int i = temp.Count;
             IGraphAlgorithm breathSearch = new BreathSearch();

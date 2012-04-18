@@ -184,6 +184,9 @@ namespace NETGraph
         #endregion
 
         #region public functions
+
+        
+
         public void updateGUI()
         {
             EventManagement.updateGuiGraph(this);
@@ -201,6 +204,13 @@ namespace NETGraph
                 }
             }
             return null;
+        }
+
+        public void addEdge(Edge edge)
+        {
+
+
+            this.Edges.Add(edge);
         }
 
         public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex)
@@ -531,5 +541,6 @@ namespace NETGraph
         }
 
         #endregion
+
     }
 }
