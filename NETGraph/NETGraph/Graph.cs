@@ -401,18 +401,20 @@ namespace NETGraph
         }
 
 
-        public void unmarkGraph()
+        public Graph unmarkGraph()
         {
-            foreach (Vertex<String> vertex in Vertexes)
+            foreach (Vertex<String> v in Vertexes)
             {
-                vertex.Marked = false;
+                v.Marked = false;
             }
 
             foreach (Edge edge in Edges)
             {
                 edge.Marked = false;
             }
+            return this;
         }
+   
 
         public bool deleteEdge(Edge edge)
         {

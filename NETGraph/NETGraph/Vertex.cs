@@ -48,14 +48,8 @@ namespace NETGraph
 
         public bool Marked
         {
-            get
-            {
-                return _marked;
-            }
-            set
-            {
-                _marked = value;
-            }
+            get;
+            set;
         }
 
         public double Costs

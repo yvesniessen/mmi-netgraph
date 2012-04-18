@@ -6,12 +6,12 @@ using NETGraph.Algorithm;
 
 namespace NETGraph.GraphAlgorithms
 {
-    class NextNeighbor : IGraphAlgorithm
+    class HeuristikNN : IGraphAlgorithm
     {
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
             Graph resultGraph = new Graph();
-            
+
             // Alle Knoten werden benötigt, daher werden sie in den Ergebnisgraphen eingefügt
 
             int NumOfAllVertex = graph.Vertexes.Count();
@@ -21,11 +21,14 @@ namespace NETGraph.GraphAlgorithms
             Vertex<String> currentVertex = startVertex;
             Vertex<String> neighborVertex = startVertex;
 
+
+
             // Solange wie es nicht N-1 Kanten gibt
-            while ( resultGraph.Edges.Count() < NumOfAllVertex-1)
+            while (resultGraph.Edges.Count() < NumOfAllVertex - 1)
             {
                 // Füge den Aktuellen Knotenstart in die resultGraph ein
                 resultGraph.addVertex(currentVertex);
+                currentVertex.Marked = true;
 
                 // Sortiert die Kantenliste des aktuellen Knotens nach den Kosten
                 currentVertex.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
@@ -34,43 +37,20 @@ namespace NETGraph.GraphAlgorithms
                 foreach (Edge e in currentVertex.Edges)
                 {
                     neighborVertex = currentVertex.getNeighborVertex(e);
-                    // Falls die aktuelle Kante nicht markiert ist
+                    // Falls der aktuelle Knoten nicht markiert ist
                     if (!neighborVertex.Marked)
                     {
-                        resultGraph.addEdge(currentVertex, neighborVertex);
+                        resultGraph.addEdge(currentVertex, neighborVertex, e.Costs);
+                        currentVertex = neighborVertex;
                         break;
                     }
                 }
-
-                // Nimm den letzen hinzugefügten Knoten und Verbinde ihn mit dem Startknoten
-
-
-            
             }
 
+            // Nimm den letzen hinzugefügten Knoten und Verbinde ihn mit dem Startknoten
+            resultGraph.addEdge(currentVertex, startVertex, graph.findEdge(currentVertex.VertexName, startVertex.VertexName).Costs);
 
             return resultGraph;
         }
-
-        private bool checkIfSameVertexes(Graph g1, Graph g2)
-        {
-
-            if (g1.Vertexes.Count == g2.Vertexes.Count)
-            {
-                foreach (Vertex<String> v in g1.Vertexes)
-                {
-                    if (!g2.Vertexes.Contains(v))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
     }
 }
