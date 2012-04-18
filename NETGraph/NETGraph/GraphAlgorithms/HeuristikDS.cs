@@ -28,14 +28,18 @@ namespace NETGraph.GraphAlgorithms
 
             Graph resultGraph = new Graph();
             Edge e;
-            int i = 0;
-            while (resultGraph.Vertexes.Count() != DS.Vertexes.Count())
-            {
-               e = graph.findEdge(DS.Vertexes.ElementAt(i).VertexName, DS.Vertexes.ElementAt(i + 1).VertexName);
 
-               resultGraph.addEdge(new Vertex<String>(e.StartVertex.VertexName), new Vertex<String>(e.EndVertex.VertexName), e.Costs);
-               i++;
-            }
+            while (resultGraph.Vertexes.Count() != DS.Vertexes.Count())
+                for (int i = 0;i < DS.Vertexes.Count()-1 ; i++)
+                {
+                    e = graph.findEdge(DS.Vertexes.ElementAt(i).VertexName, DS.Vertexes.ElementAt(i + 1).VertexName);
+
+                    resultGraph.addEdge(new Vertex<String>(e.StartVertex.VertexName), new Vertex<String>(e.EndVertex.VertexName), e.Costs);
+                }
+
+            e = graph.findEdge(DS.Vertexes.ElementAt(DS.Vertexes.Count()-1).VertexName, DS.Vertexes.ElementAt(0).VertexName);
+
+            resultGraph.addEdge(new Vertex<String>(e.StartVertex.VertexName), new Vertex<String>(e.EndVertex.VertexName), e.Costs);
 
             return resultGraph;
         }
