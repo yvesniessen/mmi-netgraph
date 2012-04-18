@@ -132,6 +132,20 @@ namespace NETGraph
             return neighbors;
         }
 
+        public Vertex<String> getNeighborVertex(Edge currentEdge)
+        {
+            //Überprüfe ob der aktuelle Knoten als start- oder endvertex eingetragen ist und gib den anderen Knoten zurück
+
+            if (currentEdge.StartVertex.VertexName.ToString() != this.VertexName.ToString())
+            {
+                return currentEdge.StartVertex;
+            }
+            else
+            {
+                return currentEdge.EndVertex;
+            }
+        }
+
         public override String ToString()
         {
             return "V: " + VertexName.ToString();

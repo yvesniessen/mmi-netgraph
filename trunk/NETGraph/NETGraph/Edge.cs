@@ -16,7 +16,7 @@ namespace NETGraph
         private Vertex<string> _startVertex, _endVertex;
 
         // The value holder for compareTo-Implementation
-        protected int m_value;
+        protected int m_value = 0;
 
         #endregion
 

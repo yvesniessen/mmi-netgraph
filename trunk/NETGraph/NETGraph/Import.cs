@@ -167,7 +167,6 @@ namespace NETGraph
 
         private static void convertListLine(string[] Elements, ref Graph _graph)
         {
-            double Edgecosts;
 
             switch (Elements.Count())
             {

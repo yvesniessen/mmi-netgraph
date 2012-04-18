@@ -43,6 +43,7 @@ namespace NETGraph
             EventManagement.writeIntoLogFile("program closed ");
         }
         #endregion
+
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
@@ -82,8 +83,6 @@ namespace NETGraph
         #region react 2 gui events
         private void BreathSearch_Click(object sender, RoutedEventArgs e)
         {
-
-            //Debug.WriteLine("Algorithemen");
             EventManagement.GuiLog("running Breathsearch ...");
 
             if (_graph != null)
@@ -380,7 +379,40 @@ namespace NETGraph
         }
         #endregion
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+
+        private void NextNeighbor_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running NextNeighbor ...");
+
+            if (_graph != null)
+            {
+                if (_graph.is_FullGraph())
+                {
+                
+                Debug.Print("--------------");
+                Debug.Print("NextNeighbor: ");
+
+                m_graphAlgorithm = new NextNeighbor();
+
+                EventManagement.startTimer();
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
+
+                //foreach (Vertex<String> vertex in _graph.Vertexes)
+                //    Debug.Print(vertex.VertexName.ToString());
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+                }
+                else
+                    System.Windows.MessageBox.Show("Please Load a FullGraph!");
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
+        private void Output_Click(object sender, RoutedEventArgs e)
         {
 
         }
