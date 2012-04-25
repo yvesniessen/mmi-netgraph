@@ -10,13 +10,14 @@
                 <MenuItem Header="Open" Click="menuFileOpen_Click" />
                 <MenuItem Header="Save" />
             </MenuItem>
-            <MenuItem Header="Algorithm">
+            <MenuItem Header="Algorithm" >
                 <MenuItem Header="Breitensuche" Click="BreathSearch_Click" />
                 <MenuItem Header="Tiefensuche" Click="DepthSearch_Click" />
                 <MenuItem Header="Prim" Click="Prim_Click" />
                 <MenuItem Header="Kruskal" Click="Kruskal_Click" />
                 <MenuItem Header="HeuristikNN" Click="HeuristikNN_Click" />
                 <MenuItem Header="HeuristikDS" Click="HeuristikDS_Click" />
+                <MenuItem Header="AllWays" Click="Allways_Click" />
             </MenuItem>
             <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">
