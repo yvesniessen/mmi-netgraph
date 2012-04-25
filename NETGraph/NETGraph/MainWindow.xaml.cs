@@ -446,12 +446,11 @@ namespace NETGraph
                     m_graphAlgorithm = new HeuristikDS();
 
                     EventManagement.startTimer();
-                    foreach (Vertex<String> v in _graph.Vertexes)
-                    {
-                        _graph.findAllWaysForVertex(v, new List<Vertex<string>>(), 0);
-                    }
-                    List<List<Vertex<String>>> temp = _graph.allResults;
+                        _graph.findAllWaysForVertex(_graph.Vertexes.First(), new List<Vertex<String>>(), 0);
+
                     EventManagement.stopTimer();
+
+                    List<List<Vertex<String>>> temp = _graph.allResults;
 
                     _graphList = Export.showGraph(ref _graph);
                     _graph.updateGUI();

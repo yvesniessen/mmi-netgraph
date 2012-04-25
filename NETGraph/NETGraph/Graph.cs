@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NETGraph.Algorithm;
+using NETGraph.GraphAlgorithms;
 
 namespace NETGraph
 {
@@ -538,6 +539,81 @@ namespace NETGraph
                 return true;
 
             return false;
+        }
+
+
+        public List<List<Vertex<String>>> allResults = new List<List<Vertex<string>>>();
+        double globalweight = 13333337;
+        List<Vertex<String>> globalway = new List<Vertex<string>>();
+        List<Vertex<String>> tempGlobalWay = new List<Vertex<string>>();
+        
+        /* void findAllWaysForVertex(Vertex<String> startVertex, double weight)//List<Vertex<String>> resultQueue, double weight)
+        {
+            tempGlobalWay.Add(startVertex);
+
+            //Abbruch: Wenn nicht alle Knoten in der Queue sind
+            if (tempGlobalWay.Count() < this.Vertexes.Count())
+            {
+                foreach (Vertex<String> currentVertex in startVertex.findNeighbors(this.DirectedEdges))
+                {
+                    if (!tempGlobalWay.Contains(currentVertex))
+                    {
+                        findAllWaysForVertex(currentVertex, weight + 1);
+                    }
+                }
+            }
+            else
+            {
+                tempGlobalWay.Clear();
+                return;
+            }
+        }*/
+
+        public void findAllWaysForVertex(Vertex<String> startVertex, List<Vertex<String>> results, double weight)
+        {
+            double edgeCosts=0;
+
+            if (results.Count() == 0)
+            {
+                results.Add(startVertex);
+            }
+
+            if (results.Count() < this.Vertexes.Count())
+            {                
+                foreach (Vertex<String> currentVertex in startVertex.findNeighbors(this.DirectedEdges))
+                {
+                    if (!results.Contains(currentVertex))
+                    {
+                        edgeCosts = this.findEdge(currentVertex.VertexName,startVertex.VertexName).Costs;
+                        if (weight + edgeCosts < globalweight)
+                        {
+                            results.Add(currentVertex);
+                            findAllWaysForVertex(currentVertex, results, (weight + edgeCosts));
+                        }
+                    }
+                }
+            }
+
+            else //(results.Count == this.Vertexes.Count())
+            {
+                double tempCosts = this.findEdge(results.First().VertexName, results.Last().VertexName).Costs;
+                allResults.Add(results);
+                weight += tempCosts;
+
+                if (weight <= globalweight)
+                {
+                    globalweight = weight;                                     
+                    globalway = results;
+                    EventManagement.GuiLog("weight: " + globalweight.ToString());
+                }
+            }
+                results.Remove(results.Last());
+            return;
+        }
+
+        public int Faculty(int n)
+        {
+            return n == 0 ? 1 : n * Faculty(n - 1);
         }
 
         #endregion
