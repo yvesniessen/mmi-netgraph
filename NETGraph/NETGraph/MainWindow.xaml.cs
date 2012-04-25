@@ -435,6 +435,35 @@ namespace NETGraph
 
         }
 
+        private void Allways_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running AllWays ...");
+
+            if (_graph != null)
+            {
+                if (_graph.is_FullGraph())
+                {
+                    m_graphAlgorithm = new HeuristikDS();
+
+                    EventManagement.startTimer();
+                    foreach (Vertex<String> v in _graph.Vertexes)
+                    {
+                        _graph.findAllWaysForVertex(v, new List<Vertex<string>>(), 0);
+                    }
+                    List<List<Vertex<String>>> temp = _graph.allResults;
+                    EventManagement.stopTimer();
+
+                    _graphList = Export.showGraph(ref _graph);
+                    _graph.updateGUI();
+                    _graph.unmarkGraph();
+                }
+                else
+                    System.Windows.MessageBox.Show("Please Load a FullGraph!");
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
 
 
     }
