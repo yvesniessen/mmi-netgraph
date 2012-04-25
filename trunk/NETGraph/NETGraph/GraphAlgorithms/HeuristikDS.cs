@@ -29,7 +29,6 @@ namespace NETGraph.GraphAlgorithms
             Graph resultGraph = new Graph();
             Edge e;
 
-            while (resultGraph.Vertexes.Count() != DS.Vertexes.Count())
                 for (int i = 0;i < DS.Vertexes.Count()-1 ; i++)
                 {
                     e = graph.findEdge(DS.Vertexes.ElementAt(i).VertexName, DS.Vertexes.ElementAt(i + 1).VertexName);
