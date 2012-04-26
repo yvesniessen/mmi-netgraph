@@ -18,6 +18,7 @@
                 <MenuItem Header="HeuristikNN" Click="HeuristikNN_Click" />
                 <MenuItem Header="HeuristikDS" Click="HeuristikDS_Click" />
                 <MenuItem Header="AllWays" Click="Allways_Click" />
+                <MenuItem Header="Dijkstra" Click="Dijkstra_Click" />
             </MenuItem>
             <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">

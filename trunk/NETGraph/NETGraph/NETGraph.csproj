@@ -65,6 +65,7 @@
     <Compile Include="Graph.cs" />
     <Compile Include="GraphAlgorithms\HeuristikNN.cs" />
     <Compile Include="GraphAlgorithms\HeuristikDS.cs" />
+    <Compile Include="GraphAlgorithms\Dijkstra.cs" />
     <Compile Include="GraphAlgorithms\Kruskal.cs" />
     <Compile Include="GraphAlgorithms\Prim.cs" />
     <Compile Include="GraphAlgorithms\TSP_AllWays.cs" />
@@ -133,6 +134,7 @@
     <Resource Include="Graphen\TSNeighbor.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Graphen\Dijkstra.txt" />
     <Content Include="Graphen\Graph_gross.txt" />
     <Resource Include="Graphen\MiniGraph.txt" />
     <Resource Include="Graphen\K_100.txt" />
