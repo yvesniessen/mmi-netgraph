@@ -20,7 +20,9 @@ namespace NETGraph
         private T _vertexName;
         private double _costs = 0;
         private List<Edge> _edges = new List<Edge>();
-        private bool _marked = false;
+        private Vertex<T> _neighborvertex= null;  // Für Dijkstra angelegt
+        public bool _marked = false;
+        public bool _marked2 = false;
         private int _grade = 0;
         #endregion
 
@@ -34,6 +36,19 @@ namespace NETGraph
         #endregion
 
         #region properties
+
+        public Vertex<T> Neighborvertex
+        {
+            get
+            {
+                return _neighborvertex;
+            }
+            set
+            {
+                _neighborvertex = value;
+            }
+        }
+
         public T VertexName
         {
             get
@@ -142,7 +157,8 @@ namespace NETGraph
 
         public override String ToString()
         {
-            return "V: " + VertexName.ToString();
+            // TEMP: Zur überprüfung von Dijkstra
+            return "V: " + VertexName.ToString() + " " + _marked.ToString() + " " +_marked2.ToString() + " " + Costs.ToString();
         }
     }
 
