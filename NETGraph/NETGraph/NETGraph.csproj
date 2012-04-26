@@ -136,7 +136,6 @@
   <ItemGroup>
     <Resource Include="Graphen\Dijkstra.txt" />
     <Content Include="Graphen\Graph_gross.txt" />
-    <Resource Include="Graphen\MiniGraph.txt" />
     <Resource Include="Graphen\K_100.txt" />
     <Resource Include="Graphen\TSP-Graph2.txt" />
     <Resource Include="Graphen\K_10.txt" />
