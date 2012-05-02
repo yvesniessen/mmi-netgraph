@@ -551,27 +551,31 @@ namespace NETGraph
         public void findAllWaysForVertex(Vertex<String> startVertex, List<Vertex<String>> results, double weight)
         {
             double edgeCosts=0;
-
+            
+            // Ersten Knoten hinzufügen
             if (results.Count() == 0)
             {
                 results.Add(startVertex);
             }
 
+            // Solange es noch nicht hinzugefügte Knoten gibt
             if (results.Count() < this.Vertexes.Count())
-            {                
+            { 
+                // Finde alle Nahbarn des übergebenen Knotens
                 foreach (Vertex<String> currentVertex in startVertex.findNeighbors(this.DirectedEdges))
                 {
+                    // Falls der Knoten noch nicht enthalten ist
                     if (!results.Contains(currentVertex))
                     {
                         edgeCosts = this.findEdge(currentVertex.VertexName,startVertex.VertexName).Costs;
                        
                         
-                        //Diese if abfrage ist das bound
-                        //if (weight + edgeCosts < globalweight)
-                        //{
+                       // Falls die Kosten höher sind als der Globale Wert, schneide diesen Ast ab (Bound)
+                       if (weight + edgeCosts < globalweight)
+                       {
                             results.Add(currentVertex);
                             findAllWaysForVertex(currentVertex, results, (weight + edgeCosts));
-                        //}
+                       }
                     }
                 }
             }
