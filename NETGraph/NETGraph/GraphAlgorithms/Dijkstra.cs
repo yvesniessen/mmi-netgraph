@@ -11,36 +11,33 @@ namespace NETGraph.Algorithm
 
         public Graph performAlgorithm(Graph graph, Vertex<String> startVertex)
         {
-            // Graph resultGraph = new Graph();
-
-            // !! ----  resultGraph.Vertexes = graph.Vertexes;
+            //Graph resultGraph = new Graph();
+            // resultGraph.Vertexes = graph.Vertexes;
 
             // ALLGEMEINES:
             //  Knoten schon besucht über Vertex.Marked
             //  Aktuelle Entfernung vom Startknoten zum Knoten über Vertex.Costs
-            //  Weg zum Vorgänger über Kanten und Kosten die in neuen Graphen eingefügt werden ??
+            //  Weg zum Vorgänger über Vorgängerattribut in Knoten
 
             // STARTBEDINGUNGEN:
             // Die Distanz ist zu jedem Knoten ist Unendlich (in diesem Fall sehr groß)
             foreach (Vertex<String> vertex in graph.Vertexes)
                 {
-                    //Vertex<String> newVertex = new Vertex<String>(vertex.VertexName);
-                    //graph.addVertex(newVertex);
                     vertex.Costs = 1000000000;
-                    //newVertex.Costs = 1000000000;
-                    //vertex._marked = false;
+                    vertex.Neighborvertex = null;
+                    vertex.Marked = false;
+
                 }
 
             // Der aktuelle Knoten ist der Startknoten (Das Gewicht ist zu sich selber 0)
             Vertex<String> currentVertex = null;
             startVertex.Costs = 0;
-            
-           
+            startVertex.Neighborvertex = startVertex;
+             
            // Wiederhole bis es N-1 Kanten gibt bzw. bis alle Knoten besucht sind
             int NumOfAllVertex = graph.Vertexes.Count();
 
-            // KANN NICHT STIMMEN
-            while (graph.Edges.Count() < NumOfAllVertex - 1)
+            while (graph.Vertexes.Where(x => x._marked == false).Count() > 0)
             {
                 // setzen den unbesuchten Knoten mit der geringsten Distanz als aktuell und besucht
                 graph.Vertexes.Sort(delegate(Vertex<String> e1, Vertex<String> e2) { return e1.Costs.CompareTo(e2.Costs); });
@@ -71,24 +68,38 @@ namespace NETGraph.Algorithm
                             // dann setze sie
                             vertex.Costs = currentCosts;
 
-                            // falls der Knoten schon einen Vorgänger (Kante) hat
-                                //resultGraph.deleteEdge(vertex.Edges.Single());
-
                             // und setze dich als Vorgänger
-                                //resultGraph.addEdge(currentEdge);
                             vertex.Neighborvertex = currentVertex;
                         }
                     }
                 }
             }
 
-            graph.Edges = null;
-
-            foreach(Vertex<String> vertex in graph.Vertexes)
+            // Alle Kanten löschen die nicht in Verwendung sind
+            foreach(Edge e in graph.Edges)
             {
-                graph.addEdge(vertex, vertex.Neighborvertex);
+                // Wenn der eine Knoten an der Kante einen Neighbor besitzt der der andere Knoten der Kante ist 
+                if ((e.StartVertex.Neighborvertex.VertexName != e.EndVertex.VertexName) &&
+                   (e.EndVertex.Neighborvertex.VertexName != e.StartVertex.VertexName))
+                {
+                    e.Marked = true;
+                }
             }
 
+           for (int i = 0; i < graph.Edges.Count(); i++)
+           {
+               if (graph.Edges[i].Marked == true)
+             {
+                 graph.Edges.Remove(graph.Edges.ElementAt(i));
+                 i--;
+             }
+           }
+
+            //foreach (Edge e in graph.Edges)
+            //{
+            //    if (e.Marked == true)
+            //    graph.Edges.Remove(e);
+            //}
 
             return graph;
         }
