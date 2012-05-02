@@ -547,27 +547,6 @@ namespace NETGraph
         List<Vertex<String>> globalway = new List<Vertex<string>>();
         List<Vertex<String>> tempGlobalWay = new List<Vertex<string>>();
         
-        /* void findAllWaysForVertex(Vertex<String> startVertex, double weight)//List<Vertex<String>> resultQueue, double weight)
-        {
-            tempGlobalWay.Add(startVertex);
-
-            //Abbruch: Wenn nicht alle Knoten in der Queue sind
-            if (tempGlobalWay.Count() < this.Vertexes.Count())
-            {
-                foreach (Vertex<String> currentVertex in startVertex.findNeighbors(this.DirectedEdges))
-                {
-                    if (!tempGlobalWay.Contains(currentVertex))
-                    {
-                        findAllWaysForVertex(currentVertex, weight + 1);
-                    }
-                }
-            }
-            else
-            {
-                tempGlobalWay.Clear();
-                return;
-            }
-        }*/
 
         public void findAllWaysForVertex(Vertex<String> startVertex, List<Vertex<String>> results, double weight)
         {
@@ -585,11 +564,14 @@ namespace NETGraph
                     if (!results.Contains(currentVertex))
                     {
                         edgeCosts = this.findEdge(currentVertex.VertexName,startVertex.VertexName).Costs;
-                        if (weight + edgeCosts < globalweight)
-                        {
+                       
+                        
+                        //Diese if abfrage ist das bound
+                        //if (weight + edgeCosts < globalweight)
+                        //{
                             results.Add(currentVertex);
                             findAllWaysForVertex(currentVertex, results, (weight + edgeCosts));
-                        }
+                        //}
                     }
                 }
             }
@@ -600,12 +582,15 @@ namespace NETGraph
                 allResults.Add(results);
                 weight += tempCosts;
 
+
+                //Es werden nur kürzere Wege angezeigt da sonst die GUI zu lange braucht
                 if (weight <= globalweight)
                 {
                     globalweight = weight;                                     
                     globalway = results;
                     EventManagement.GuiLog("weight: " + globalweight.ToString());
                 }
+
             }
                 results.Remove(results.Last());
             return;
