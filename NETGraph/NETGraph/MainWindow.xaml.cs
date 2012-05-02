@@ -275,8 +275,27 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-        
 
+        private void MooreBellmanFord_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running MooreBellmanFord ...");
+
+            if (_graph != null)
+            {
+                m_graphAlgorithm = new MooreBellmanFord();
+
+                EventManagement.startTimer();
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
 
 
 
@@ -483,6 +502,8 @@ namespace NETGraph
             labelState.Content = (Int32.Parse(labelState.Content.ToString()) + 1).ToString();
         }
         #endregion
+
+
 
 
 
