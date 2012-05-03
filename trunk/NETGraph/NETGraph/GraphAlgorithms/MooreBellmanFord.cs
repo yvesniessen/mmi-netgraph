@@ -42,8 +42,10 @@ namespace NETGraph.Algorithm
            startVertex.Marked = true;
            Vertex<String> currentVertex = startVertex;
 
+
+
            /////////////////////////////////////////////////////////////////////////////////////////
-           // Schritt 2: Die günstigste Strecke berechnen
+           // Schritt 2: Die günstigsten Strecken von startVertex aus berechnen
            /////////////////////////////////////////////////////////////////////////////////////////
 
            List<Vertex<String>> neighborList = new List<Vertex<string>>();
@@ -79,20 +81,21 @@ namespace NETGraph.Algorithm
                }
            }
 
+
+
            /////////////////////////////////////////////////////////////////////////////////////////
-           // Schritt 3: Die benutzen Kanten raussuchen
+           // Schritt 3: Die benutzen Kanten raussuchen und prüfen, ob es einen negativen Zykel gibt
            /////////////////////////////////////////////////////////////////////////////////////////
 
-           EventManagement.GuiLog("Benutzte Kanten:");
-
-           foreach (Vertex<String> vertex in graph.Vertexes)
+           foreach (Edge edge in graph.Edges)
            {
-               EventManagement.GuiLog("Start: " + vertex.VertexName+ " Ende: " + vertex.PreVertex.VertexName);
+               double startVertexCosts = edge.StartVertex.Costs;
+               double endVertexCosts = edge.EndVertex.Costs;
+               if ((startVertexCosts + edge.Costs) < endVertexCosts)
+                   EventManagement.GuiLog("Abbruch: Es gibt einen Kreis negativen Gewichtes.");
            }
 
-
-
-            return graph;
+           return graph;
         }
         #endregion
     }
