@@ -285,8 +285,15 @@ namespace NETGraph
                 m_graphAlgorithm = new MooreBellmanFord();
 
                 EventManagement.startTimer();
-                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                String startVertexName = "2";
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex(startVertexName));
                 EventManagement.stopTimer();
+
+                EventManagement.GuiLog("Wege von [Knoten " + startVertexName + "]:");
+                foreach (Vertex<String> vertex in _graph.Vertexes)
+                {
+                    EventManagement.GuiLog("[Knoten " + vertex.VertexName + "] Distanz: " + vertex.Costs);
+                }
 
                 _graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
