@@ -21,8 +21,11 @@ namespace NETGraph
         private double _costs = 0;
         private List<Edge> _edges = new List<Edge>();
         private Vertex<T> _neighborvertex= null;  // Für Dijkstra angelegt
+        private Color _color = Colors.White;
         public bool _marked = false;
         private int _grade = 0;
+        //Vorgänger
+        private Vertex<String> _preVertex;
         #endregion
 
         #region constructors
@@ -35,6 +38,30 @@ namespace NETGraph
         #endregion
 
         #region properties
+
+        public Vertex<String> PreVertex
+        {
+            get
+            {
+                return _preVertex;
+            }
+            set
+            {
+                _preVertex = value;
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                _color = value;
+            }
+        }
 
         public Vertex<T> Neighborvertex
         {
