@@ -27,9 +27,9 @@ namespace NETGraph
         #region constructors
         public Graph()
         {
-           
+
         }
-        
+
         public Graph(String graphName)
         {
             GraphName = GraphName;
@@ -50,8 +50,8 @@ namespace NETGraph
             }
         }
 
-        public String GraphName 
-        { 
+        public String GraphName
+        {
             get
             {
                 return _graphName;
@@ -121,10 +121,10 @@ namespace NETGraph
                 _directedEdges = value;
             }
         }
-      
+
         public int NumberOfVertexes
         {
-            get 
+            get
             {
                 return _numberOfVertexes;
             }
@@ -174,7 +174,7 @@ namespace NETGraph
                 {
                     return edge;
                 }
-                else if(!DirectedEdges && edge.EndVertex.VertexName.Equals(startVertex.VertexName) && edge.StartVertex.VertexName.Equals(endVertex.VertexName))
+                else if (!DirectedEdges && edge.EndVertex.VertexName.Equals(startVertex.VertexName) && edge.StartVertex.VertexName.Equals(endVertex.VertexName))
                 {
                     return edge;
                 }
@@ -186,7 +186,7 @@ namespace NETGraph
 
         #region public functions
 
-        
+
 
         public void updateGUI()
         {
@@ -200,7 +200,7 @@ namespace NETGraph
                 {
                     //MessageBox.Show("Edge schon vorhanden: " + e.ToString());
                     System.Diagnostics.Debug.WriteLine("Edge schon vorhanden: " + edge.ToString());
-                    
+
                     return edge;
                 }
             }
@@ -218,7 +218,7 @@ namespace NETGraph
         {
             startVertex = addVertex(startVertex);
             endVertex = addVertex(endVertex);
-         
+
             if (!ParallelEdges)
             {
                 if (!DirectedEdges)
@@ -257,7 +257,7 @@ namespace NETGraph
                 }
             }
         }
-        
+
         public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, double edgecosts)
         {
             startVertex = addVertex(startVertex);
@@ -311,7 +311,7 @@ namespace NETGraph
                 }
             }
         }
-        
+
         public Vertex<String> addVertex(Vertex<String> vertex)
         {
             bool check = false;
@@ -343,12 +343,12 @@ namespace NETGraph
 
         public Vertex<String> findVertex(String name)
         {
-            foreach(Vertex<String> v in Vertexes)
+            foreach (Vertex<String> v in Vertexes)
             {
                 if (v.VertexName.Equals(name))
                     return v;
             }
-            return new Vertex<string>("FAIL");              
+            return new Vertex<string>("FAIL");
         }
 
         public Edge findEdge(String startVertex, String endVertex)
@@ -365,7 +365,7 @@ namespace NETGraph
                 return null;
             }
         }
-            
+
         /* Zusammenhangskomponenten
          * 
          * Überlegungen: 
@@ -386,7 +386,7 @@ namespace NETGraph
             m_graphAlgorithm = new BreathSearch();
             foreach (Vertex<String> vertex in Vertexes)
             {
-                if ((!vertex.Marked) ) //&& (vertex.Edges.Count > 0))
+                if ((!vertex.Marked)) //&& (vertex.Edges.Count > 0))
                 {
                     _connectingComponents.Add(m_graphAlgorithm.performAlgorithm(this, vertex));
                 }
@@ -425,7 +425,7 @@ namespace NETGraph
             }
             return this;
         }
-   
+
 
         public bool deleteEdge(Edge edge)
         {
@@ -435,7 +435,7 @@ namespace NETGraph
                 //Lösche Kante aus Liste der Kanten
                 Edges.Remove(edge);
                 //Durchsuche Liste der Knoten nach der Kante
-                foreach(Vertex<String> v in Vertexes)
+                foreach (Vertex<String> v in Vertexes)
                 {
                     //Wenn Kante in der Liste der Kanten des Knotens
                     if (v.Edges.Contains(edge))
@@ -501,12 +501,12 @@ namespace NETGraph
                 //Zuerst alle Kanten löschen die den Knoten beinhalten
                 foreach (Edge e in v.Edges)
                 {
-                    if ( (e.StartVertex.Equals(v)) || (e.EndVertex.Equals(v)) )
+                    if ((e.StartVertex.Equals(v)) || (e.EndVertex.Equals(v)))
                     {
                         deleteEdge(e);
                     }
                 }
-                if (v.Equals(delVertex)) 
+                if (v.Equals(delVertex))
                 {
                     Vertexes.Remove(v);
                     return true;
@@ -535,7 +535,7 @@ namespace NETGraph
         public bool is_FullGraph()
         {
             // Ein Vollständiger Graph hat imm n über 2 Kanten
-            if (((this.Vertexes.Count() * (this.Vertexes.Count()-1)) /2) == this.Edges.Count())
+            if (((this.Vertexes.Count() * (this.Vertexes.Count() - 1)) / 2) == this.Edges.Count())
                 return true;
 
             return false;
@@ -546,12 +546,12 @@ namespace NETGraph
         double globalweight = 13333337;
         List<Vertex<String>> globalway = new List<Vertex<string>>();
         List<Vertex<String>> tempGlobalWay = new List<Vertex<string>>();
-        
+
 
         public void findAllWaysForVertex(Vertex<String> startVertex, List<Vertex<String>> results, double weight)
         {
-            double edgeCosts=0;
-            
+            double edgeCosts = 0;
+
             // Ersten Knoten hinzufügen
             if (results.Count() == 0)
             {
@@ -560,22 +560,22 @@ namespace NETGraph
 
             // Solange es noch nicht hinzugefügte Knoten gibt
             if (results.Count() < this.Vertexes.Count())
-            { 
+            {
                 // Finde alle Nahbarn des übergebenen Knotens
                 foreach (Vertex<String> currentVertex in startVertex.findNeighbors(this.DirectedEdges))
                 {
                     // Falls der Knoten noch nicht enthalten ist
                     if (!results.Contains(currentVertex))
                     {
-                        edgeCosts = this.findEdge(currentVertex.VertexName,startVertex.VertexName).Costs;
-                       
-                        
-                       // Falls die Kosten höher sind als der Globale Wert, schneide diesen Ast ab (Bound)
-                       if (weight + edgeCosts < globalweight)
-                       {
+                        edgeCosts = this.findEdge(currentVertex.VertexName, startVertex.VertexName).Costs;
+
+
+                        // Falls die Kosten höher sind als der Globale Wert, schneide diesen Ast ab (Bound)
+                        if (weight + edgeCosts < globalweight)
+                        {
                             results.Add(currentVertex);
                             findAllWaysForVertex(currentVertex, results, (weight + edgeCosts));
-                       }
+                        }
                     }
                 }
             }
@@ -590,13 +590,13 @@ namespace NETGraph
                 //Es werden nur kürzere Wege angezeigt da sonst die GUI zu lange braucht
                 if (weight <= globalweight)
                 {
-                    globalweight = weight;                                     
+                    globalweight = weight;
                     globalway = results;
                     EventManagement.GuiLog("weight: " + globalweight.ToString());
                 }
 
             }
-                results.Remove(results.Last());
+            results.Remove(results.Last());
             return;
         }
 
@@ -607,5 +607,11 @@ namespace NETGraph
 
         #endregion
 
+
+        public List<Vertex<string>> getWayForVertexes(Vertex<string> startVertex, Vertex<string> endVertex)
+        {
+            BreathSearch search = new BreathSearch();
+            return search.findWay(this, startVertex, endVertex);
+        }
     }
 }

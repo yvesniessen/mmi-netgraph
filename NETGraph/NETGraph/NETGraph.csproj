@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GraphAlgorithms\DepthSearch.cs" />
+    <Compile Include="GraphAlgorithms\FordFulkerson.cs" />
     <Compile Include="GraphAlgorithms\IGraphAlgorithm.cs" />
     <Compile Include="GraphAlgorithms\BreathSearch.cs" />
     <Compile Include="Edge.cs" />
