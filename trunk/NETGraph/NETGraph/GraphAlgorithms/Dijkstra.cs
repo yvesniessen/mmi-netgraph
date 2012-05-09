@@ -23,7 +23,8 @@ namespace NETGraph.Algorithm
             // Die Distanz ist zu jedem Knoten ist Unendlich (in diesem Fall sehr groß)
             foreach (Vertex<String> vertex in graph.Vertexes)
                 {
-                    vertex.Costs = 1000000000;
+                    
+                    vertex.Costs = double.MaxValue;
                     vertex.Neighborvertex = null;
                     vertex.Marked = false;
 
@@ -37,10 +38,12 @@ namespace NETGraph.Algorithm
            // Wiederhole bis es N-1 Kanten gibt bzw. bis alle Knoten besucht sind
             int NumOfAllVertex = graph.Vertexes.Count();
 
+            // Solange es noch unmarkierte Kanten gibt
             while (graph.Vertexes.Where(x => x._marked == false).Count() > 0)
             {
                 // setzen den unbesuchten Knoten mit der geringsten Distanz als aktuell und besucht
                 graph.Vertexes.Sort(delegate(Vertex<String> e1, Vertex<String> e2) { return e1.Costs.CompareTo(e2.Costs); });
+                
                 
                 for(int i = 0; i < NumOfAllVertex; i++)
                 {
@@ -79,27 +82,15 @@ namespace NETGraph.Algorithm
             foreach(Edge e in graph.Edges)
             {
                 // Wenn der eine Knoten an der Kante einen Neighbor besitzt der der andere Knoten der Kante ist 
-                if ((e.StartVertex.Neighborvertex.VertexName != e.EndVertex.VertexName) &&
+                if (! (e.StartVertex.Neighborvertex.VertexName != e.EndVertex.VertexName) &&
                    (e.EndVertex.Neighborvertex.VertexName != e.StartVertex.VertexName))
                 {
-                    e.Marked = true;
+                    graph.Edges.Remove(e);
                 }
+
             }
 
-           for (int i = 0; i < graph.Edges.Count(); i++)
-           {
-               if (graph.Edges[i].Marked == true)
-             {
-                 graph.Edges.Remove(graph.Edges.ElementAt(i));
-                 i--;
-             }
-           }
 
-            //foreach (Edge e in graph.Edges)
-            //{
-            //    if (e.Marked == true)
-            //    graph.Edges.Remove(e);
-            //}
 
             return graph;
         }

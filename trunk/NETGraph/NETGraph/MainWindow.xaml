@@ -4,7 +4,8 @@
         Title="NetGraph" Height="587" Width="1312" Loaded="Window_Loaded"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" ResizeMode="CanResizeWithGrip">
 
-    <Grid Height="545" Width="1282">
+    <DockPanel ScrollViewer.HorizontalScrollBarVisibility="Visible" >
+        <Grid Height="545" Width="1282">
         <Menu Height="23" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1353" Foreground="Blue" OpacityMask="#FF7C2D2D">
             <MenuItem Header="File" Cursor="None">
                 <MenuItem Header="Open" Click="menuFileOpen_Click" />
@@ -47,7 +48,7 @@
                 <Label Content="0" Height="28" Name="labelEdgeCollision" Width="109"  Margin="2"/>
             </WrapPanel>
         </GroupBox>
-        <StackPanel Height="449" HorizontalAlignment="Left" Margin="506,69,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="428" CanVerticallyScroll="True" CanHorizontallyScroll="True" >
+        <StackPanel Height="449" HorizontalAlignment="Left" Margin="506,69,0,0" Name="stackPanel1" VerticalAlignment="Top" Width="428" CanVerticallyScroll="True" CanHorizontallyScroll="True" ScrollViewer.CanContentScroll="True" >
             <ListView Name="listview" ItemsSource="{Binding ViewData}">
                 <ListView.View>
                     <GridView>
@@ -78,4 +79,5 @@
             </Grid>
         </GroupBox>
     </Grid>
+    </DockPanel>
 </Window>
