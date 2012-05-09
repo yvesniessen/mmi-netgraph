@@ -97,6 +97,7 @@ namespace NETGraph.Algorithm
 
            return graph;
         }
+
         #endregion
     }
 }
