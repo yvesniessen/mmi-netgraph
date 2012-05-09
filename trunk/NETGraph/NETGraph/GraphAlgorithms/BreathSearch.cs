@@ -81,7 +81,7 @@ namespace NETGraph.Algorithm
 
             } while (Schlange.Count != 0);
 
-            List<Vertex<String>> way = new List<Vertex<string>>();             
+            List<Vertex<String>> way = new List<Vertex<string>>();
             Vertex<String> searchedVertex = graph.findVertex(endVertex.VertexName);
 
             do

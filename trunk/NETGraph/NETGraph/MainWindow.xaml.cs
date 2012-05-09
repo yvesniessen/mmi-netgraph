@@ -47,19 +47,19 @@ namespace NETGraph
         #region members
         public static ObservableCollection<ViewData> _ViewData = new ObservableCollection<ViewData>();
         public ObservableCollection<ViewData> ViewData
-                    { get { return _ViewData; } }
+        { get { return _ViewData; } }
 
-        
+
         public static ObservableCollection<ViewDataVertexes> _ViewDataVertexes = new ObservableCollection<ViewDataVertexes>();
         public ObservableCollection<ViewDataVertexes> ViewDataVertexes
-                    { get { return _ViewDataVertexes; } }
+        { get { return _ViewDataVertexes; } }
 
 
 
         private IGraphAlgorithm m_graphAlgorithm;
         private Graph _graph;
         private GraphListData _graphList;
-        private Stack<Graph> _graphStateStack = new Stack<Graph>(); 
+        private Stack<Graph> _graphStateStack = new Stack<Graph>();
         #endregion
 
         #region un/-register events
@@ -121,7 +121,7 @@ namespace NETGraph
                 _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
                 EventManagement.stopTimer();
                 foreach (Vertex<String> vertex in _graph.Vertexes)
-                   Debug.Print(vertex.VertexName.ToString());
+                    Debug.Print(vertex.VertexName.ToString());
 
                 _graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
@@ -166,9 +166,9 @@ namespace NETGraph
             foreach (Vertex<String> vertex in _graph.Vertexes)
                 Debug.Print(vertex.VertexName.ToString());
 
-                //_graphList = Export.showGraph(ref _graph);
-                _graph.updateGUI();
-                _graph.unmarkGraph();
+            //_graphList = Export.showGraph(ref _graph);
+            _graph.updateGUI();
+            _graph.unmarkGraph();
         }
 
 
@@ -239,9 +239,9 @@ namespace NETGraph
 
                     EventManagement.startTimer();
 
-                      _graph.findAllWaysForVertex(_graph.Vertexes.First(), new List<Vertex<string>>(), 0);
+                    _graph.findAllWaysForVertex(_graph.Vertexes.First(), new List<Vertex<string>>(), 0);
 
-                     // List<List<Vertex<String>>> temp = _graph.allResults;
+                    // List<List<Vertex<String>>> temp = _graph.allResults;
                     EventManagement.stopTimer();
 
                     _graphList = Export.showGraph(ref _graph);
@@ -261,16 +261,16 @@ namespace NETGraph
 
             if (_graph != null)
             {
-                    m_graphAlgorithm = new Dijkstra();
+                m_graphAlgorithm = new Dijkstra();
 
-                    EventManagement.startTimer();
-                    _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-                    EventManagement.stopTimer();
+                EventManagement.startTimer();
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
 
-                    _graphList = Export.showGraph(ref _graph);
-                    _graph.updateGUI();
-                    _graph.unmarkGraph();
-              
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+
             }
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
@@ -312,7 +312,7 @@ namespace NETGraph
             {
                 _graph = _graphStateStack.Pop();
                 //Label Ausgabe inkrementieren
-                labelState.Content = (Int32.Parse(labelState.Content.ToString()) -1).ToString();
+                labelState.Content = (Int32.Parse(labelState.Content.ToString()) - 1).ToString();
                 _graph.updateGUI();
             }
             catch
@@ -321,7 +321,7 @@ namespace NETGraph
 
         private void menuFileOpen_Click(object sender, RoutedEventArgs e)
         {
-             _graph = Import.openFileDialog();
+            _graph = Import.openFileDialog();
             if (_graph == null)
             {
                 EventManagement.GuiLog("Problem beim einlesen des Graphens -> Abbruch");
@@ -332,7 +332,10 @@ namespace NETGraph
             saveGraphState(_graph);
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
-            
+
+            m_graphAlgorithm = new FordFulkerson();
+            m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex("0"));
+
             #region Praktikum 2
 
             //Debug.Print("Praktikum 2: ");
@@ -370,8 +373,8 @@ namespace NETGraph
             #endregion
 
             #region Prim
-            
-            
+
+
             //_graph.findEdge("0", "3").Costs = 200;
             //_graph.findEdge("0", "2").Costs = 199;
             //_graph.findEdge("0", "1").Costs = 1;
@@ -379,7 +382,7 @@ namespace NETGraph
 
             //m_graphAlgorithm = new Prim();
             //m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
-            
+
             #endregion
 
             #region Auskommentiert um Hr. Hoever bei der Abgabe nicht zu verwirren:
@@ -395,10 +398,10 @@ namespace NETGraph
                             }
                         }*/
 
-                        /*GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
+            /*GraphListData depthsarchgraph = _graph.depthsearch(_graph.findVertex("0"));
                 
-                        foreach (String s in depthsarchgraph.Vertexes)
-                           Console.WriteLine(s);*/
+            foreach (String s in depthsarchgraph.Vertexes)
+               Console.WriteLine(s);*/
             #endregion
 
         }
@@ -408,7 +411,8 @@ namespace NETGraph
             try
             {
                 System.Diagnostics.Process.Start("notepad", "errorlog.txt");
-            }catch(Exception ex) {System.Windows.Forms.MessageBox.Show("LogFile does not exist!\n"+ex.Message.ToString());}
+            }
+            catch (Exception ex) { System.Windows.Forms.MessageBox.Show("LogFile does not exist!\n" + ex.Message.ToString()); }
         }
         private void textBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -421,8 +425,8 @@ namespace NETGraph
         }
         #endregion
 
-        #region react 2 subscribed events     
-        
+        #region react 2 subscribed events
+
         // update gui process timer
         void EventManagement_OnTimerEvent(object sender, string ms_time)
         {
@@ -453,11 +457,11 @@ namespace NETGraph
                 {
                     _ViewData.Add(new ViewData { StartVertex = graph.Edges[i].StartVertex.ToString(), EndVertex = graph.Edges[i].EndVertex.ToString(), Costs = graph.Edges[i].Costs.ToString() });
                 }
-                _ViewData.Add(new ViewData {StartVertex = "Nur ersten "+maxcount.ToString()+" angezeigt"});
+                _ViewData.Add(new ViewData { StartVertex = "Nur ersten " + maxcount.ToString() + " angezeigt" });
             }
             if (graph.Vertexes.Count <= maxcount)
             {
-            foreach (var v in graph.Vertexes)
+                foreach (var v in graph.Vertexes)
                 {
                     _ViewDataVertexes.Add(new ViewDataVertexes { Vertex = v.ToString(), Costs = v.Costs.ToString() });
                 }
@@ -486,9 +490,9 @@ namespace NETGraph
                 }
                 labelGraphWeight.Content = graphWeight.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                EventManagement.GuiLog("There was a Problem while counting the graph weight:" +ex.Message.ToString());
+                EventManagement.GuiLog("There was a Problem while counting the graph weight:" + ex.Message.ToString());
                 System.Windows.MessageBox.Show("There was a Problem while counting the graph weight");
             }
 
@@ -499,7 +503,7 @@ namespace NETGraph
             richTextBoxLog.AppendText("\n");
             richTextBoxLog.AppendText(a.Text);
         }
-    
+
         #endregion
 
         #region functions

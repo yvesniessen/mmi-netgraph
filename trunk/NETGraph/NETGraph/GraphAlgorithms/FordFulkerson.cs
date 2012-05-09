@@ -17,7 +17,7 @@ namespace NETGraph.GraphAlgorithms
             /////////////////////////////////////////////////////////////////////////////////////////
             foreach (Edge e in graph.Edges)
             {
-                e.Residual_Costs = 0;
+              //  e.Residual_Costs = 0;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,8 @@ namespace NETGraph.GraphAlgorithms
             List<Vertex<String>> wayFromStartToEnd = new List<Vertex<string>>();
             wayFromStartToEnd = graph.getWayForVertexes(startVertex, endVertex);
 
-            throw new NotImplementedException();
+
+            return null;
         }
     }
 }
