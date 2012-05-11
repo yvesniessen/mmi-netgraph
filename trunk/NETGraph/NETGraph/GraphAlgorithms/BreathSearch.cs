@@ -22,9 +22,9 @@ namespace NETGraph.Algorithm
                 Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex.Marked)
+                if (!vertex._marked)
                 {
-                    vertex.Marked = true;
+                    vertex._marked = true;
                     result.Vertexes.Add(vertex);
                 }
 
@@ -32,7 +32,7 @@ namespace NETGraph.Algorithm
 
                 foreach (Vertex<String> neighbor in neighbors)
                 {
-                    if (!neighbor.Marked)
+                    if (!neighbor._marked)
                     {
                         Schlange.Add(neighbor);
                     }
@@ -46,6 +46,11 @@ namespace NETGraph.Algorithm
 
         public List<Vertex<String>> findWay(Graph graph, Vertex<String> startVertex, Vertex<String> endVertex)
         {
+            foreach (Vertex<String> preVertex in graph.Vertexes)
+            {
+                preVertex.PreVertex = null;
+            }
+
             Graph result = new Graph();
 
             List<Vertex<String>> Schlange = new List<Vertex<string>>();
@@ -57,24 +62,29 @@ namespace NETGraph.Algorithm
                 Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex.Marked)
+                if (!vertex._marked)
                 {
-                    vertex.Marked = true;
                     result.Vertexes.Add(vertex);
-
+                    vertex._marked = true;
                     //Wir sind am Ende angekommen und können getrost aufhören
                     if (vertex.VertexName.Equals(endVertex.VertexName))
+                    {
                         break;
+                    }
+                 
                 }
 
                 List<Vertex<String>> neighbors = vertex.findNeighbors(graph.DirectedEdges);
 
                 foreach (Vertex<String> neighbor in neighbors)
                 {
-                    if (!neighbor.Marked)
+                    if (!neighbor._marked)
                     {
-                        neighbor.PreVertex = vertex;
                         Schlange.Add(neighbor);
+                        if (neighbor.PreVertex == null)
+                        {
+                            neighbor.PreVertex = vertex;
+                        }
                     }
                 }
 
@@ -83,14 +93,15 @@ namespace NETGraph.Algorithm
 
             List<Vertex<String>> way = new List<Vertex<string>>();
             Vertex<String> searchedVertex = graph.findVertex(endVertex.VertexName);
+            way.Add(searchedVertex);
 
             do
             {
-                way.Add(searchedVertex);
                 searchedVertex = graph.findVertex(searchedVertex.PreVertex.VertexName);
+                way.Add(searchedVertex);
             } while (searchedVertex.PreVertex.VertexName != startVertex.VertexName);
 
-            way.Add(startVertex);
+              way.Add(startVertex);
 
             return way;
         }
@@ -106,9 +117,9 @@ namespace NETGraph.Algorithm
                 Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex.Marked)
+                if (!vertex._marked)
                 {
-                    vertex.Marked = true;
+                    vertex._marked = true;
                 }
 
                 List<Vertex<String>> neighbors = vertex.findNeighbors(graph.DirectedEdges);
@@ -118,7 +129,7 @@ namespace NETGraph.Algorithm
                     if (neighbor == endVertex)
                         return true;
 
-                    if (!neighbor.Marked)
+                    if (!neighbor._marked)
                     {
                         Schlange.Add(neighbor);
                     }
