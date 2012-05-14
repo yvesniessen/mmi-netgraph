@@ -25,7 +25,7 @@ namespace NETGraph.Algorithm
 
        public Graph performAlgorithm(Graph graph, Vertex<String> startVertex)
         {
-           Graph resultGraph = new Graph();
+           graph.unmarkGraph();
            int n = graph.Vertexes.Count;
 
            /////////////////////////////////////////////////////////////////////////////////////////
@@ -37,47 +37,37 @@ namespace NETGraph.Algorithm
                vertex.Costs = double.PositiveInfinity;
                vertex.PreVertex = null;
            }
+
            startVertex.Costs = 0;
            startVertex.PreVertex = startVertex;
            startVertex.Marked = true;
-           Vertex<String> currentVertex = startVertex;
-
 
 
            /////////////////////////////////////////////////////////////////////////////////////////
            // Schritt 2: Die günstigsten Strecken von startVertex aus berechnen
            /////////////////////////////////////////////////////////////////////////////////////////
 
-           List<Vertex<String>> neighborList = new List<Vertex<string>>();
-           for (int i = 0; i < n; i++)
+           //List<Vertex<String>> neighborList = new List<Vertex<string>>();
+           for (int i = 1; i < n; i++)
            {
                //Hole die Nachbarn für den aktuellen Vertex und schaue sie dir an
-               foreach (Vertex<String> vertex in currentVertex.findNeighbors(graph.DirectedEdges))
+               foreach (Edge edge in graph.Edges)
+               //foreach (Vertex<String> vertex in currentVertex.findNeighbors(graph.DirectedEdges))
                {
-                   if (!vertex.Marked)
+                   //if (!vertex.Marked)
+                   //{
+                   //    vertex.Marked = true;
+                   //    neighborList.Add(vertex);
+                   //}
+
+                   //double distanceFromCurrentVertex = currentVertex.Costs;
+                   double edgeCostsFromCurrentEdge = edge.Costs;
+
+                   if ((edge.StartVertex.Costs + edgeCostsFromCurrentEdge) < edge.EndVertex.Costs)
                    {
-                       vertex.Marked = true;
-                       neighborList.Add(vertex);
+                       edge.EndVertex.Costs = (edge.StartVertex.Costs + edgeCostsFromCurrentEdge);
+                       edge.EndVertex.PreVertex = edge.StartVertex;
                    }
-
-                   double distanceFromCurrentVertex = currentVertex.Costs;
-                   double edgeCostsFromCurrentEdge = graph.findEdge(currentVertex.VertexName, vertex.VertexName).Costs;
-
-                   if ((distanceFromCurrentVertex + edgeCostsFromCurrentEdge) < vertex.Costs)
-                   {
-                       vertex.Costs = (distanceFromCurrentVertex + edgeCostsFromCurrentEdge);
-                       vertex.PreVertex = currentVertex;
-                   }
-               }
-
-               if (neighborList.Count > 0)
-               {
-                   currentVertex = neighborList.First();
-                   neighborList.Remove(neighborList.First());
-               }
-               else
-               {
-                   break;
                }
            }
 
@@ -93,6 +83,8 @@ namespace NETGraph.Algorithm
                double endVertexCosts = edge.EndVertex.Costs;
                if ((startVertexCosts + edge.Costs) < endVertexCosts)
                    EventManagement.GuiLog("Abbruch: Es gibt einen Kreis negativen Gewichtes.");
+
+           //TODO: hier die KANTE zurückliefen für nächstes Praktikum 
            }
 
            return graph;

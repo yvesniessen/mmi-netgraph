@@ -40,6 +40,7 @@ namespace NETGraph.Algorithm
             while (graph.Vertexes.Where(x => x._marked == false).Count() > 0)
             {
                 // setzen den unbesuchten Knoten mit der geringsten Distanz als aktuell und besucht
+                //komplexität nlogn (besser wäre einfach nur günstigsten knoten suchen komplexität n)
                 graph.Vertexes.Sort(delegate(Vertex<String> e1, Vertex<String> e2) { return e1.Costs.CompareTo(e2.Costs); });
 
                 for (int i = 0; i < NumOfAllVertex; i++)
@@ -53,7 +54,7 @@ namespace NETGraph.Algorithm
                 }
 
 
-                List<Vertex<String>> neighborVertexs = currentVertex.findNeighbors(false);
+                List<Vertex<String>> neighborVertexs = currentVertex.findNeighbors(graph.DirectedEdges);
 
                 // für alle unbesuchten Nachbarn:        
                 foreach (Vertex<String> vertex in neighborVertexs)
@@ -61,9 +62,9 @@ namespace NETGraph.Algorithm
                     if (vertex._marked == false)
                     {
                         //wenn die Eigene Distanz + das Kantengewicht geringer ist als die aktuelle Distanz des Knotens
-                        double currentCosts = currentVertex.Costs + graph.findEdge(vertex.VertexName, currentVertex.VertexName).Costs;
-                        Edge currentEdge = graph.findEdge(vertex.VertexName, currentVertex.VertexName);
-                        if ((currentVertex.Costs + currentEdge.Costs) < vertex.Costs)
+                        Edge currentEdge = graph.findEdge(currentVertex.VertexName, vertex.VertexName);
+                        double currentCosts = currentVertex.Costs + currentEdge.Costs;
+                        if (currentCosts < vertex.Costs)
                         {
                             // dann setze sie
                             vertex.Costs = currentCosts;
