@@ -183,18 +183,18 @@ namespace NETGraph
 
         public override String ToString()
         {
-            String s = "V: " + VertexName.ToString();
+            String s = "V: " + VertexName.ToString()
                         //+ " " + _marked.ToString()
-                        //+ " " + Costs.ToString();
+                        + " " + Costs.ToString();
 
-            //if (_neighborvertex != null)
-            //{
-            //    s += " " + _neighborvertex.VertexName.ToString();
-            //}
-            //else
-            //{
-            //    s += " null";
-            //}
+            if (_neighborvertex != null)
+            {
+                s += " " + _neighborvertex.VertexName.ToString();
+            }
+            else
+            {
+                s += " null";
+            }
 
             return s;
         }
