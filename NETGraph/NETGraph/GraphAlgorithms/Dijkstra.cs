@@ -37,7 +37,7 @@ namespace NETGraph.Algorithm
             // Wiederhole bis es N-1 Kanten gibt bzw. bis alle Knoten besucht sind
             int NumOfAllVertex = graph.Vertexes.Count();
 
-            while (graph.Vertexes.Where(x => x._marked == false).Count() > 0)
+            while (graph.Vertexes.Where(x => x.Marked == false).Count() > 0)
             {
                 // setzen den unbesuchten Knoten mit der geringsten Distanz als aktuell und besucht
                 //komplexität nlogn (besser wäre einfach nur günstigsten knoten suchen komplexität n)
@@ -45,10 +45,10 @@ namespace NETGraph.Algorithm
 
                 for (int i = 0; i < NumOfAllVertex; i++)
                 {
-                    if (graph.Vertexes.ElementAt(i)._marked != true)
+                    if (graph.Vertexes.ElementAt(i).Marked != true)
                     {
                         currentVertex = graph.Vertexes.ElementAt(i);
-                        currentVertex._marked = true;
+                        currentVertex.Marked = true;
                         break;
                     }
                 }
@@ -59,7 +59,7 @@ namespace NETGraph.Algorithm
                 // für alle unbesuchten Nachbarn:        
                 foreach (Vertex<String> vertex in neighborVertexs)
                 {
-                    if (vertex._marked == false)
+                    if (vertex.Marked == false)
                     {
                         //wenn die Eigene Distanz + das Kantengewicht geringer ist als die aktuelle Distanz des Knotens
                         Edge currentEdge = graph.findEdge(currentVertex.VertexName, vertex.VertexName);

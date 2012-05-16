@@ -22,9 +22,9 @@ namespace NETGraph.Algorithm
                 Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex._marked)
+                if (!vertex.Marked)
                 {
-                    vertex._marked = true;
+                    vertex.Marked = true;
                     result.Vertexes.Add(vertex);
                 }
 
@@ -32,7 +32,7 @@ namespace NETGraph.Algorithm
 
                 foreach (Vertex<String> neighbor in neighbors)
                 {
-                    if (!neighbor._marked)
+                    if (!neighbor.Marked)
                     {
                         Schlange.Add(neighbor);
                     }
@@ -44,7 +44,7 @@ namespace NETGraph.Algorithm
             return result;
         }
 
-        public List<Vertex<String>> findWay(Graph graph, Vertex<String> startVertex, Vertex<String> endVertex)
+        public Graph findWay(Graph graph, Vertex<String> startVertex, Vertex<String> endVertex)
         {
             foreach (Vertex<String> preVertex in graph.Vertexes)
             {
@@ -56,54 +56,81 @@ namespace NETGraph.Algorithm
             List<Vertex<String>> Schlange = new List<Vertex<string>>();
 
             Schlange.Add(startVertex);
+            Vertex<String> vertex = Schlange.First();
 
-            do
+            // Solange nicht beim letzten Element angekommen
+            while (!Schlange.Contains(endVertex) && (Schlange.Count != 0))
             {
-                Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex._marked)
+                if (!vertex.Marked)
                 {
-                    result.Vertexes.Add(vertex);
-                    vertex._marked = true;
+                    //result.Vertexes.Add(vertex);
+                    vertex.Marked = true;
                     //Wir sind am Ende angekommen und können getrost aufhören
-                    if (vertex.VertexName.Equals(endVertex.VertexName))
-                    {
-                        break;
-                    }
-                 
+                    //if (vertex.VertexName.Equals(endVertex.VertexName))
+                    //{
+                    //    break;
+                    //}
+
                 }
 
                 List<Vertex<String>> neighbors = vertex.findNeighbors(graph.DirectedEdges);
 
                 foreach (Vertex<String> neighbor in neighbors)
                 {
-                    if (!neighbor._marked)
+                    //if (!neighbor.Marked)
+                    //{
+                    //    Schlange.Add(neighbor);
+                    //    if (neighbor.PreVertex == null)
+                    //    {
+                    //        neighbor.PreVertex = vertex;
+                    //    }
+                    //}
+
+                    // Wenn noch kein Vorgänger für den Knoten eingetragen ist, sprich er von noch keinem anderen Knoten in die Liste eingetragen wurde
+                    if (neighbor.PreVertex == null)
                     {
                         Schlange.Add(neighbor);
-                        if (neighbor.PreVertex == null)
-                        {
-                            neighbor.PreVertex = vertex;
-                        }
+                        neighbor.PreVertex = vertex;
                     }
                 }
+                if (Schlange.Count > 0)
+                {
+                    vertex = Schlange.First();
+                }
 
+            }
 
-            } while (Schlange.Count != 0);
+            //solange aktueller Knoten != Startknoten
 
-            List<Vertex<String>> way = new List<Vertex<string>>();
-            Vertex<String> searchedVertex = graph.findVertex(endVertex.VertexName);
-            way.Add(searchedVertex);
-
-            do
+            if (endVertex.PreVertex != null)
             {
-                searchedVertex = graph.findVertex(searchedVertex.PreVertex.VertexName);
-                way.Add(searchedVertex);
-            } while (searchedVertex.PreVertex.VertexName != startVertex.VertexName);
+                Vertex<String> Vertex = endVertex;
+                //Solange bis wir am Anfang des Weges sind
+                while (Vertex.VertexName != startVertex.VertexName)
+                {
+                    result.addEdge(Vertex.PreVertex, Vertex, graph.findEdge(Vertex.PreVertex, Vertex).Costs);
+                    Vertex = Vertex.PreVertex;
+                }
+            }
 
-              way.Add(startVertex);
+            return result;
 
-            return way;
+
+            //List<Vertex<String>> way = new List<Vertex<string>>();
+            //Vertex<String> searchedVertex = graph.findVertex(endVertex.VertexName);
+            //way.Add(searchedVertex);
+
+            //do
+            //{
+            //    searchedVertex = graph.findVertex(searchedVertex.PreVertex.VertexName);
+            //    way.Add(searchedVertex);
+            //} while (searchedVertex.PreVertex.VertexName != startVertex.VertexName);
+
+            //  way.Add(startVertex);
+
+            //return way;
         }
 
         public bool checkIfTwoVertexesinSameComponent(Graph graph, Vertex<String> startVertex, Vertex<String> endVertex)
@@ -117,9 +144,9 @@ namespace NETGraph.Algorithm
                 Vertex<String> vertex = Schlange.First();
                 Schlange.Remove(vertex);
 
-                if (!vertex._marked)
+                if (!vertex.Marked)
                 {
-                    vertex._marked = true;
+                    vertex.Marked = true;
                 }
 
                 List<Vertex<String>> neighbors = vertex.findNeighbors(graph.DirectedEdges);
@@ -129,7 +156,7 @@ namespace NETGraph.Algorithm
                     if (neighbor == endVertex)
                         return true;
 
-                    if (!neighbor._marked)
+                    if (!neighbor.Marked)
                     {
                         Schlange.Add(neighbor);
                     }
