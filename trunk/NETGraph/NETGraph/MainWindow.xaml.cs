@@ -333,8 +333,8 @@ namespace NETGraph
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
 
-            //m_graphAlgorithm = new FordFulkerson();
-            //m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex("0"));
+            m_graphAlgorithm = new FordFulkerson();
+            m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex("0"));
 
             #region Praktikum 2
 

@@ -351,6 +351,25 @@ namespace NETGraph
             return new Vertex<string>("FAIL");
         }
 
+        public Edge findEdge(Edge edge)
+        {
+            foreach (Edge e in Edges)
+                if (e.EdgeName == edge.EdgeName)
+                    return e;
+            return null;
+        }
+
+        public Edge findInvertedEdge(Edge edge)
+        {
+            return findEdge(edge.EndVertex, edge.StartVertex);
+        }
+
+
+        public Edge findEdge(Vertex<String> startVertex, Vertex<String> endVertex)
+        {
+            return getEdge(startVertex,endVertex);
+        }
+
         public Edge findEdge(String startVertex, String endVertex)
         {
             Vertex<String> _startVertex = findVertex(startVertex);
@@ -608,7 +627,13 @@ namespace NETGraph
         #endregion
 
 
-        public List<Vertex<string>> getWayForVertexes(Vertex<string> startVertex, Vertex<string> endVertex)
+        public List<Vertex<string>> getWayListForVertexes(Vertex<string> startVertex, Vertex<string> endVertex)
+        {
+            BreathSearch search = new BreathSearch();
+            return search.findWay(this, startVertex, endVertex).Vertexes;
+        }
+
+        public Graph getWayForVertexes(Vertex<string> startVertex, Vertex<string> endVertex)
         {
             BreathSearch search = new BreathSearch();
             return search.findWay(this, startVertex, endVertex);

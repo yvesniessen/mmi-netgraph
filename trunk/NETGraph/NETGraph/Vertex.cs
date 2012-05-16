@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace NETGraph
 {
@@ -22,7 +23,7 @@ namespace NETGraph
         private List<Edge> _edges = new List<Edge>();
         private Vertex<T> _neighborvertex= null;  // Für Dijkstra angelegt
         private Color _color = Colors.White;
-        public bool _marked = false;
+        private bool _marked = false;
         private int _grade = 0;
         //Vorgänger
         private Vertex<String> _preVertex;
@@ -89,8 +90,15 @@ namespace NETGraph
 
         public bool Marked
         {
-            get;
-            set;
+            get
+            {
+                return _marked;
+            }
+            set
+            {
+                _marked = value;
+                Debug.WriteLine("name: " + this._vertexName + " marked: " + this._marked + " value: " + value);
+            }
         }
 
         public double Costs
@@ -183,18 +191,18 @@ namespace NETGraph
 
         public override String ToString()
         {
-            String s = "V: " + VertexName.ToString()
-                        //+ " " + _marked.ToString()
-                        + " " + Costs.ToString();
+            String s = "V: " + VertexName.ToString();
+                       // + " m:" + _marked.ToString()
+                       // + " " + Costs.ToString();
 
-            if (_neighborvertex != null)
-            {
-                s += " " + _neighborvertex.VertexName.ToString();
-            }
-            else
-            {
-                s += " null";
-            }
+            //if (_neighborvertex != null)
+            //{
+            //    s += " " + _neighborvertex.VertexName.ToString();
+            //}
+            //else
+            //{
+            //    s += " null";
+            //}
 
             return s;
         }

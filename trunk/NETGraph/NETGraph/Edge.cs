@@ -14,6 +14,7 @@ namespace NETGraph
         private bool _marked = false;
         private String _edgeName;      
         private Vertex<string> _startVertex, _endVertex;
+        private double _flow = 0;
 
         // The value holder for compareTo-Implementation
         protected int m_value = 0;
@@ -33,6 +34,18 @@ namespace NETGraph
         #endregion
 
         # region properties
+        public double Flow
+        {
+            get
+            {
+                return _flow;
+            }
+            set
+            {
+                _flow = value;
+            }
+        }
+
         public double Costs
         {
             get
@@ -98,7 +111,7 @@ namespace NETGraph
         #region public functions
         public override String ToString()
         {
-            return "Edge: " + _edgeName.ToString() + " Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
+            return "Edge: " + _edgeName.ToString() + " Cap: " + this.Costs + " Flow: " + this.Flow;// + " m:" + _marked.ToString();//" Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
         }
         
         public int CompareTo(Object obj)
