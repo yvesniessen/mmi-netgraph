@@ -21,7 +21,8 @@
                 <MenuItem Header="AllWays" Click="Allways_Click" />
                 <MenuItem Header="Dijkstra" Click="Dijkstra_Click" />
                 <MenuItem Header="Moore-Bellman-Ford" Click="MooreBellmanFord_Click" />
-            </MenuItem>
+                <MenuItem Header="FordFulkerson" Click="FordFulkerson_Click" />
+                </MenuItem>
             <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">
                 <MenuItem Header="Version" />

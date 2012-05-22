@@ -305,6 +305,37 @@ namespace NETGraph
         }
 
 
+        private void FordFulkerson_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running FordFulkerson ...");
+
+            if (_graph != null)
+            {
+                m_graphAlgorithm = new FordFulkerson();
+
+                EventManagement.startTimer();
+                String startVertexName = "0";
+
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex(startVertexName));
+
+                EventManagement.stopTimer();
+
+                EventManagement.GuiLog("Wege von [Knoten " + startVertexName + "]:");
+                foreach (Edge edge in _graph.Edges)
+                {
+                    EventManagement.GuiLog("[Kante S:" + edge.StartVertex.VertexName + " E: " + edge.EndVertex.VertexName +"] Kap: " + edge.Costs + " / Flow: " + edge.Flow );
+                }
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
+
 
         private void buttonStateRecover_Click(object sender, RoutedEventArgs e)
         {
@@ -333,8 +364,7 @@ namespace NETGraph
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
 
-            m_graphAlgorithm = new FordFulkerson();
-            m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex("0"));
+         
 
             #region Praktikum 2
 
