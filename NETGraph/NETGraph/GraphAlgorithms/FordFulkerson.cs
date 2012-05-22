@@ -8,10 +8,11 @@ namespace NETGraph.GraphAlgorithms
 {
     class FordFulkerson : IGraphAlgorithm
     {
+       // public Vertex<string> EndVertex;
 
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
-            Vertex<String> endVertex = graph.Vertexes.Last();
+            Vertex<String> EndVertex = graph.findVertex("7");
             Graph minimalerWeg = new Graph();
             Graph residualGraph = new Graph();
             
@@ -20,7 +21,7 @@ namespace NETGraph.GraphAlgorithms
             // Solange wie es einen Fluss noch von startVertex nach endVertex gibt ist die Optimierung noch nicht beendet
             residualGraph = graph;
             residualGraph.DirectedEdges = true;
-            minimalerWeg = residualGraph.getWayForVertexes(startVertex, endVertex);
+            minimalerWeg = residualGraph.getWayForVertexes(startVertex, EndVertex);
             while (minimalerWeg.Vertexes.Count != 0)
             {
 
@@ -45,33 +46,10 @@ namespace NETGraph.GraphAlgorithms
                             currentedge.Flow -= min_costs;
                     }
                 }
-                
-                //TANS CODE
-                //for (int i = 0; i < minimalerWeg.Vertexes.Count; i++)
-                //{
-                //    Edge tempEdge = graph.findEdge(minimalerWeg[i + 1].VertexName, minimalerWeg[i].VertexName);
-                //    if (tempEdge != null)
-                //    {
-                //        tempEdge.Flow += min_costs;
-                //    }
-                //    else
-                //    {
-                //        try
-                //        {
-                //            tempEdge = graph.findEdge(minimalerWeg[i].VertexName, minimalerWeg[i + 1].VertexName);
-                //            tempEdge.Flow -= min_costs;
-                //        }
-                //        catch (Exception e)
-                //        {
-                //            throw e;
-                //        }
-                //    }
-                //    i++;
-                //}
 
                 // Wende die Breitensuche auf dem Residualgraphen an und finde den MINIMALEN(Kantenanzahl) Weg
                 residualGraph = this.buildResidualGraph(graph);
-                minimalerWeg = residualGraph.getWayForVertexes(residualGraph.findVertex(startVertex.VertexName), residualGraph.findVertex(endVertex.VertexName));
+                minimalerWeg = residualGraph.getWayForVertexes(residualGraph.findVertex(startVertex.VertexName), residualGraph.findVertex(EndVertex.VertexName));
 
             }
             return graph;
