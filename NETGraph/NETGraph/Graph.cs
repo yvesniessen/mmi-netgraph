@@ -312,6 +312,64 @@ namespace NETGraph
             }
         }
 
+        public void addEdge(Vertex<String> startVertex, Vertex<String> endVertex, double edgecosts, double realCosts)
+        {
+            startVertex = addVertex(startVertex);
+            endVertex = addVertex(endVertex);
+
+
+            if (!ParallelEdges)
+            {
+                if (!DirectedEdges)
+                {
+                    if ((checkEdgeExists(startVertex, endVertex) == null) && (checkEdgeExists(endVertex, startVertex) == null))
+                    {
+                        Edge tempEdge = new Edge(startVertex, endVertex);
+                        tempEdge.Costs = edgecosts;
+                        tempEdge.RealCosts = realCosts;
+                        Edges.Add(tempEdge);
+                    }
+                    else
+                    {
+                        _collisionOfEdges++;
+                    }
+                }
+                else
+                {
+                    if ((checkEdgeExists(startVertex, endVertex) == null))
+                    {
+                        Edge tempEdge = new Edge(startVertex, endVertex);
+                        tempEdge.Costs = edgecosts;
+                        tempEdge.RealCosts = realCosts;
+                        Edges.Add(tempEdge);
+                    }
+                    else
+                    {
+                        _collisionOfEdges++;
+                    }
+                }
+            }
+            else
+            {
+                if (!DirectedEdges)
+                {
+                    //TO FIX ?? Fall mal prüfen...
+
+                    Edge tempEdge = new Edge(startVertex, endVertex);
+                    tempEdge.Costs = edgecosts;
+                    tempEdge.RealCosts = realCosts;
+                    Edges.Add(tempEdge);
+                }
+                else
+                {
+                    Edge tempEdge = new Edge(startVertex, endVertex);
+                    tempEdge.Costs = edgecosts;
+                    tempEdge.RealCosts = realCosts;
+                    Edges.Add(tempEdge);
+                }
+            }
+        }
+
         public Vertex<String> addVertex(Vertex<String> vertex)
         {
             bool check = false;
@@ -517,14 +575,6 @@ namespace NETGraph
         {
             foreach (Vertex<String> v in Vertexes)
             {
-                //Zuerst alle Kanten löschen die den Knoten beinhalten
-                foreach (Edge e in v.Edges)
-                {
-                    if ((e.StartVertex.Equals(v)) || (e.EndVertex.Equals(v)))
-                    {
-                        deleteEdge(e);
-                    }
-                }
                 if (v.Equals(delVertex))
                 {
                     Vertexes.Remove(v);

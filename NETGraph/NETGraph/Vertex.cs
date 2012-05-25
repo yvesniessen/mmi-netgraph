@@ -25,6 +25,9 @@ namespace NETGraph
         private Color _color = Colors.White;
         private bool _marked = false;
         private int _grade = 0;
+        private double _balance = 0;
+
+
         //Vorgänger
         private Vertex<String> _preVertex;
         #endregion
@@ -39,6 +42,18 @@ namespace NETGraph
         #endregion
 
         #region properties
+
+        public double Balance
+        {
+            get
+            {
+                return _balance;
+            }
+            set
+            {
+                _balance = value;
+            }
+        }
 
         public Vertex<String> PreVertex
         {

@@ -85,56 +85,57 @@ namespace NETGraph
                     {
                         String[] _coloumnElements = _line.Split('\t');
 
-                        if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
+                       /* if (_CountColoumnElements > 0 && _coloumnElements.Length != _CountColoumnElements)
                         {
                             throw new NotImplementedException("ERROR:transformFileToGraph");
-                        }
+                        }*/
 
                         //_CountColoumnElements = _coloumnElements.Length;
 
 
                         _data.Add(_line);
                     }
-
                 // Decide the Type of input File Convertion
-                switch (_CountColoumnElements)
+                int _counter = 0;
+                int _counter2 = 0;
+                foreach (String data in _data)
                 {
-                    case 1:
-                        EventManagement.GuiLog("ERROR:transformFileToGraph");
-                        EventManagement.writeIntoLogFile("ERROR:transformFileToGraph");
-                        throw new NotImplementedException("ERROR:transformFileToGraph");
+                    String[] _coloumnElements = data.Split('\t');
+                    _CountColoumnElements = _coloumnElements.Length;
+                    
+                    switch (_CountColoumnElements)
+                    {
+                        case 1:
+                            String tmp = _data[_counter2].Replace(".", ",");
+                            _graph.Vertexes[_counter2].Balance = Convert.ToDouble(tmp);
+                            _counter2++;
+                            break;
                         //break; //unereichbar wegen exception
-                    case 0:
-                    case 2:
-                    case 3: //TODO: ANDERS ÜBERLEGEN DA SO 3x3 und 2x2 Matrix nicht erkannt wird
+                        case 0:
+                        case 2:
+                        case 3: //TODO: ANDERS ÜBERLEGEN DA SO 3x3 und 2x2 Matrix nicht erkannt wird
+                        case 4:
                         EventManagement.GuiLog("parse file to edgelist");
-                        //Debug.Print("Kantenliste");
-                        foreach (String data in _data)
-                        {
-                            String[] _Elements = data.Split('\t');   
-                            convertListLine(_Elements, ref _graph);   
-                        }
-                        break;
-                    default:
-                        EventManagement.GuiLog("parse file to Adjazensmatrix");
-                        Debug.Print("Adjazensmatrix");
+                            //Debug.Print("Kantenliste");
 
-                        // test if it is a valid number of Row elements
-                        if (_data.Count != _graph.NumberOfVertexes)
-                            throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
-                        int _counter = 0;
-                        foreach (String data in _data)
-                        {
-                            String[] _Elements = data.Split('\t');
+                            convertListLine(_coloumnElements, ref _graph);
+                            break;
+                        default:
+                            EventManagement.GuiLog("parse file to Adjazensmatrix");
+                            Debug.Print("Adjazensmatrix");
 
-                            // test if it is a valid number of columns elements
-                            if (_Elements.Length != _graph.NumberOfVertexes)
-                                throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Column Elements!");
+                            // test if it is a valid number of Row elements
+                            if (_data.Count != _graph.NumberOfVertexes)
+                                throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
 
-                            convertMatrixLine(_counter, _Elements, ref _graph);
+                                // test if it is a valid number of columns elements
+                            if (_coloumnElements.Length != _graph.NumberOfVertexes)
+                                    throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Column Elements!");
+
+                            convertMatrixLine(_counter, _coloumnElements, ref _graph);
                             _counter++;
-                        }
-                        break;
+                            break;
+                    }
                 }
                 EventManagement.stopTimer();
                 return _graph;
@@ -180,6 +181,13 @@ namespace NETGraph
                     //Hier wäre Double.tryParse eher angebracht
                     _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]), Convert.ToDouble(Elements[2]));
                     break;
+
+                case 4:
+                    Elements[2] = Elements[2].Replace(".", ",");
+                    Elements[3] = Elements[3].Replace(".", ",");
+                    _graph.addEdge(new Vertex<string>(Elements[0]), new Vertex<string>(Elements[1]), Convert.ToDouble(Elements[3]), Convert.ToDouble(Elements[2]));
+                    break;
+
                 default:
                     Debug.Print("ConvertListLine: dieser Fall dürfte nicht eintreten ;)");
                     break;
