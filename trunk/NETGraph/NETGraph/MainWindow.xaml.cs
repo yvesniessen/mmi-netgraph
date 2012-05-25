@@ -364,7 +364,8 @@ namespace NETGraph
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
 
-         
+            m_graphAlgorithm = new CycleCanceling();
+            m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
 
             #region Praktikum 2
 

@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GraphAlgorithms\CycleCanceling.cs" />
     <Compile Include="GraphAlgorithms\FordFulkerson.cs" />
     <Compile Include="GraphAlgorithms\DepthSearch.cs" />
     <Compile Include="GraphAlgorithms\IGraphAlgorithm.cs" />

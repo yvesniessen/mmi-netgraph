@@ -15,6 +15,7 @@ namespace NETGraph
         private String _edgeName;      
         private Vertex<string> _startVertex, _endVertex;
         private double _flow = 0;
+        private double _realCosts = 0;
 
         // The value holder for compareTo-Implementation
         protected int m_value = 0;
@@ -43,6 +44,18 @@ namespace NETGraph
             set
             {
                 _flow = value;
+            }
+        }
+
+        public double RealCosts
+        {
+            get
+            {
+                return _realCosts;
+            }
+            set
+            {
+                _realCosts = value;
             }
         }
 
@@ -111,7 +124,7 @@ namespace NETGraph
         #region public functions
         public override String ToString()
         {
-            return "Edge: " + _edgeName.ToString() + " Cap: " + this.Costs + " Flow: " + this.Flow;// + " m:" + _marked.ToString();//" Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
+            return "Edge: " + _edgeName.ToString() + " Flow: " + this.Flow +" Cap: " + this.Costs + " Costs: " + this.RealCosts;// + " m:" + _marked.ToString();//" Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
         }
         
         public int CompareTo(Object obj)

@@ -12,7 +12,7 @@ namespace NETGraph.GraphAlgorithms
 
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
-            Vertex<String> EndVertex = graph.findVertex("7");
+            Vertex<String> EndVertex = graph.findVertex("T*");
             Graph minimalerWeg = new Graph();
             Graph residualGraph = new Graph();
             
@@ -55,7 +55,7 @@ namespace NETGraph.GraphAlgorithms
             return graph;
         }
 
-        private Graph buildResidualGraph(Graph graph)
+        public Graph buildResidualGraph(Graph graph)
         {
             Graph residualGraph = new Graph();
             residualGraph.DirectedEdges = true;
@@ -68,19 +68,19 @@ namespace NETGraph.GraphAlgorithms
                 //Hinkante hinzufügen
                 if((e.Costs - e.Flow) != 0)
                 {
-                    residualGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge, (e.Costs - e.Flow));
+                    residualGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge, (e.Costs - e.Flow), e.RealCosts);
                 }
                 
                 //Rückkante hinzufügen
                 if(e.Flow != 0)
                 {
-                    residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow);
+                    residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow, (e.RealCosts*(-1)));
                 }
             }
             return residualGraph;
         }
 
-        private double getMinCostsFromEdges(Graph minWeg)
+        public double getMinCostsFromEdges(Graph minWeg)
         {
             double costs = 0.0;
             minWeg.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
