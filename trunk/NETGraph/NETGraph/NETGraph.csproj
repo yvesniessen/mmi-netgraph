@@ -137,6 +137,9 @@
     <Resource Include="Graphen\TSNeighbor.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Graphen\Kostenminimal100.txt" />
+    <Resource Include="Graphen\Kostenminimal5.txt" />
+    <Resource Include="Graphen\Kostenminimal_eigener.txt" />
     <Resource Include="Graphen\TextFile1.txt" />
     <Resource Include="Graphen\Wege3.txt" />
     <Resource Include="Graphen\Wege2.txt" />
