@@ -22,6 +22,8 @@
                 <MenuItem Header="Dijkstra" Click="Dijkstra_Click" />
                 <MenuItem Header="Moore-Bellman-Ford" Click="MooreBellmanFord_Click" />
                 <MenuItem Header="FordFulkerson" Click="FordFulkerson_Click" />
+                <MenuItem Header="CycleCanceling" Click="CycleCanceling_Click" />
+                <MenuItem Header="SuccessiveShortestPath" Click="SuccessiveShortestPath_Click" />
                 </MenuItem>
             <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">

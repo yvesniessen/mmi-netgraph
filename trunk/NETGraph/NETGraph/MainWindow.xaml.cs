@@ -150,7 +150,6 @@ namespace NETGraph
             _graph.updateGUI();
             _graph.unmarkGraph();
         }
-
         private void Kruskal_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Kruskal ...");
@@ -170,8 +169,6 @@ namespace NETGraph
             _graph.updateGUI();
             _graph.unmarkGraph();
         }
-
-
         private void HeuristikNN_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running HeuristikNN ...");
@@ -196,7 +193,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void HeuristikDS_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running HeuristikNN ...");
@@ -221,12 +217,10 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void Output_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void Allways_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running AllWays ...");
@@ -254,7 +248,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void Dijkstra_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running Dijkstra ...");
@@ -275,7 +268,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
         private void MooreBellmanFord_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running MooreBellmanFord ...");
@@ -303,8 +295,6 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
-
-
         private void FordFulkerson_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running FordFulkerson ...");
@@ -334,7 +324,48 @@ namespace NETGraph
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
         }
+        private void CycleCanceling_Click(object sender, RoutedEventArgs e)
+        {
+             EventManagement.GuiLog("running CycleCanceling ...");
 
+
+             if (_graph != null)
+             {
+                 
+                     m_graphAlgorithm = new CycleCanceling();
+
+                     EventManagement.startTimer();
+                     _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                     EventManagement.stopTimer();
+
+                     _graphList = Export.showGraph(ref _graph);
+                     _graph.updateGUI();
+                     _graph.unmarkGraph();
+             }
+             else
+                 System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
+
+        private void SuccessiveShortestPath_Click(object sender, RoutedEventArgs e)
+        {
+            EventManagement.GuiLog("running SuccessiveShortestPath ...");
+
+            if (_graph != null)
+            {
+
+                m_graphAlgorithm = new SuccessiveShortestPath();
+
+                EventManagement.startTimer();
+                _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+                EventManagement.stopTimer();
+
+                _graphList = Export.showGraph(ref _graph);
+                _graph.updateGUI();
+                _graph.unmarkGraph();
+            }
+            else
+                System.Windows.MessageBox.Show("Please Load a Graph!");
+        }
 
 
         private void buttonStateRecover_Click(object sender, RoutedEventArgs e)
@@ -363,9 +394,6 @@ namespace NETGraph
             saveGraphState(_graph);
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
-
-            m_graphAlgorithm = new CycleCanceling();
-            m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
 
             #region Praktikum 2
 
@@ -544,6 +572,10 @@ namespace NETGraph
             labelState.Content = (Int32.Parse(labelState.Content.ToString()) + 1).ToString();
         }
         #endregion
+
+
+
+
 
 
 

@@ -26,6 +26,7 @@ namespace NETGraph
         private bool _marked = false;
         private int _grade = 0;
         private double _balance = 0;
+        private double _momentbalance = 0;
 
 
         //Vorgänger
@@ -52,6 +53,18 @@ namespace NETGraph
             set
             {
                 _balance = value;
+            }
+        }
+
+        public double Momentbalance
+        {
+            get
+            {
+                return _momentbalance;
+            }
+            set
+            {
+                _momentbalance = value;
             }
         }
 
