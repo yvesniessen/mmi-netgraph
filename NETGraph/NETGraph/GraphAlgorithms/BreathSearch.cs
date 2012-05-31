@@ -110,7 +110,7 @@ namespace NETGraph.Algorithm
                 //Solange bis wir am Anfang des Weges sind
                 while (Vertex.VertexName != startVertex.VertexName)
                 {
-                    result.addEdge(Vertex.PreVertex, Vertex, graph.findEdge(Vertex.PreVertex, Vertex).Costs);
+                    result.addEdge(Vertex.PreVertex, Vertex, graph.findEdge(Vertex.PreVertex, Vertex).Costs, graph.findEdge(Vertex.PreVertex, Vertex).RealCosts);
                     Vertex = Vertex.PreVertex;
                 }
             }

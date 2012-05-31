@@ -370,6 +370,9 @@ namespace NETGraph
             }
         }
 
+
+
+
         public Vertex<String> addVertex(Vertex<String> vertex)
         {
             bool check = false;

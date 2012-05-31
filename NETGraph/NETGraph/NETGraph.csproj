@@ -71,6 +71,7 @@
     <Compile Include="GraphAlgorithms\MooreBellmanFord.cs" />
     <Compile Include="GraphAlgorithms\Kruskal.cs" />
     <Compile Include="GraphAlgorithms\Prim.cs" />
+    <Compile Include="GraphAlgorithms\SuccessiveShortestPath.cs" />
     <Compile Include="GraphAlgorithms\TSP_AllWays.cs" />
     <Compile Include="GraphListData.cs" />
     <Compile Include="Import.cs" />
@@ -137,6 +138,7 @@
     <Resource Include="Graphen\TSNeighbor.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Graphen\SuccessivesShortestPath.txt" />
     <Resource Include="Graphen\Kostenminimal100.txt" />
     <Resource Include="Graphen\Kostenminimal5.txt" />
     <Resource Include="Graphen\Kostenminimal_eigener.txt" />

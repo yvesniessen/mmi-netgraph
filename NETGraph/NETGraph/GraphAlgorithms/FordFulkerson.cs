@@ -66,15 +66,15 @@ namespace NETGraph.GraphAlgorithms
 
 
                 //Hinkante hinzufügen
-                if((e.Costs - e.Flow) != 0)
+                if ((e.Costs - e.Flow) != 0)
                 {
                     residualGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge, (e.Costs - e.Flow), e.RealCosts);
                 }
-                
+
                 //Rückkante hinzufügen
-                if(e.Flow != 0)
+                if (e.Flow != 0)
                 {
-                    residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow, (e.RealCosts*(-1)));
+                    residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow, (e.RealCosts * (-1)));
                 }
             }
             return residualGraph;
