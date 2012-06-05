@@ -24,6 +24,30 @@ namespace NETGraph.GraphAlgorithms
 
 
         */
+
+        private Graph setBalance(Graph result)
+        {
+            foreach (Vertex<String> v in result.Vertexes)
+            {
+                double sumflow = 0;
+
+                foreach (Edge e in result.Edges)
+                {
+                    if (e.StartVertex == v)
+                    {
+                        sumflow += e.Flow;
+                    }
+                    else if (e.EndVertex == v)
+                    {
+                        sumflow -= e.Flow;
+                    }
+                }
+                v.Momentbalance = v.Balance - sumflow;
+            }
+
+            return result;
+        }
+
         private Graph buildWay(Graph graph, Vertex<String> sourceVertex, Vertex<String> targetVertex)
         {
             Graph result = new Graph();
@@ -63,26 +87,10 @@ namespace NETGraph.GraphAlgorithms
                 }
             }
 
-            foreach (Vertex<String> v in result.Vertexes)
-            {
-                double sumflow = 0;
+            result = this.setBalance(result);
 
-                foreach (Edge e in result.Edges)
-                {
-                    if (e.StartVertex == v)
-                    {
-                        sumflow += e.Flow;
-                    }
-                    else if (e.EndVertex == v)
-                    {
-                        sumflow -= e.Flow;
-                    }
-                }
-                v.Momentbalance = v.Balance - sumflow;
-            }
-
-                Vertex<String> s;
-                Vertex<String> t = new Vertex<string>("leer");
+                Vertex<String> s = new Vertex<string>("leer"); ;
+                Vertex<String> t = new Vertex<string>("leer2");
                 Graph way = new Graph();
                 Graph way2 = new Graph();
                 Graph way3 = new Graph();
@@ -135,27 +143,48 @@ namespace NETGraph.GraphAlgorithms
                     
                     }
 
-                    if (way.Edges.Count() >= 1)
+                    if (way3.Edges.Count() >= 1)
                     {
                         double landa = 0;
                         // finde Landa heraus (das min der Kapazitäten aller Kanten im Weg und dem was eine Quelle geben kann (b-b') und was eine Senke aufnehmen kann (b'-b))
 
                         // Sortiere alle kosten nach ihrer Kapazität
-                        way3.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.RealCosts.CompareTo(e2.RealCosts); });
-                        landa = way3.Edges.First().RealCosts;
+                        way3.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
+                        landa = way3.Edges.First().Costs;
 
-                        if (way3.Vertexes.First().Momentbalance < landa)
+                        if (s.Momentbalance < landa)
                         {
-                            landa = way3.Vertexes.First().Momentbalance;
+                            landa = s.Momentbalance;
                         }
 
-                        if (way3.Vertexes.Last().Momentbalance < landa)
+                        if ((t.Momentbalance*(-1)) < landa)
                         {
-                            landa = way3.Vertexes.Last().Momentbalance;
+                            landa = t.Momentbalance*(-1);
                         }
+
                         // Erhöhe alle Flüsse auf dem Weg des Residualgraphen im Ursprungsgraphen und Landa
                         // Zum Beispiel: Kante aus Residualgraph mit -3 wird im ursprünglichen Graphen zu einem Fluss von 3.
+                        foreach (Edge e in way3.Edges)
+                        {
+                            Edge resultedge = result.findEdge(e.StartVertex, e.EndVertex);
+                            if (resultedge != null)
+                            {
+                                resultedge.Flow += landa;
+                            }
+                            else  // Falls zurückgepumt werden muss
+                            {
+                                resultedge = result.findEdge(e.EndVertex, e.StartVertex);
 
+                                if (resultedge != null)
+                                {
+                                    resultedge.Flow -= landa;
+                                }
+                            }
+
+                        }
+                        way3 = new Graph();
+
+                        result = this.setBalance(result);
 
                     }
                     else

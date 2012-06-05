@@ -362,6 +362,15 @@ namespace NETGraph
                 _graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
                 _graph.unmarkGraph();
+
+                double Costs = 0;
+
+                foreach (Edge edge in _graph.Edges)
+                {
+                    Costs += edge.Flow * edge.RealCosts;
+                }
+
+                EventManagement.GuiLog("Kosten: " + Costs + "\n");
             }
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");
