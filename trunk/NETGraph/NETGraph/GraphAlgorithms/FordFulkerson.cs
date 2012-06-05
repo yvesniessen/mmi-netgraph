@@ -66,7 +66,7 @@ namespace NETGraph.GraphAlgorithms
 
 
                 //Hinkante hinzufügen
-                if ((e.Costs - e.Flow) != 0)
+                if ((e.Costs - e.Flow) > 0)
                 {
                     residualGraph.addEdge(startVertexForNewEdge, endVertexForNewEdge, (e.Costs - e.Flow), e.RealCosts);
                 }
@@ -74,7 +74,10 @@ namespace NETGraph.GraphAlgorithms
                 //Rückkante hinzufügen
                 if (e.Flow != 0)
                 {
-                    residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow, (e.RealCosts * (-1)));
+                    //if (e.RealCosts >= 0)
+                        residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Flow, (e.RealCosts * (-1)));
+                   // else
+                   //     residualGraph.addEdge(endVertexForNewEdge, startVertexForNewEdge, e.Costs, e.RealCosts);
                 }
             }
             return residualGraph;
