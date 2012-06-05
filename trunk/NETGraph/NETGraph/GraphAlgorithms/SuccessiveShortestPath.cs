@@ -24,6 +24,27 @@ namespace NETGraph.GraphAlgorithms
 
 
         */
+        private Graph buildWay(Graph graph, Vertex<String> sourceVertex, Vertex<String> targetVertex)
+        {
+            Graph result = new Graph();
+            Vertex<String> target = graph.findVertex(targetVertex.VertexName);
+            Vertex<String> currentVertex = graph.findVertex(targetVertex.VertexName).PreVertex;
+            Edge tempEdge;
+
+            while (!currentVertex.VertexName.Equals(sourceVertex.VertexName))
+            {
+                tempEdge = graph.findEdge(currentVertex, target);
+                result.addEdge(new Vertex<string>(currentVertex.VertexName), new Vertex<string>(target.VertexName),tempEdge.Costs, tempEdge.RealCosts);
+                target = currentVertex;
+                currentVertex = target.PreVertex;
+            }
+
+            tempEdge = graph.findEdge(currentVertex, target);
+            result.addEdge(new Vertex<string>(currentVertex.VertexName), new Vertex<string>(target.VertexName), tempEdge.Costs, tempEdge.RealCosts);
+
+            return result;
+        }
+
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
             Graph result = graph;
@@ -94,7 +115,7 @@ namespace NETGraph.GraphAlgorithms
                                     // Finde die kürzesten Wege von s aus.
                                     way = residualgraph.buildResidualGraph(result);
                                     way2 = shortestWay.performAlgorithm(way, way.findVertex(s.VertexName));
-
+                                    way3 = this.buildWay(way2, way2.findVertex(s.VertexName), way2.findVertex(t.VertexName));
 
                                     // Die Kanten des Weges mit neuen werten füllen
                                     //way3 = findWay.findWay(way2, way2.findVertex(s.VertexName), way2.findVertex(t.VertexName));
@@ -120,20 +141,21 @@ namespace NETGraph.GraphAlgorithms
                         // finde Landa heraus (das min der Kapazitäten aller Kanten im Weg und dem was eine Quelle geben kann (b-b') und was eine Senke aufnehmen kann (b'-b))
 
                         // Sortiere alle kosten nach ihrer Kapazität
-                        way.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.RealCosts.CompareTo(e2.RealCosts); });
-                        landa = way.Edges.First().RealCosts;
+                        way3.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.RealCosts.CompareTo(e2.RealCosts); });
+                        landa = way3.Edges.First().RealCosts;
 
-                        if (way.Vertexes.First().Momentbalance < landa)
+                        if (way3.Vertexes.First().Momentbalance < landa)
                         {
-                            landa = way.Vertexes.First().Momentbalance;
+                            landa = way3.Vertexes.First().Momentbalance;
                         }
 
-                        if (way.Vertexes.Last().Momentbalance < landa)
+                        if (way3.Vertexes.Last().Momentbalance < landa)
                         {
-                            landa = way.Vertexes.Last().Momentbalance;
+                            landa = way3.Vertexes.Last().Momentbalance;
                         }
                         // Erhöhe alle Flüsse auf dem Weg des Residualgraphen im Ursprungsgraphen und Landa
                         // Zum Beispiel: Kante aus Residualgraph mit -3 wird im ursprünglichen Graphen zu einem Fluss von 3.
+
 
                     }
                     else
