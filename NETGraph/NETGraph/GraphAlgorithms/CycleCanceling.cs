@@ -26,14 +26,12 @@ namespace NETGraph.GraphAlgorithms
 
             graph = m_fordFulk.performAlgorithm(graph, graph.findVertex("S*"));
 
-            graph = deleteSuperTargetandSource(graph);
-
-
             Graph residualGraph = m_fordFulk.buildResidualGraph(graph);
-
-
             
             Graph negativeCycle = findNegativeCycle(residualGraph, startVertex);
+
+            graph = deleteSuperTargetandSource(graph);
+
             while (negativeCycle != null)
             {
                 double min_costs = m_fordFulk.getMinCostsFromEdges(negativeCycle);
@@ -92,16 +90,21 @@ namespace NETGraph.GraphAlgorithms
         {
             List<Vertex<String>> sources = new List<Vertex<string>>();
             List<Vertex<String>> targets = new List<Vertex<string>>();
+
+            double totalBalance = 0;
+
             foreach (Vertex<String> vertex in graph.Vertexes)
             {
                 if (vertex.Balance > 0)
                 {
                     sources.Add(vertex);
+                   
                 }
                 else if (vertex.Balance < 0)
                 {
                     targets.Add(vertex);
                 }
+                totalBalance += vertex.Balance;
             }
             Vertex<String> SuperSource = new Vertex<string>("S*");
             Vertex<String> SuperTarget = new Vertex<string>("T*");
@@ -114,7 +117,16 @@ namespace NETGraph.GraphAlgorithms
             {
                 graph.addEdge(graph.findVertex(vertex.VertexName), SuperTarget, graph.findVertex(vertex.VertexName).Balance * (-1));
             }
-            return graph;
+
+            if (totalBalance == 0)
+            {
+                return graph;
+            }
+            else
+            {
+                EventManagement.GuiLog("Balancen nicht ausgeglichen. Abbruch!");
+                return new Graph();
+            }
         }
 
         public Graph findNegativeCycle(Graph graph, Vertex<String> startVertex)
