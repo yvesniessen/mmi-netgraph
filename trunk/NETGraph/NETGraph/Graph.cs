@@ -8,7 +8,7 @@ using NETGraph.GraphAlgorithms;
 
 namespace NETGraph
 {
-    class Graph
+    public class Graph
     {
         #region members
         private String _graphName;

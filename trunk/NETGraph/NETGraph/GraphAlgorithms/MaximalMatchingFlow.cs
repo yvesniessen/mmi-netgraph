@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NETGraph.Algorithm;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.GraphAlgorithms
 {
     class MaximalMatchingFlow : IGraphAlgorithm
     {
+        public Boolean DrawSingleStep = false;
         List<Vertex<String>> sources = new List<Vertex<string>>();
         List<Vertex<String>> targets = new List<Vertex<string>>();
 
@@ -21,7 +22,9 @@ namespace NETGraph.GraphAlgorithms
             //BRAUCHEN WIR GLAUBE ICH NUR EINMAL ZU MACHEN!!!
             //for (int i = 0; i < targets.Count; i++)
             //{
-                tempGraph = FordFulkerson.performAlgorithm(graph, graph.findVertex("S*"));
+            (FordFulkerson as FordFulkerson).EndVertex = graph.findVertex("T*");
+            tempGraph = FordFulkerson.performAlgorithm(graph, graph.findVertex("S*"));
+                
             //}
 
             graph = deleteSuperTargetandSource(graph);

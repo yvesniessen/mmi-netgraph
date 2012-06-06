@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NETGraph.Algorithm;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.GraphAlgorithms
 {
     class Prim : IGraphAlgorithm
     {
+        
         #region IGraphAlgorithm Member
-
+        public Boolean DrawSingleStep = false;
         /*
          * Vorgehen - Algorithmus von Prim:
 

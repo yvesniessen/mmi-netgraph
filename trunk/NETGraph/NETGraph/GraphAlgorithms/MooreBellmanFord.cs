@@ -11,12 +11,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.Algorithm
 {
     class MooreBellmanFord : IGraphAlgorithm
     {
         #region IGraphAlgorithm Member
+        public Boolean DrawSingleStep = false;
 
         /////////////////////////////////////////////////////////////////////////////////////////
         // TODO: im Schritt 3 negative Zykel auffinden...!!!!

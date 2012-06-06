@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.Algorithm
 {
     class BreathSearch : IGraphAlgorithm
     {
         #region IGraphAlgorithm Member
+        public Boolean DrawSingleStep = false;
 
         public Graph performAlgorithm(Graph graph, Vertex<String> startVertex)
         {

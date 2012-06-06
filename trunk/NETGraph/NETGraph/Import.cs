@@ -119,6 +119,7 @@ namespace NETGraph
                             {
                                 EventManagement.GuiLog("parse file to edgelist");
                                 Debug.Print("Kantenliste");
+                                _counter2++;
                             }
 
                             //WENNN ES EINE Liste für eine Bipartiden Graphen ist

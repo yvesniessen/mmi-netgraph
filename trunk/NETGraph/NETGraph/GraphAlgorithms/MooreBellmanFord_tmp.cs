@@ -11,11 +11,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.Algorithm
 {
     class MooreBellmanFord_tmp : IGraphAlgorithm
     {
+        public Boolean DrawSingleStep = false;
         #region IGraphAlgorithm Member
 
         /////////////////////////////////////////////////////////////////////////////////////////

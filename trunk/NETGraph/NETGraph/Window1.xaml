@@ -1,0 +1,13 @@
+﻿<Window x:Class="Demo.WpfGraphApplication.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:gv="clr-namespace:Microsoft.Glee.GraphViewerGdi;assembly=Microsoft.Glee.GraphViewerGDI"
+    Title="Test" Height="473" Width="551">
+    <Grid>
+        <WindowsFormsHost Name="windowsFormsHost1" Margin="0,60,0,0">
+            <gv:GViewer x:Name="gViewer"></gv:GViewer>
+        </WindowsFormsHost>
+        <Label Height="28" Name="label1" VerticalAlignment="Top">Label</Label>
+        <Label Content="Legende: V: n test" Height="62" HorizontalAlignment="Left" Margin="307,0,0,0" Name="label2" VerticalAlignment="Top" Width="222" />
+    </Grid>
+</Window>

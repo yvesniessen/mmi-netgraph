@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NETGraph.Algorithm;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.GraphAlgorithms
 {
     class HeuristikNN : IGraphAlgorithm
     {
+        public Boolean DrawSingleStep = false;
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
             Graph resultGraph = new Graph();
