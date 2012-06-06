@@ -87,6 +87,7 @@ namespace NETGraph
         {
             get
             {
+                _edgeName = StartVertex.ToString() + ":" + EndVertex.ToString();
                 return _edgeName;
             }
             set
@@ -124,7 +125,7 @@ namespace NETGraph
         #region public functions
         public override String ToString()
         {
-            return "Edge: " + _edgeName.ToString() + " Flow: " + this.Flow + " Cap: " + this.Costs + " Costs: " + this.RealCosts;// + " m:" + _marked.ToString();//" Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
+            return "Edge: " + EdgeName.ToString() + " Flow: " + this.Flow + " Cap: " + this.Costs + " Costs: " + this.RealCosts;// + " m:" + _marked.ToString();//" Startknoten: " + this._startVertex.ToString() + " Endknoten: "+  this._endVertex.ToString() + " Kosten: " + this._costs.ToString();
         }
         
         public int CompareTo(Object obj)

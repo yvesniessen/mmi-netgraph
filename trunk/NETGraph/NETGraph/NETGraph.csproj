@@ -68,6 +68,7 @@
     <Compile Include="GraphAlgorithms\HeuristikNN.cs" />
     <Compile Include="GraphAlgorithms\HeuristikDS.cs" />
     <Compile Include="GraphAlgorithms\Dijkstra.cs" />
+    <Compile Include="GraphAlgorithms\MaximalMatchingFlow.cs" />
     <Compile Include="GraphAlgorithms\MooreBellmanFord_tmp.cs" />
     <Compile Include="GraphAlgorithms\MooreBellmanFord.cs" />
     <Compile Include="GraphAlgorithms\Kruskal.cs" />

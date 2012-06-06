@@ -399,10 +399,15 @@ namespace NETGraph
                 return;
             }
 
+            m_graphAlgorithm = new MaximalMatchingFlow();
+            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+
             GraphListData _graphList;
             saveGraphState(_graph);
             _graphList = Export.showGraph(ref _graph);
             _graph.updateGUI();
+
+           
 
             #region Praktikum 2
 

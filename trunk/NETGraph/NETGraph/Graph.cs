@@ -18,7 +18,7 @@ namespace NETGraph
         private int _collisionOfVertexes = 0;
         private int _collisionOfEdges = 0;
         private bool _parallelEdges = false;
-        private bool _directedEdges = true;
+        private bool _directedEdges = false;
         private int _numberOfVertexes = 0;
         private IGraphAlgorithm m_graphAlgorithm;
         private double _processTime = .0;

@@ -27,6 +27,7 @@ namespace NETGraph.GraphAlgorithms
 
         private Graph setBalance(Graph result)
         {
+            double totalBalance = 0;
             foreach (Vertex<String> v in result.Vertexes)
             {
                 double sumflow = 0;
@@ -42,10 +43,17 @@ namespace NETGraph.GraphAlgorithms
                         sumflow -= e.Flow;
                     }
                 }
+                totalBalance += v.Balance;
                 v.Momentbalance = v.Balance - sumflow;
             }
-
-            return result;
+            if (totalBalance != 0)
+            {
+                return null;
+            }
+            else
+            {
+                return result;
+            }
         }
 
         private Graph buildWay(Graph graph, Vertex<String> sourceVertex, Vertex<String> targetVertex)
@@ -87,7 +95,15 @@ namespace NETGraph.GraphAlgorithms
                 }
             }
 
+
+
             result = this.setBalance(result);
+            if (result == null)
+            {
+                EventManagement.GuiLog("KALTE FUSION, ENERGIE QUELLE AUS NICHTS - ABBRUCH ABBRUCH!!");
+                return new Graph();
+            }
+
 
                 Vertex<String> s = new Vertex<string>("leer"); ;
                 Vertex<String> t = new Vertex<string>("leer2");
@@ -101,7 +117,7 @@ namespace NETGraph.GraphAlgorithms
                 bool abort = false;
 
                 // Solange wie es kein return gab und noch Wege von s->t gibt.
-                    while (!abort)
+                while (!abort)
                 {
                     
                     foreach (Vertex<String> v1 in result.Vertexes)
@@ -126,18 +142,9 @@ namespace NETGraph.GraphAlgorithms
                                     way3 = this.buildWay(way2, way2.findVertex(s.VertexName), way2.findVertex(t.VertexName));
 
                                     // Die Kanten des Weges mit neuen werten füllen
-                                    //way3 = findWay.findWay(way2, way2.findVertex(s.VertexName), way2.findVertex(t.VertexName));
                                     // Wenn es einen Weg gibt nimm diesen
-                                    if (way.Edges.Count() >= 1 )
-                                    {
-                                        break;
-                                    }
+              
                                 }
-                            }
-
-                            if (way.Edges.Count() >= 1)
-                            {
-                                break;
                             }
                         }
                     
@@ -145,21 +152,21 @@ namespace NETGraph.GraphAlgorithms
 
                     if (way3.Edges.Count() >= 1)
                     {
-                        double landa = 0;
+                        double lamda = 0;
                         // finde Landa heraus (das min der Kapazitäten aller Kanten im Weg und dem was eine Quelle geben kann (b-b') und was eine Senke aufnehmen kann (b'-b))
 
                         // Sortiere alle kosten nach ihrer Kapazität
                         way3.Edges.Sort(delegate(Edge e1, Edge e2) { return e1.Costs.CompareTo(e2.Costs); });
-                        landa = way3.Edges.First().Costs;
+                        lamda = way3.Edges.First().Costs;
 
-                        if (s.Momentbalance < landa)
+                        if (s.Momentbalance < lamda)
                         {
-                            landa = s.Momentbalance;
+                            lamda = s.Momentbalance;
                         }
 
-                        if ((t.Momentbalance*(-1)) < landa)
+                        if ((t.Momentbalance*(-1)) < lamda)
                         {
-                            landa = t.Momentbalance*(-1);
+                            lamda = t.Momentbalance*(-1);
                         }
 
                         // Erhöhe alle Flüsse auf dem Weg des Residualgraphen im Ursprungsgraphen und Landa
@@ -169,7 +176,7 @@ namespace NETGraph.GraphAlgorithms
                             Edge resultedge = result.findEdge(e.StartVertex, e.EndVertex);
                             if (resultedge != null)
                             {
-                                resultedge.Flow += landa;
+                                resultedge.Flow += lamda;
                             }
                             else  // Falls zurückgepumt werden muss
                             {
@@ -177,7 +184,7 @@ namespace NETGraph.GraphAlgorithms
 
                                 if (resultedge != null)
                                 {
-                                    resultedge.Flow -= landa;
+                                    resultedge.Flow -= lamda;
                                 }
                             }
 
