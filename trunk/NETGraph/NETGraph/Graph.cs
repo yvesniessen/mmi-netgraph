@@ -386,7 +386,7 @@ namespace NETGraph
                     if (v.VertexName.Equals(vertex.VertexName))
                     {
                         check = true;
-                        System.Diagnostics.Debug.WriteLine("Knoten schon da: " + vertex.VertexName.ToString());
+                        //System.Diagnostics.Debug.WriteLine("Knoten schon da: " + vertex.VertexName.ToString());
                         CollisionOfVertexes++;
                         return v;
                     }

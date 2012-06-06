@@ -18,10 +18,11 @@ namespace NETGraph.GraphAlgorithms
             Graph tempGraph = graph;
 
             IGraphAlgorithm FordFulkerson = new FordFulkerson();
-            for (int i = 0; i < targets.Count; i++)
-            {
+            //BRAUCHEN WIR GLAUBE ICH NUR EINMAL ZU MACHEN!!!
+            //for (int i = 0; i < targets.Count; i++)
+            //{
                 tempGraph = FordFulkerson.performAlgorithm(graph, graph.findVertex("S*"));
-            }
+            //}
 
             graph = deleteSuperTargetandSource(graph);
 
