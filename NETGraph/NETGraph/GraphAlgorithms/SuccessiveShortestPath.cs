@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NETGraph.Algorithm;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.GraphAlgorithms
 {
     class SuccessiveShortestPath : IGraphAlgorithm
@@ -24,7 +24,7 @@ namespace NETGraph.GraphAlgorithms
 
 
         */
-
+        public Boolean DrawSingleStep = false;
         private Graph setBalance(Graph result)
         {
             double totalBalance = 0;

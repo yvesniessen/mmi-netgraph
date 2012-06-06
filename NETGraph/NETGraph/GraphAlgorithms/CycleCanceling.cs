@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NETGraph.Algorithm;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.GraphAlgorithms
 {
     class CycleCanceling : IGraphAlgorithm
     {
+        public Boolean DrawSingleStep = false;
         FordFulkerson m_fordFulk = new FordFulkerson();
         MooreBellmanFord m_MooreBellmannFord = new MooreBellmanFord();
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)

@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Demo.WpfGraphApplication;
 namespace NETGraph.Algorithm
 {
     class DepthSearch : IGraphAlgorithm
     {
 
         #region IGraphAlgorithm Member
+        public Boolean DrawSingleStep = false;
+
 
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {

@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using NETGraph.Algorithm;
 using NETGraph.GraphAlgorithms;
+using Demo.WpfGraphApplication;
 
 namespace NETGraph
 {
@@ -27,7 +28,7 @@ namespace NETGraph
 
     public partial class MainWindow : Window
     {
-
+        public int counter = 1;
         #region constructor
         public MainWindow()
         {
@@ -221,6 +222,15 @@ namespace NETGraph
         {
 
         }
+
+        private void Draw_Click(object sender, RoutedEventArgs e)
+        {
+            Window1 draw = new Window1(_graph);
+            draw.Title = "Graph - Manuelle Zeichnung " + counter.ToString();
+            draw.Show();
+            counter++;
+        }
+
         private void Allways_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running AllWays ...");
@@ -298,13 +308,14 @@ namespace NETGraph
         private void FordFulkerson_Click(object sender, RoutedEventArgs e)
         {
             EventManagement.GuiLog("running FordFulkerson ...");
-
             if (_graph != null)
             {
                 m_graphAlgorithm = new FordFulkerson();
 
+
                 EventManagement.startTimer();
                 String startVertexName = "0";
+                (m_graphAlgorithm as FordFulkerson).EndVertex = _graph.findVertex("7");
 
                 _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.findVertex(startVertexName));
 
@@ -319,7 +330,6 @@ namespace NETGraph
                 _graphList = Export.showGraph(ref _graph);
                 _graph.updateGUI();
                 _graph.unmarkGraph();
-
             }
             else
                 System.Windows.MessageBox.Show("Please Load a Graph!");

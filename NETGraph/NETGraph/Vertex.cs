@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace NETGraph
 {
-    class Vertex<T>
+    public class Vertex<T>
     {
         #region members 
         private T _vertexName;

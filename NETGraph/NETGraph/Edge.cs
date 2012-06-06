@@ -7,7 +7,7 @@ namespace NETGraph
 {
 
     //ToDO: Change Generics to template!
-    class Edge : IComparable
+    public class Edge : IComparable
     {
         #region members
         private double _costs = 0;

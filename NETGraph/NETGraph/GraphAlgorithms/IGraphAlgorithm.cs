@@ -7,6 +7,6 @@ namespace NETGraph.Algorithm
 {
     interface IGraphAlgorithm
     {
-        Graph performAlgorithm(Graph graph, Vertex<String> startVertex);
+       Graph performAlgorithm(Graph graph, Vertex<String> startVertex);
     }
 }
