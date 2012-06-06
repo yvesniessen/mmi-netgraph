@@ -21,14 +21,10 @@ namespace NETGraph.GraphAlgorithms
             for (int i = 0; i < targets.Count; i++)
             {
                 tempGraph = FordFulkerson.performAlgorithm(graph, graph.findVertex("S*"));
-                foreach (Edge e in tempGraph.Edges)
-                {
-                    if (e.Flow == 1)
-                    {
-                        e.RealCosts = double.PositiveInfinity;
-                    }
-                }
             }
+
+            graph = deleteSuperTargetandSource(graph);
+
             return graph;
         }
 
@@ -45,16 +41,17 @@ namespace NETGraph.GraphAlgorithms
                     sources.Add(vertex);
                     foreach (Edge e in vertex.Edges)
                     {
-                        Vertex<String> tempVertex = e.StartVertex;
 
-                        e.StartVertex = vertex;
                         e.Flow = 0;
                         e.Costs = 1;
                         e.RealCosts = 1;
-                        if (!e.EndVertex.VertexName.Equals(tempVertex.VertexName))
+
+                        if (e.EndVertex.VertexName.Equals(vertex.VertexName))
                         {
-                            e.EndVertex = tempVertex;
+                            e.EndVertex = e.StartVertex;
                         }
+
+                        e.StartVertex = vertex;
                     }
                 }
                 else

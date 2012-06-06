@@ -150,6 +150,7 @@
     <Resource Include="Graphen\Wege1.txt" />
     <Resource Include="Graphen\Dijkstra.txt" />
     <Resource Include="Graphen\Ford-Fulk.txt" />
+    <Resource Include="Graphen\MaxMatching_Klein.txt" />
     <Content Include="Graphen\Graph_gross.txt" />
     <Resource Include="Graphen\K_100.txt" />
     <Resource Include="Graphen\TSP-Graph2.txt" />

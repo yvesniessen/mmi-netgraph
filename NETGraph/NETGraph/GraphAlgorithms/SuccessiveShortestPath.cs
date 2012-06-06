@@ -32,6 +32,7 @@ namespace NETGraph.GraphAlgorithms
             {
                 double sumflow = 0;
 
+                // Flüsse betrachten die von Knoten weg- bzw. hingehen und diese von der Balance abziehen
                 foreach (Edge e in result.Edges)
                 {
                     if (e.StartVertex == v)
@@ -85,12 +86,14 @@ namespace NETGraph.GraphAlgorithms
 
             foreach(Edge e in result.Edges)
             {
+                //wenn negative Kosten wird fluss voll ausgenutzt
                 if (e.RealCosts < 0)
                 {
                     e.Flow = e.Costs;
                 }
                 else
                 {
+                    //wenn positiv wird sie nicht genutzt
                     e.Flow = 0;
                 }
             }

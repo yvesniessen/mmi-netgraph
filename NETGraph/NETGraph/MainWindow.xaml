@@ -24,6 +24,7 @@
                 <MenuItem Header="FordFulkerson" Click="FordFulkerson_Click" />
                 <MenuItem Header="CycleCanceling" Click="CycleCanceling_Click" />
                 <MenuItem Header="SuccessiveShortestPath" Click="SuccessiveShortestPath_Click" />
+                <MenuItem Header="MaxminalMatching" Click="MaxminalMatching_Click" />
                 </MenuItem>
             <MenuItem Header="Output" Click="Output_Click" />
             <MenuItem Header="Help">
