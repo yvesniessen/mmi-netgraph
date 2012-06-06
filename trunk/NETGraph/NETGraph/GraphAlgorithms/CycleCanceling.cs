@@ -23,17 +23,19 @@ namespace NETGraph.GraphAlgorithms
             graph.findEdge(graph.findVertex("5"), graph.findVertex("4")).Flow = 0;*/
 
             graph = buildSuperTargetandSource(graph);
-
+            //Ford Fulkerson für initialen Fluss
             graph = m_fordFulk.performAlgorithm(graph, graph.findVertex("S*"));
-
-            Graph residualGraph = m_fordFulk.buildResidualGraph(graph);
             
+            Graph residualGraph = m_fordFulk.buildResidualGraph(graph);
+            //negativen Cycle suchen
             Graph negativeCycle = findNegativeCycle(residualGraph, startVertex);
 
             graph = deleteSuperTargetandSource(graph);
 
+            //solange Negativer Cycle noch da
             while (negativeCycle != null)
             {
+                //Flaschenhals finden im Cycle
                 double min_costs = m_fordFulk.getMinCostsFromEdges(negativeCycle);
 
                 // Suche alle Kanten im Residualgraphen und passe die Kapazitäten im ursprünglichen Graphen an
@@ -46,12 +48,15 @@ namespace NETGraph.GraphAlgorithms
                     }
                     else
                     {
+                        //wenn Kante nicht gefunden suche die Umgedreht
                         currentedge = graph.findInvertedEdge(edge);
                         if (currentedge != null)
                             currentedge.Flow -= min_costs;
                     }
                 }
+                //Residualgraph für nächsten durchlauf
                 residualGraph = m_fordFulk.buildResidualGraph(graph);
+                //Nächsten negativen Cycle finden
                 negativeCycle = findNegativeCycle(residualGraph, startVertex);
             }
 
@@ -131,13 +136,15 @@ namespace NETGraph.GraphAlgorithms
 
         public Graph findNegativeCycle(Graph graph, Vertex<String> startVertex)
         {
+            //Kante des Rattenschwanzes finden
             Edge negativeEdge = m_MooreBellmannFord.getEdgeForNegativeCycle(graph, graph.findVertex(startVertex.VertexName));
             if (negativeEdge != null)
             {
                 Graph cycleGraph = new Graph();
                 Vertex<String> startVertexForCycle = negativeEdge.StartVertex;
                 Vertex<String> currentVertex = startVertexForCycle.PreVertex;
-
+                
+                //Cycle solange Rückwärtslaufen lassen bis wieder am Anfang
                 while (currentVertex != startVertexForCycle)
                 {
                     Edge tempEdge = graph.findEdge(currentVertex.PreVertex, currentVertex);

@@ -399,8 +399,6 @@ namespace NETGraph
                 return;
             }
 
-            m_graphAlgorithm = new MaximalMatchingFlow();
-            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
 
             GraphListData _graphList;
             saveGraphState(_graph);
@@ -586,6 +584,25 @@ namespace NETGraph
             labelState.Content = (Int32.Parse(labelState.Content.ToString()) + 1).ToString();
         }
         #endregion
+
+        private void MaxminalMatching_Click(object sender, RoutedEventArgs e)
+        {
+            m_graphAlgorithm = new MaximalMatchingFlow();
+            _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
+
+            EventManagement.GuiLog("Matchings:");
+            
+            int counter = 0;
+            foreach (Edge edge in _graph.Edges)
+            {
+                if (edge.Flow == 1)
+                {
+                    EventManagement.GuiLog("Matching von " + edge.StartVertex.VertexName + " mit " + edge.EndVertex.VertexName);
+                    counter++;
+                }
+            }
+            EventManagement.GuiLog("Summe: " + counter);
+        }
 
 
 
