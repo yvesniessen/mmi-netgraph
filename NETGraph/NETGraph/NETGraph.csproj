@@ -140,6 +140,8 @@
     <Resource Include="Graphen\TSNeighbor.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Graphen\K_10e.txt" />
+    <Resource Include="Graphen\Matching_100_100.txt" />
     <Resource Include="Graphen\SuccessivesShortestPath.txt" />
     <Resource Include="Graphen\Kostenminimal100.txt" />
     <Resource Include="Graphen\Kostenminimal5.txt" />

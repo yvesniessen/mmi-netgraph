@@ -125,7 +125,7 @@ namespace NETGraph
             set
             {
                 _marked = value;
-                Debug.WriteLine("name: " + this._vertexName + " marked: " + this._marked + " value: " + value);
+                //Debug.WriteLine("name: " + this._vertexName + " marked: " + this._marked + " value: " + value);
             }
         }
 

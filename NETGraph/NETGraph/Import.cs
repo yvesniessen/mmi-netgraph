@@ -115,15 +115,41 @@ namespace NETGraph
                         case 2:
                         case 3: //TODO: ANDERS ÜBERLEGEN DA SO 3x3 und 2x2 Matrix nicht erkannt wird
                         case 4:
-                        EventManagement.GuiLog("parse file to edgelist");
-                            //Debug.Print("Kantenliste");
+                            if (_counter2 == 0 || _counter2 == 1)
+                            {
+                                EventManagement.GuiLog("parse file to edgelist");
+                                Debug.Print("Kantenliste");
+                            }
+
+                            //WENNN ES EINE Liste für eine Bipartiden Graphen ist
+                        if (_counter2 == 1 && _graph.Vertexes.Count() != 1)
+                        {
+                            //sich den ersten zahlenwert wieder aus der Balance holen
+                            int numoffirstgroup = Convert.ToInt32(_graph.Vertexes[_counter2 - 1].Balance);
+                            
+                            //Die erste Gruppe als Source definieren
+                            for (int i = 0; i < numoffirstgroup; i++)
+                            {
+                                //SOURCE
+                                _graph.Vertexes[i].Balance = 1;
+                            }
+                            //Die zweite Gruppe als Target
+                            for (int i = numoffirstgroup; i < _graph.Vertexes.Count(); i++)
+                            {
+                                _graph.Vertexes[i].Balance = -1;
+                            }
+                            //Counter2 nochmal erhöhen damit nicht mehr in die schleife gesprungen wird....
+                            _counter2++;
+                        }
 
                             convertListLine(_coloumnElements, ref _graph);
                             break;
                         default:
-                            EventManagement.GuiLog("parse file to Adjazensmatrix");
-                            Debug.Print("Adjazensmatrix");
-
+                            if (_counter == 0)
+                            {
+                                EventManagement.GuiLog("parse file to Adjazensmatrix");
+                                Debug.Print("Adjazensmatrix");
+                            }
                             // test if it is a valid number of Row elements
                             if (_data.Count != _graph.NumberOfVertexes)
                                 throw new NotImplementedException("ERROR:transformFileToGraph\n-->Invalid Row Elements!");
