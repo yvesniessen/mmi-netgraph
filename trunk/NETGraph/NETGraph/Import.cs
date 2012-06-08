@@ -123,10 +123,10 @@ namespace NETGraph
                             }
 
                             //WENNN ES EINE Liste für eine Bipartiden Graphen ist
-                        if (_counter2 == 1 && _graph.Vertexes.Count() != 1)
+                        if (_counter2 == 2 && _graph.Vertexes.Count() != 1)
                         {
                             //sich den ersten zahlenwert wieder aus der Balance holen
-                            int numoffirstgroup = Convert.ToInt32(_graph.Vertexes[_counter2 - 1].Balance);
+                            int numoffirstgroup = Convert.ToInt32(_graph.Vertexes[_counter2 - 2].Balance);
                             
                             //Die erste Gruppe als Source definieren
                             for (int i = 0; i < numoffirstgroup; i++)

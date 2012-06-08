@@ -598,6 +598,7 @@ namespace NETGraph
         private void MaxminalMatching_Click(object sender, RoutedEventArgs e)
         {
             m_graphAlgorithm = new MaximalMatchingFlow();
+            (m_graphAlgorithm as MaximalMatchingFlow).DrawSingleStep = false;
             _graph = m_graphAlgorithm.performAlgorithm(_graph, _graph.Vertexes.First());
 
             EventManagement.GuiLog("Matchings:");
