@@ -25,13 +25,20 @@ namespace NETGraph.GraphAlgorithms
 
             graph = buildSuperTargetandSource(graph);
             //Ford Fulkerson für initialen Fluss
-            graph = m_fordFulk.performAlgorithm(graph, graph.findVertex("S*"));
-            
-            Graph residualGraph = m_fordFulk.buildResidualGraph(graph);
-            //negativen Cycle suchen
-            Graph negativeCycle = findNegativeCycle(residualGraph, startVertex);
+            Vertex<String> SuperSource = graph.findVertex("S*");
+            graph = m_fordFulk.performAlgorithm(graph, SuperSource);
+
+            //Roter Ausgang: Über Kanten kann nicht genug transportiert werden
+            //...... über alle Kanten von S* iterieren und Fluss Addieren... Fluss muss = Balance von S* sein
+            //oder Kapazität von Kante = Fluss von Kante
 
             graph = deleteSuperTargetandSource(graph);
+
+            Graph residualGraph = m_fordFulk.buildResidualGraph(graph);
+            //negativen Cycle suchen
+            Graph negativeCycle = findNegativeCycle(residualGraph);
+
+
 
             //solange Negativer Cycle noch da
             while (negativeCycle != null)
@@ -58,7 +65,7 @@ namespace NETGraph.GraphAlgorithms
                 //Residualgraph für nächsten durchlauf
                 residualGraph = m_fordFulk.buildResidualGraph(graph);
                 //Nächsten negativen Cycle finden
-                negativeCycle = findNegativeCycle(residualGraph, startVertex);
+                negativeCycle = findNegativeCycle(residualGraph);
             }
 
             double min_flow_costs = 0;
@@ -135,27 +142,37 @@ namespace NETGraph.GraphAlgorithms
             }
         }
 
-        public Graph findNegativeCycle(Graph graph, Vertex<String> startVertex)
+        public Graph findNegativeCycle(Graph graph)
         {
             //Kante des Rattenschwanzes finden
-            Edge negativeEdge = m_MooreBellmannFord.getEdgeForNegativeCycle(graph, graph.findVertex(startVertex.VertexName));
-            if (negativeEdge != null)
+            foreach (Vertex<String> v in graph.Vertexes)
             {
-                Graph cycleGraph = new Graph();
-                Vertex<String> startVertexForCycle = negativeEdge.StartVertex;
-                Vertex<String> currentVertex = startVertexForCycle.PreVertex;
-                
-                //Cycle solange Rückwärtslaufen lassen bis wieder am Anfang
-                while (currentVertex != startVertexForCycle)
+                Edge negativeEdge = m_MooreBellmannFord.getEdgeForNegativeCycle(graph, graph.findVertex(v.VertexName));
+                if (negativeEdge != null)
                 {
-                    Edge tempEdge = graph.findEdge(currentVertex.PreVertex, currentVertex);
-                    cycleGraph.addEdge(currentVertex.PreVertex, currentVertex, tempEdge.Costs, tempEdge.RealCosts);
-                    currentVertex = currentVertex.PreVertex;
-                }
-                Edge tmpEdge = graph.findEdge(currentVertex.PreVertex, currentVertex);
-                cycleGraph.addEdge(currentVertex.PreVertex, currentVertex, tmpEdge.Costs, tmpEdge.RealCosts);
+                    Vertex<String> startVertexForCycle = negativeEdge.StartVertex;
+                    for (int i = 0; i < graph.Vertexes.Count(); i++)
+                    {
+                        startVertexForCycle = startVertexForCycle.PreVertex;
+                    }                
+                                   
+                    
+                    Graph cycleGraph = new Graph();
 
-                return cycleGraph;
+                    Vertex<String> currentVertex = startVertexForCycle.PreVertex;
+
+                    //Cycle solange Rückwärtslaufen lassen bis wieder am Anfang
+                    while (currentVertex != startVertexForCycle)
+                    {
+                        Edge tempEdge = graph.findEdge(currentVertex.PreVertex, currentVertex);
+                        cycleGraph.addEdge(currentVertex.PreVertex, currentVertex, tempEdge.Costs, tempEdge.RealCosts);
+                        currentVertex = currentVertex.PreVertex;
+                    }
+                    Edge tmpEdge = graph.findEdge(currentVertex.PreVertex, currentVertex);
+                    cycleGraph.addEdge(currentVertex.PreVertex, currentVertex, tmpEdge.Costs, tmpEdge.RealCosts);
+
+                    return cycleGraph;
+                }
             }
             return null;
         }
