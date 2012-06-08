@@ -80,6 +80,7 @@ namespace NETGraph.GraphAlgorithms
 
         public Graph performAlgorithm(Graph graph, Vertex<string> startVertex)
         {
+            graph.DirectedEdges = true;
             Graph result = graph;
 
             // Setzen der Anfangsflüsse
