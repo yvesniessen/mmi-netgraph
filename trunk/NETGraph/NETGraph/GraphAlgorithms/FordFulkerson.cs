@@ -10,7 +10,7 @@ namespace NETGraph.GraphAlgorithms
     class FordFulkerson : IGraphAlgorithm
     {
        // public Vertex<string> EndVertex;
-        public Boolean DrawSingleStep = true;
+        public Boolean DrawSingleStep = false;
         public Vertex<String> EndVertex = null;
 
 
